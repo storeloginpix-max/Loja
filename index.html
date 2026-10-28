@@ -3,86 +3,936 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja Online - Em Breve</title>
+    
+    <title>X SOLO 1 V 47 | Plataforma de Campeonatos de Free Fire</title>
+    
+    <meta name="description" content="X SOLO 1 V 47 - Plataforma profissional de organização de campeonatos de Free Fire. Criação de salas, premiação para vencedores e transmissões ao vivo.">
+    <meta name="keywords" content="X SOLO, X SOLO 1 V 47, X SOLO FREE FIRE, campeonato free fire, torneio free fire, x solo 1v47, competição free fire, salas personalizadas, premiação, esports">
+    <meta name="author" content="X SOLO 1 V 47">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Portuguese">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xsolo1v47.netlify.app/">
+    <meta property="og:title" content="X SOLO 1 V 47 | Campeonatos de Free Fire">
+    <meta property="og:description" content="Plataforma profissional de campeonatos de Free Fire com premiação garantida.">
+    
+    <meta name="google-site-verification" content="_Xb754dlBTitXsskM1StZJQOBOMZ_RdVNMceHpIBE0A" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff6b00;
+            --primary-dark: #cc5500;
+            --secondary: #1a1a2e;
+            --accent: #00d4ff;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --light: #ffffff;
+            --gray: #8a8a9a;
+            --gray-light: #c0c0d0;
+            --success: #00ff88;
+            --border: #2a2a3e;
         }
 
         body {
-            min-height: 100vh;
+            background: var(--darker);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            justify-content: space-between;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            transition: all 0.3s;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-btn span {
+            display: block;
+            height: 2px;
+            background: var(--light);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--light);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .cnpj-header {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 320px;
+            height: 100vh;
+            background: var(--dark);
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.8);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1001;
+            padding: 2rem 0;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 0 2rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .sidebar-section {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            transition: all 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--primary);
+            padding-left: 10px;
+        }
+
+        .sidebar ul li a svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .whatsapp-highlight {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-highlight a {
+            color: var(--success) !important;
+            font-weight: 600;
+        }
+
+        .whatsapp-highlight svg {
+            fill: var(--success) !important;
+            stroke: none !important;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* MAIN CONTENT */
+        main {
+            padding-top: 80px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            padding: 6rem 2rem 4rem;
             text-align: center;
-            padding: 20px;
+            position: relative;
             overflow: hidden;
         }
 
-        .container {
-            max-width: 600px;
-            animation: fadeIn 1.5s ease-in-out;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
         }
 
-        .subtitle {
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray-light);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--primary);
+            color: var(--light);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 107, 0, 0.4);
+        }
+
+        .cta-button svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* CONTENT SECTIONS */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* ABOUT SECTION */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .about-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .about-card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .about-card h3 {
             font-size: 1.3rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        .badge {
-            display: inline-block;
-            padding: 10px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50px;
+        .about-card p {
+            color: var(--gray-light);
+            line-height: 1.7;
+        }
+
+        /* FEATURES LIST */
+        .features-list {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .feature-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature-content p {
+            color: var(--gray-light);
+            line-height: 1.6;
+        }
+
+        /* SOCIAL SECTION */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .social-card {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .social-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .social-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .social-card-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .social-card-icon.youtube { background: rgba(255, 0, 0, 0.1); color: #ff0000; }
+        .social-card-icon.instagram { background: linear-gradient(135deg, rgba(240, 148, 51, 0.1), rgba(188, 24, 136, 0.1)); color: #dc2743; }
+        .social-card-icon.telegram { background: rgba(0, 136, 204, 0.1); color: #0088cc; }
+        .social-card-icon.discord { background: rgba(88, 101, 242, 0.1); color: #5865F2; }
+
+        .social-card-content h4 {
             font-size: 1rem;
-            backdrop-filter: blur(10px);
-            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
+        }
+
+        .social-card-content p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--light);
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .footer-column ul {
+            list-style: none;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
         }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .subtitle { font-size: 1rem; }
-            .icon { font-size: 60px; }
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-legal-item {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .footer-legal-item strong {
+            color: var(--light);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-document {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .footer-document a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-document a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-document svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 3rem 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">🛍️</div>
-        <h1>Loja Online</h1>
-        <p class="subtitle">Estamos preparando algo especial para você!</p>
-        <div class="badge">Em Breve</div>
-    </div>
+    <header>
+        <div class="logo-container">
+            <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div>
+                <div class="logo">X SOLO <span>1 V 47</span></div>
+                <div class="cnpj-header">CNPJ: 69.813.815/0001-96</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <button class="close-btn" onclick="toggleMenu()" aria-label="Fechar">✕</button>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Redes Sociais</div>
+            <ul>
+                <li class="whatsapp-highlight">
+                    <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        Grupo Oficial WhatsApp
+                    </a>
+                </li>
+                <li>
+                    <a href="https://youtube.com/@xsolo1v47?si=_YYz06xhW2gW1wp-" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        YouTube
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/xsolo1v47?exln=MXFjZjJ6MTBtbm41Yw==" target="_blank">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        Instagram
+                    </a>
+                </li>
+                <li>
+                    <a href="https://t.me/xsolo1v47" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        Telegram
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        Discord: @xsolo1v47
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Plataforma de <span>Campeonatos</span> de Free Fire</h1>
+                <p>Organização profissional de competições online com premiação garantida, salas personalizadas e transmissões ao vivo.</p>
+                <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" target="_blank" class="cta-button">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    Entrar no Grupo Oficial
+                </a>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="section">
+                <div class="section-header">
+                    <h2>Sobre a Plataforma</h2>
+                    <p>Organização profissional de campeonatos e eventos de jogos online</p>
+                </div>
+
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-card-icon">
+                            <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3>Competições Organizadas</h3>
+                        <p>Criamos salas personalizadas de competição com regras claras e estrutura profissional para garantir a melhor experiência aos jogadores.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="about-card-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3>Premiação Garantida</h3>
+                        <p>Todos os valores de premiação são informados antes do início dos campeonatos. Pagamentos rápidos e seguros aos vencedores.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <div class="about-card-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3>Transmissões Ao Vivo</h3>
+                        <p>Campeonatos transmitidos ao vivo com venda de ingressos para espectadores acompanharem as competições em tempo real.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>Como Funciona</h2>
+                    <p>Processo completo de participação nos campeonatos</p>
+                </div>
+
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        </div>
+                        <div class="feature-content">
+                            <h4>1. Entre no Grupo Oficial</h4>
+                            <p>Acesse nosso grupo do WhatsApp para receber todas as informações sobre campeonatos, datas, valores de inscrição e premiações.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        </div>
+                        <div class="feature-content">
+                            <h4>2. Realize sua Inscrição</h4>
+                            <p>As vagas são limitadas. Siga as instruções divulgadas no grupo para garantir sua participação no campeonato.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="feature-content">
+                            <h4>3. Participe da Competição</h4>
+                            <p>Esteja online no horário marcado. As salas são criadas pela organização e os links são enviados no grupo oficial.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="feature-content">
+                            <h4>4. Receba sua Premiação</h4>
+                            <p>Após a comprovação da vitória, o pagamento é realizado de forma rápida e segura através dos métodos disponíveis.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>Redes Sociais</h2>
+                    <p>Siga-nos em todas as plataformas</p>
+                </div>
+
+                <div class="social-grid">
+                    <a href="https://youtube.com/@xsolo1v47?si=_YYz06xhW2gW1wp-" target="_blank" class="social-card">
+                        <div class="social-card-icon youtube">
+                            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </div>
+                        <div class="social-card-content">
+                            <h4>YouTube</h4>
+                            <p>@xsolo1v47</p>
+                        </div>
+                    </a>
+
+                    <a href="https://www.instagram.com/xsolo1v47?exln=MXFjZjJ6MTBtbm41Yw==" target="_blank" class="social-card">
+                        <div class="social-card-icon instagram">
+                            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </div>
+                        <div class="social-card-content">
+                            <h4>Instagram</h4>
+                            <p>@xsolo1v47</p>
+                        </div>
+                    </a>
+
+                    <a href="https://t.me/xsolo1v47" target="_blank" class="social-card">
+                        <div class="social-card-icon telegram">
+                            <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </div>
+                        <div class="social-card-content">
+                            <h4>Telegram</h4>
+                            <p>@xsolo1v47</p>
+                        </div>
+                    </a>
+
+                    <div class="social-card">
+                        <div class="social-card-icon discord">
+                            <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        </div>
+                        <div class="social-card-content">
+                            <h4>Discord</h4>
+                            <p>@xsolo1v47</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="inscricoes.html">Inscrições</a></li>
+                        <li><a href="regras.html">Regras</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Comunidade</h4>
+                    <ul>
+                        <li><a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" target="_blank">Grupo WhatsApp</a></li>
+                        <li><a href="https://youtube.com/@xsolo1v47" target="_blank">YouTube</a></li>
+                        <li><a href="https://www.instagram.com/xsolo1v47" target="_blank">Instagram</a></li>
+                        <li><a href="https://t.me/xsolo1v47" target="_blank">Telegram</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="https://wa.me/5585996787670" target="_blank">(85) 99678-7670</a></li>
+                        <li><a href="mailto:contato@xsolo1v47.com">contato@xsolo1v47.com</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Regras dos Campeonatos</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <div class="footer-legal-item">
+                        <strong>CNPJ</strong>
+                        69.813.815/0001-96
+                    </div>
+                    <div class="footer-legal-item">
+                        <strong>Registro CCMEI</strong>
+                        CCMEI-69813815000196-20261028101222
+                    </div>
+                    <div class="footer-legal-item">
+                        <strong>Marco Civil da Internet</strong>
+                        Lei nº 12.965/2014
+                    </div>
+                    <div class="footer-legal-item">
+                        <strong>LGPD</strong>
+                        Lei nº 13.709/2018
+                    </div>
+                </div>
+
+                <div class="footer-document">
+                    <a href="CCMEI-69813815000196-20261028101222.pdf" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        Documento CCMEI - Verificação de Registro
+                    </a>
+                </div>
+
+                <div class="footer-copy">
+                    &copy; 2024 X SOLO 1 V 47. Todos os direitos reservados.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function ajustarPosicoes() {
+            const header = document.getElementById('mainHeader');
+            const headerHeight = header.offsetHeight;
+            document.body.style.paddingTop = headerHeight + 'px';
+        }
+
+        ajustarPosicoes();
+        window.addEventListener('resize', ajustarPosicoes);
+    </script>
 </body>
 </html>
