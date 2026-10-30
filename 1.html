@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X SOLO 1 V 47 FREE FIRE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #001a33;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO FIXO */
+        header {
+            background-color: #000000;
+            padding: 12px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #ffaa00;
+        }
+
+        /* BOTÃO DO MENU */
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-btn span {
+            display: block;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* CONTAINER DO TÍTULO E CNPJ */
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        /* TÍTULO ESTILO FREE FIRE */
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #000;
+            line-height: 1.1;
+        }
+
+        h1 .highlight {
+            color: #ffaa00;
+            text-shadow: 2px 2px 0px #000, 0 0 8px rgba(255, 170, 0, 0.6);
+        }
+
+        /* CNPJ */
+        .cnpj {
+            color: #888888;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        /* BARRA DE CATEGORIAS / CARROSSEL */
+        .nav-bar {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            background-color: #000000;
+            padding: 10px 25px;
+            z-index: 49;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+
+        .nav-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-bar a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            margin-right: 5px;
+        }
+
+        .nav-bar a:hover {
+            color: #ffaa00;
+        }
+
+        .nav-bar a.active {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .nav-bar .separator {
+            color: #555555;
+            margin-right: 5px;
+            user-select: none;
+        }
+
+        /* SIDEBAR FLUTUANTE */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.7);
+            transition: left 0.4s ease;
+            z-index: 100;
+            padding-top: 70px;
+            border-right: 1px solid #2a2a2a;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* BOTÃO FECHAR */
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #ff6600;
+            transform: rotate(90deg);
+        }
+
+        /* LISTA DO MENU */
+        .sidebar ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .sidebar ul li {
+            border-bottom: 1px solid #1f1f1f;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #1a1a1a;
+        }
+
+        .sidebar ul li:hover a {
+            color: #ff6600;
+            padding-left: 35px;
+        }
+
+        /* ÍCONES SVG */
+        .sidebar ul li a svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
+        }
+
+        /* OVERLAY ESCURO AO ABRIR MENU */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 90;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header-info">
+            <h1>X SOLO <span class="highlight">1</span> V 47 FREE FIRE</h1>
+            <p class="cnpj">CNPJ: 69.813.815/0001-96</p>
+        </div>
+    </header>
+
+    <!-- BARRA DE CATEGORIAS -->
+    <nav class="nav-bar" id="navBar">
+        <a href="index.html" class="active">Início</a>
+        <span class="separator">/</span>
+        <a href="inscricoes.html">Inscrições</a>
+        <span class="separator">/</span>
+        <a href="regras.html">Regras</a>
+        <span class="separator">/</span>
+        <a href="contato.html">Contato</a>
+        <span class="separator">/</span>
+        <a href="passaros.html">Pássaros</a>
+        <span class="separator">/</span>
+        <a href="4v4off.html">4V4 OFF</a>
+    </nav>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- SIDEBAR FLUTUANTE -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleMenu()" aria-label="Fechar menu">✕</button>
+        </div>
+        <ul>
+            <li>
+                <a href="index.html">
+                    <svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Início
+                </a>
+            </li>
+            <li>
+                <a href="inscricoes.html">
+                    <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    Inscrições
+                </a>
+            </li>
+            <li>
+                <a href="classificacao.html">
+                    <svg viewBox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                    Classificação
+                </a>
+            </li>
+            <li>
+                <a href="calendario.html">
+                    <svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Calendário
+                </a>
+            </li>
+            <li>
+                <a href="regras.html">
+                    <svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Regras
+                </a>
+            </li>
+            <li>
+                <a href="contato.html">
+                    <svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    Contato
+                </a>
+            </li>
+            <li>
+                <a href="passaros.html">
+                    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    Pássaros
+                </a>
+            </li>
+            <li>
+                <a href="4v4off.html">
+                    <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    4V4 OFF
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Ajusta a posição da nav-bar exatamente abaixo do header (sem espaço)
+        function ajustarPosicoes() {
+            const header = document.getElementById('mainHeader');
+            const navBar = document.getElementById('navBar');
+            const headerHeight = header.offsetHeight;
+            navBar.style.top = headerHeight + 'px';
+            document.body.style.paddingTop = (headerHeight + navBar.offsetHeight) + 'px';
+        }
+
+        ajustarPosicoes();
+        window.addEventListener('resize', ajustarPosicoes);
+    </script>
+</body>
+</html>

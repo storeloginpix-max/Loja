@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Jogadores - X SOLO 1 V 47</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e3e6e8;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 24px 20px;
+            background: linear-gradient(145deg, #141414, #0f0f0f);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+
+        .header h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .header h1 span { color: #FFD814; }
+
+        .header-sub {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* STATUS BAR */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .status-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #25D366;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(37, 211, 102, 0); }
+        }
+
+        .btn-refresh {
+            background: transparent;
+            border: 1px solid #333;
+            color: #ccc;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            border-color: #FFD814;
+            color: #FFD814;
+        }
+
+        .btn-refresh.loading svg {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* PROGRESS BAR */
+        .progress-container {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        .progress-label { color: #888; }
+        .progress-value { color: #FFD814; font-weight: 700; font-family: 'Russo One', sans-serif; }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #222;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD814, #F7CA00);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 10px rgba(255, 216, 20, 0.3);
+        }
+
+        /* LISTA DE JOGADORES */
+        .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .player-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .player-card:hover {
+            border-color: #3a3a3a;
+            transform: translateX(4px);
+        }
+
+        /* DESTAQUE PARA VAGA DO USUÁRIO */
+        .player-card.me {
+            background: linear-gradient(145deg, rgba(255, 216, 20, 0.12), rgba(255, 216, 20, 0.04));
+            border-color: #FFD814;
+            box-shadow: 0 0 20px rgba(255, 216, 20, 0.15);
+            position: relative;
+        }
+
+        .player-card.me::before {
+            content: '👤 VOCÊ';
+            position: absolute;
+            top: -8px;
+            right: 16px;
+            background: #FFD814;
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .player-number {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(145deg, #222, #1a1a1a);
+            border: 1px solid #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Russo One', sans-serif;
+            font-size: 1rem;
+            color: #FFD814;
+            flex-shrink: 0;
+        }
+
+        .player-card.me .player-number {
+            background: linear-gradient(145deg, #FFD814, #F7CA00);
+            color: #000;
+            border-color: #FFD814;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-name {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-card.me .player-name {
+            color: #FFD814;
+        }
+
+        .player-label {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .player-status {
+            width: 8px;
+            height: 8px;
+            background: #25D366;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-icon { font-size: 3rem; margin-bottom: 12px; }
+        .empty-text { font-size: 0.95rem; }
+
+        /* LOADING */
+        .loading-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 216, 20, 0.1);
+            border-top: 3px solid #FFD814;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        /* FOOTER */
+        .footer-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #FFD814;
+            color: #000;
+        }
+
+        .btn-primary:hover { background: #F7CA00; }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ccc;
+            border: 1px solid #333;
+        }
+
+        .btn-secondary:hover {
+            border-color: #FFD814;
+            color: #FFD814;
+        }
+
+        .last-update {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #555;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .header h1 { font-size: 1.2rem; }
+            .player-card { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>X SOLO <span>1 V 47</span> FREE FIRE</h1>
+            <div class="header-sub">Lista oficial de jogadores inscritos</div>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+            <div class="status-info">
+                <div class="live-dot"></div>
+                <span>Atualização em tempo real</span>
+            </div>
+            <button class="btn-refresh" id="btnRefresh" onclick="carregarLista()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Atualizar
+            </button>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-label">Vagas Preenchidas</span>
+                <span class="progress-value" id="progressValue">0 / 48</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- LISTA DE JOGADORES -->
+        <div id="playersContainer">
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <div class="empty-text">Carregando lista de jogadores...</div>
+            </div>
+        </div>
+
+        <!-- LAST UPDATE -->
+        <div class="last-update" id="lastUpdate"></div>
+
+        <!-- FOOTER ACTIONS -->
+        <div class="footer-actions">
+            <a href="index.html" class="btn-action btn-secondary">← Início</a>
+            <!-- CORRIGIDO: Agora redireciona para index.html onde estão as salas disponíveis -->
+            <a href="index.html" class="btn-action btn-primary">Ver Salas Disponíveis</a>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES
+        const SHEET_ID = '1n0pEm4fhV-MxilAiGM9ec4FQ_noPoZevNjziha56IVA';
+        const MAX_VAGAS = 48;
+        const AUTO_REFRESH_INTERVAL = 15000; // 15 segundos
+
+        // Obter parâmetros da URL (para destacar a vaga do usuário atual)
+        const params = new URLSearchParams(window.location.search);
+        const userVaga = params.get('vaga') ? params.get('vaga').trim() : null;
+
+        let refreshTimer = null;
+
+        // Função principal para carregar a lista
+        async function carregarLista() {
+            const container = document.getElementById('playersContainer');
+            const btnRefresh = document.getElementById('btnRefresh');
+            
+            // Mostrar loading apenas na primeira carga
+            if (container.children.length <= 1) {
+                container.innerHTML = `
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <div class="empty-text">Carregando lista de jogadores...</div>
+                    </div>
+                `;
+            }
+
+            btnRefresh.classList.add('loading');
+
+            try {
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+                const response = await fetch(csvUrl, { method: 'GET', cache: 'no-cache' });
+                
+                if (!response.ok) throw new Error('Falha ao carregar');
+                
+                const text = await response.text();
+                if (text.trim().startsWith('<')) throw new Error('Resposta inválida');
+
+                const lines = text.split('\n').filter(l => l.trim() !== '');
+                const players = [];
+
+                // Pular cabeçalho (linha 0)
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(col => col.replace(/"/g, '').trim());
+                    
+                    // Coluna A: sala (índice 0)
+                    // Coluna E: nome no jogo (índice 4)
+                    const vaga = cols[0];
+                    const nomeJogo = cols[4];
+
+                    if (vaga && nomeJogo) {
+                        players.push({ vaga, nomeJogo });
+                    }
+                }
+
+                // Ordenar por número da vaga (numérico)
+                players.sort((a, b) => parseInt(a.vaga) - parseInt(b.vaga));
+
+                renderizarLista(players);
+                atualizarProgresso(players.length);
+                atualizarTimestamp();
+
+            } catch (error) {
+                console.error('Erro ao carregar lista:', error);
+                if (container.children.length <= 1) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">⚠️</div>
+                            <div class="empty-text">Erro ao carregar a lista. Tente novamente.</div>
+                        </div>
+                    `;
+                }
+            } finally {
+                btnRefresh.classList.remove('loading');
+            }
+        }
+
+        // Renderizar a lista de jogadores
+        function renderizarLista(players) {
+            const container = document.getElementById('playersContainer');
+
+            if (players.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"></div>
+                        <div class="empty-text">Nenhum jogador inscrito ainda.<br>Seja o primeiro!</div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="players-list">';
+            
+            players.forEach((player, index) => {
+                const isMe = userVaga && player.vaga === userVaga;
+                const delay = index * 0.05; // Animação em cascata
+                
+                html += `
+                    <div class="player-card ${isMe ? 'me' : ''}" style="animation-delay: ${delay}s">
+                        <div class="player-number">${player.vaga.padStart(2, '0')}</div>
+                        <div class="player-info">
+                            <div class="player-name">${escapeHtml(player.nomeJogo)}</div>
+                            <div class="player-label">Jogador inscrito</div>
+                        </div>
+                        <div class="player-status"></div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Scroll suave até a vaga do usuário se existir
+            if (userVaga) {
+                setTimeout(() => {
+                    const meCard = document.querySelector('.player-card.me');
+                    if (meCard) {
+                        meCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 500);
+            }
+        }
+
+        // Atualizar barra de progresso
+        function atualizarProgresso(count) {
+            const percentage = Math.round((count / MAX_VAGAS) * 100);
+            document.getElementById('progressValue').textContent = `${count} / ${MAX_VAGAS}`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+        }
+
+        // Atualizar timestamp
+        function atualizarTimestamp() {
+            const agora = new Date();
+            const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('lastUpdate').textContent = `Última atualização: ${hora}`;
+        }
+
+        // Escape HTML para prevenir XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Iniciar auto-refresh
+        function iniciarAutoRefresh() {
+            if (refreshTimer) clearInterval(refreshTimer);
+            refreshTimer = setInterval(carregarLista, AUTO_REFRESH_INTERVAL);
+        }
+
+        // Inicialização
+        window.addEventListener('DOMContentLoaded', () => {
+            carregarLista();
+            iniciarAutoRefresh();
+        });
+
+        // Pausar auto-refresh quando a aba não está visível (economia de recursos)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (refreshTimer) clearInterval(refreshTimer);
+            } else {
+                carregarLista(); // Carrega imediatamente ao voltar
+                iniciarAutoRefresh();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Contatos - X Solo 1 V 47 Free Fire</title>
+<style>
+  :root {
+    --bg-primary: #050505;
+    --bg-card: #0c0c0c;
+    --bg-button: #111111;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    
+    --wa-color: #25D366;
+    --ig-color: #E1306C;
+    --tt-color: #00f2ea;
+    --tt-color-2: #ff0050;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 20px;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(37, 211, 102, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(225, 48, 108, 0.03) 0%, transparent 40%);
+    color: var(--text-primary);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 36px 28px;
+    box-shadow: 
+      0 24px 80px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+
+  .header {
+    text-align: center;
+    padding-bottom: 28px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .category-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .brand {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .brand .highlight {
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .brand .sub {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 18px 20px;
+    background: var(--bg-button);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .contact-btn:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .contact-btn:hover::after {
+    left: 100%;
+  }
+
+  .contact-btn:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+  }
+
+  /* Brand Specific Hover Effects */
+  .contact-btn.whatsapp:hover {
+    border-color: rgba(37, 211, 102, 0.3);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.08);
+  }
+
+  .contact-btn.group:hover {
+    border-color: rgba(37, 211, 102, 0.3);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.08);
+  }
+
+  .contact-btn.instagram:hover {
+    border-color: rgba(225, 48, 108, 0.3);
+    box-shadow: 0 12px 32px rgba(225, 48, 108, 0.08);
+  }
+
+  .contact-btn.tiktok:hover {
+    border-color: rgba(0, 242, 234, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 242, 234, 0.06), 0 12px 32px rgba(255, 0, 80, 0.04);
+  }
+
+  .icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .whatsapp:hover .icon-wrapper { background: rgba(37, 211, 102, 0.1); border-color: rgba(37, 211, 102, 0.2); }
+  .group:hover .icon-wrapper { background: rgba(37, 211, 102, 0.1); border-color: rgba(37, 211, 102, 0.2); }
+  .instagram:hover .icon-wrapper { background: rgba(225, 48, 108, 0.1); border-color: rgba(225, 48, 108, 0.2); }
+  .tiktok:hover .icon-wrapper { background: rgba(0, 242, 234, 0.08); border-color: rgba(0, 242, 234, 0.2); }
+
+  .icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-btn:hover .icon-wrapper svg {
+    transform: scale(1.1);
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .contact-label {
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.2px;
+  }
+
+  .contact-sub {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .arrow {
+    color: var(--text-muted);
+    font-size: 20px;
+    font-weight: 300;
+    transition: all 0.3s ease;
+    margin-left: auto;
+  }
+
+  .contact-btn:hover .arrow {
+    transform: translateX(4px);
+    color: var(--text-secondary);
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 28px 20px;
+      border-radius: 16px;
+    }
+    .brand {
+      font-size: 22px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="category-label">Canais Oficiais</div>
+      <div class="brand">
+        <span class="highlight">X SOLO 1 V 47</span>
+        <span class="sub">Free Fire</span>
+      </div>
+    </div>
+
+    <!-- Contato Direto -->
+    <div class="section">
+      <div class="section-title">Contato Direto</div>
+      <a href="https://wa.me/5585996787670" target="_blank" rel="noopener noreferrer" class="contact-btn whatsapp">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </div>
+        <div class="contact-info">
+          <span class="contact-label">WhatsApp Oficial</span>
+          <span class="contact-sub">(85) 99678-7670</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Grupo Oficial -->
+    <div class="section">
+      <div class="section-title">Comunidade</div>
+      <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" target="_blank" rel="noopener noreferrer" class="contact-btn group">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#25D366" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+          </svg>
+        </div>
+        <div class="contact-info">
+          <span class="contact-label">Grupo da Comunidade</span>
+          <span class="contact-sub">X SOLO 1 V 47 Free Fire</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Redes Sociais -->
+    <div class="section">
+      <div class="section-title">Redes Sociais</div>
+      
+      <a href="https://www.instagram.com/xsolo1v47" target="_blank" rel="noopener noreferrer" class="contact-btn instagram">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ig-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFC107"/>
+                <stop offset="50%" stop-color="#E1306C"/>
+                <stop offset="100%" stop-color="#833AB4"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#ig-grad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </div>
+        <div class="contact-info">
+          <span class="contact-label">Instagram</span>
+          <span class="contact-sub">@xsolo1v47</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+
+      <a href="https://www.tiktok.com/@xsolo1v47" target="_blank" rel="noopener noreferrer" class="contact-btn tiktok">
+        <div class="icon-wrapper">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="tt-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2ea"/>
+                <stop offset="100%" stop-color="#ff0050"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#tt-grad)" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+          </svg>
+        </div>
+        <div class="contact-info">
+          <span class="contact-label">TikTok</span>
+          <span class="contact-sub">@xsolo1v47</span>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      © 2024 X Solo 1 V 47 · Free Fire
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+
+<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<style>
+    /* Esconde o iframe do Netlify */
+    iframe[id="nl-badge-frame"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .wa-float-btn {
+        position: fixed !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        width: 190px !important;
+        height: 44px !important;
+        background: #25D366 !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
+        transition: all 0.25s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        font-family: 'Inter', -apple-system, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #ffffff !important;
+        letter-spacing: 0.3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        outline: none !important;
+    }
+
+    .wa-float-btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
+        background: #20BD5A !important;
+    }
+
+    .wa-float-btn:active {
+        transform: scale(0.97) !important;
+    }
+
+    .wa-float-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (max-width: 480px) {
+        .wa-float-btn {
+            width: 170px !important;
+            height: 42px !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            font-size: 0.85rem !important;
+        }
+        .wa-float-btn svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+</style>
+
+<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
+   class="wa-float-btn" 
+   id="waFloatBtn"
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    // Remove/esconde o iframe do Netlify
+    (function hideNetlifyBadge() {
+        function removeBadge() {
+            // Tenta esconder pelo ID
+            var iframe = document.getElementById('nl-badge-frame');
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.opacity = '0';
+                iframe.remove(); // Remove completamente do DOM
+            }
+            
+            // Tenta esconder por seletor CSS genérico
+            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
+            badges.forEach(function(badge) {
+                badge.style.display = 'none';
+                badge.remove();
+            });
+        }
+
+        // Executa imediatamente
+        removeBadge();
+
+        // Executa após DOM carregado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', removeBadge);
+        }
+
+        // Executa após página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(removeBadge, 100);
+            setTimeout(removeBadge, 500);
+            setTimeout(removeBadge, 1500);
+        });
+
+        // Usa MutationObserver para detectar quando o iframe for injetado
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'IFRAME' && 
+                            (node.id === 'nl-badge-frame' || 
+                             node.title.indexOf('Netlify') !== -1)) {
+                            node.style.display = 'none';
+                            setTimeout(function() { node.remove(); }, 10);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    })();
+</script>
+<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->

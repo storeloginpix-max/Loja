@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso ao Grupo - X SOLO 1 V 47</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #e3e6e8;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 440px;
+            width: 100%;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 32px 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .loading-circle {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 216, 20, 0.1);
+            border-top: 4px solid #FFD814;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 24px; transition: color 0.3s; }
+        .subtitle.waiting { color: #FFD814; }
+
+        /* CARD DE SUCESSO */
+        .success-card {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(6, 125, 98, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 2rem;
+        }
+
+        .congrats-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .congrats-text {
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .vaga-badge {
+            display: inline-block;
+            background: rgba(255, 216, 20, 0.15);
+            color: #FFD814;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 216, 20, 0.3);
+        }
+
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px;
+            background: #25D366;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .btn-whatsapp:hover { background: #1ebc57; transform: translateY(-2px); }
+
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: #FFD814;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 216, 20, 0.4);
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .btn-secondary:hover { 
+            background: rgba(255, 216, 20, 0.1); 
+            border-color: #FFD814;
+        }
+
+        /* ALERTA DE SEGURANÇA */
+        .security-alert {
+            background: rgba(204, 12, 57, 0.08);
+            border: 1px solid rgba(204, 12, 57, 0.3);
+            border-left: 4px solid #cc0c39;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .security-alert-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .security-alert-text {
+            color: #ccc;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .security-alert-text strong {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .btn-back {
+            display: inline-block;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-back:hover {
+            color: #fff;
+            border-color: #333;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* TELA DE ERRO */
+        .error-screen {
+            display: none;
+        }
+        .error-icon { font-size: 3rem; margin-bottom: 16px; }
+        .error-text { color: #ff6b6b; font-weight: 600; margin-bottom: 8px; }
+        .error-sub { color: #888; font-size: 0.9rem; }
+
+        @media (max-width: 480px) {
+            .container { padding: 24px 18px; }
+            .congrats-title { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- TELA DE CARREGAMENTO / SINCRONIZAÇÃO -->
+        <div id="loadingScreen">
+            <div class="loading-circle"></div>
+            <div class="title">Validando Inscrição</div>
+            <div class="subtitle" id="loadingSubtitle">Sincronizando com o banco de dados...</div>
+        </div>
+
+        <!-- TELA DE SUCESSO -->
+        <div id="successScreen" class="success-card">
+            <div class="success-icon">🏆</div>
+            <div class="congrats-title">Parabéns! Inscrição Confirmada</div>
+            <div class="vaga-badge" id="displayVaga">Sala --</div>
+            <p class="congrats-text">
+                Agora você já está fazendo parte da lista oficial de jogadores do <strong style="color:#FFD814;">X SOLO 1 V 47</strong>. 
+                Seu pagamento foi validado com sucesso!
+            </p>
+
+            <!-- Botão Principal: Entrar no Grupo -->
+            <a id="btnZap" href="#" target="_blank" class="btn-whatsapp">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Entrar no Grupo do WhatsApp
+            </a>
+
+            <!-- Botão Secundário: Ver Lista de Jogadores -->
+            <a href="inscricoes.html" class="btn-secondary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Ver Lista de Jogadores Inscritos
+            </a>
+
+            <!-- Alerta de Segurança -->
+            <div class="security-alert">
+                <div class="security-alert-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    ATENÇÃO - LEIA COM CUIDADO
+                </div>
+                <p class="security-alert-text">
+                    <strong>Não compartilhe</strong> seu link, esta página ou o grupo do campeonato com amigos, outros jogadores ou pessoas que <strong>não tenham pago</strong> a inscrição. Isso pode levar à <strong>remoção imediata da sua conta</strong> do campeonato. Seu link é <strong>único e rastreado</strong> — se outra pessoa acessá-lo, saberemos.
+                </p>
+            </div>
+
+            <!-- Botão Voltar ao Início -->
+            <a href="index.html" class="btn-back">← Voltar para o início</a>
+        </div>
+
+        <!-- TELA DE ERRO -->
+        <div id="errorScreen" class="error-screen">
+            <div class="error-icon">🚫</div>
+            <div class="error-text">Acesso Negado</div>
+            <div class="error-sub">Não foi possível localizar sua inscrição no banco de dados. Redirecionando...</div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES
+        const SHEET_ID = '1n0pEm4fhV-MxilAiGM9ec4FQ_noPoZevNjziha56IVA';
+        const ZAP_TXT_URL = 'zap.txt';
+        const FALLBACK_ZAP = 'https://chat.whatsapp.com/K7OW5PK2i7j4OI17G8TmlE?s=cl&p=a&iam=2';
+        
+        // Configurações de Tentativa (Polling)
+        const MAX_RETRIES = 20;
+        const RETRY_DELAY = 3000;
+        let currentRetry = 0;
+
+        // Obter parâmetros da URL e limpar espaços em branco
+        const params = new URLSearchParams(window.location.search);
+        const urlTxid = params.get('txid') ? params.get('txid').trim() : '';
+        const urlVaga = params.get('vaga') ? params.get('vaga').trim() : '';
+
+        // 1. VERIFICAÇÃO INICIAL: Se não tiver os parâmetros, bloqueia imediatamente
+        if (!urlTxid || !urlVaga) {
+            window.location.href = 'index.html';
+        }
+
+        // Função para buscar o link do zap.txt
+        async function getZapLink() {
+            try {
+                const response = await fetch(ZAP_TXT_URL + '?t=' + Date.now());
+                if (response.ok) {
+                    const text = await response.text();
+                    const link = text.trim();
+                    if (link.startsWith('http')) return link;
+                }
+            } catch (error) {
+                console.warn('Não foi possível ler zap.txt, usando fallback.');
+            }
+            return FALLBACK_ZAP;
+        }
+
+        // 2. VERIFICAÇÃO CRUZADA NA PLANILHA (Mesma linha)
+        async function verifyOnSheet(targetTxid, targetVaga) {
+            try {
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+                const response = await fetch(csvUrl, { method: 'GET', cache: 'no-cache' });
+                
+                if (!response.ok) return false;
+                const text = await response.text();
+                if (text.trim().startsWith('<')) return false;
+
+                const lines = text.split('\n');
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(col => col.replace(/"/g, '').trim());
+                    
+                    const rowVaga = cols[0]; // Coluna A: sala
+                    const rowTxid = cols[6]; // Coluna G: id pagamento
+
+                    if (rowVaga === targetVaga && rowTxid === targetTxid) {
+                        return true; 
+                    }
+                }
+                return false;
+            } catch (error) {
+                console.error('Erro ao verificar planilha:', error);
+                return false;
+            }
+        }
+
+        // Função para redirecionar em caso de erro final
+        function redirectToError() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('errorScreen').style.display = 'block';
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 4000);
+        }
+
+        // 3. LÓGICA DE SINCRONIZAÇÃO COM TENTATIVAS (POLLING)
+        async function checkAndProceed() {
+            currentRetry++;
+            
+            const subtitle = document.getElementById('loadingSubtitle');
+            subtitle.textContent = `Sincronizando com o banco de dados... (${currentRetry}/${MAX_RETRIES})`;
+            subtitle.classList.add('waiting');
+
+            const sheetValid = await verifyOnSheet(urlTxid, urlVaga);
+
+            if (sheetValid) {
+                const zapLink = await getZapLink();
+                
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('successScreen').style.display = 'block';
+                document.getElementById('displayVaga').textContent = `Sala ${urlVaga}`;
+                document.getElementById('btnZap').href = zapLink;
+            } else {
+                if (currentRetry < MAX_RETRIES) {
+                    setTimeout(checkAndProceed, RETRY_DELAY);
+                } else {
+                    redirectToError();
+                }
+            }
+        }
+
+        // Inicia a verificação ao carregar a página
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(checkAndProceed, 1500);
+        });
+
+        // Impede o usuário de voltar para a tela anterior (segurança)
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
+<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<style>
+    /* Esconde o iframe do Netlify */
+    iframe[id="nl-badge-frame"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .wa-float-btn {
+        position: fixed !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        width: 190px !important;
+        height: 44px !important;
+        background: #25D366 !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
+        transition: all 0.25s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        font-family: 'Inter', -apple-system, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #ffffff !important;
+        letter-spacing: 0.3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        outline: none !important;
+    }
+
+    .wa-float-btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
+        background: #20BD5A !important;
+    }
+
+    .wa-float-btn:active {
+        transform: scale(0.97) !important;
+    }
+
+    .wa-float-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (max-width: 480px) {
+        .wa-float-btn {
+            width: 170px !important;
+            height: 42px !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            font-size: 0.85rem !important;
+        }
+        .wa-float-btn svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+</style>
+
+<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
+   class="wa-float-btn" 
+   id="waFloatBtn"
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    // Remove/esconde o iframe do Netlify
+    (function hideNetlifyBadge() {
+        function removeBadge() {
+            // Tenta esconder pelo ID
+            var iframe = document.getElementById('nl-badge-frame');
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.opacity = '0';
+                iframe.remove(); // Remove completamente do DOM
+            }
+            
+            // Tenta esconder por seletor CSS genérico
+            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
+            badges.forEach(function(badge) {
+                badge.style.display = 'none';
+                badge.remove();
+            });
+        }
+
+        // Executa imediatamente
+        removeBadge();
+
+        // Executa após DOM carregado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', removeBadge);
+        }
+
+        // Executa após página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(removeBadge, 100);
+            setTimeout(removeBadge, 500);
+            setTimeout(removeBadge, 1500);
+        });
+
+        // Usa MutationObserver para detectar quando o iframe for injetado
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'IFRAME' && 
+                            (node.id === 'nl-badge-frame' || 
+                             node.title.indexOf('Netlify') !== -1)) {
+                            node.style.display = 'none';
+                            setTimeout(function() { node.remove(); }, 10);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    })();
+</script>
+<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
+

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificação e Premiação - X SOLO 1 V 47</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e3e6e8;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 28px 20px;
+            background: linear-gradient(145deg, #141414, #0f0f0f);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .header h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .header h1 span { color: #FFD814; }
+
+        .header-sub {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* INTRO */
+        .intro-box {
+            background: rgba(255, 216, 20, 0.08);
+            border: 1px solid rgba(255, 216, 20, 0.3);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .intro-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .intro-text {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .intro-text strong { color: #FFD814; }
+
+        /* COMO FUNCIONA */
+        .how-it-works {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .how-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .how-title-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 216, 20, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .how-list {
+            list-style: none;
+        }
+
+        .how-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .how-list li:last-child { border-bottom: none; }
+
+        .how-check {
+            width: 20px;
+            height: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .how-check svg {
+            width: 12px;
+            height: 12px;
+            stroke: #10b981;
+            stroke-width: 3;
+            fill: none;
+        }
+
+        /* CARDS DE PREMIAÇÃO */
+        .prize-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .prize-card {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-card:hover {
+            transform: translateY(-3px);
+            border-color: #3a3a3a;
+        }
+
+        .prize-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+
+        .prize-card.entry::before { background: #ef4444; }
+        .prize-card.kill::before { background: #10b981; }
+        .prize-card.booyah::before { background: #FFD814; }
+
+        .prize-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .prize-card.entry .prize-icon { background: rgba(239, 68, 68, 0.15); }
+        .prize-card.kill .prize-icon { background: rgba(16, 185, 129, 0.15); }
+        .prize-card.booyah .prize-icon { background: rgba(255, 216, 20, 0.15); }
+
+        .prize-info { flex: 1; min-width: 0; }
+
+        .prize-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .prize-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .prize-desc {
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        .prize-value {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .prize-card.entry .prize-value { color: #ef4444; }
+        .prize-card.kill .prize-value { color: #10b981; }
+        .prize-card.booyah .prize-value { color: #FFD814; }
+
+        /* SIMULADOR DE GANHOS */
+        .simulator {
+            background: linear-gradient(145deg, #141414, #0f0f0f);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .simulator-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .simulator-subtitle {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .scenario {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            transition: all 0.2s;
+        }
+
+        .scenario:hover {
+            border-color: rgba(255, 216, 20, 0.3);
+            background: rgba(255, 216, 20, 0.04);
+        }
+
+        .scenario:last-child { margin-bottom: 0; }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .scenario-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scenario-total {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.1rem;
+            color: #10b981;
+        }
+
+        .scenario-detail {
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        .scenario-detail strong { color: #ccc; }
+
+        .math-formula {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #FFD814;
+            letter-spacing: 0.5px;
+        }
+
+        /* DESTAQUE MÁXIMO */
+        .max-prize {
+            background: linear-gradient(145deg, rgba(255, 216, 20, 0.1), rgba(255, 216, 20, 0.03));
+            border: 1px solid rgba(255, 216, 20, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .max-prize::before {
+            content: '🏆';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            opacity: 0.1;
+        }
+
+        .max-prize-label {
+            font-size: 0.8rem;
+            color: #FFD814;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .max-prize-value {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2.2rem;
+            color: #FFD814;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(255, 216, 20, 0.3);
+        }
+
+        .max-prize-text {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* FOOTER */
+        .footer-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #FFD814;
+            color: #000;
+        }
+
+        .btn-primary:hover { background: #F7CA00; transform: translateY(-2px); }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ccc;
+            border: 1px solid #333;
+        }
+
+        .btn-secondary:hover {
+            border-color: #FFD814;
+            color: #FFD814;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 12px; padding-bottom: 30px; }
+            .header h1 { font-size: 1.25rem; }
+            .prize-card { padding: 16px; }
+            .max-prize-value { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-icon"></div>
+            <h1>CLASSIFICAÇÃO E <span>PREMIAÇÃO</span></h1>
+            <div class="header-sub">Entenda como você pode lucrar jogando</div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="intro-box">
+            <div class="intro-icon">💰</div>
+            <div class="intro-text">
+                No <strong>X SOLO 1 V 47</strong>, você pode ganhar dinheiro de <strong>duas formas simultâneas</strong>: por cada abate que fizer E pela sua posição final. Os valores se acumulam!
+            </div>
+        </div>
+
+        <!-- COMO FUNCIONA -->
+        <div class="how-it-works">
+            <div class="how-title">
+                <div class="how-title-icon">📌</div>
+                Como funciona o sistema
+            </div>
+            <ul class="how-list">
+                <li>
+                    <div class="how-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <span>Você paga <strong style="color:#FFD814;">R$ 7,00</strong> para garantir sua vaga no campeonato.</span>
+                </li>
+                <li>
+                    <div class="how-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <span>Cada <strong style="color:#10b981;">abate</strong> que você fizer vale <strong style="color:#10b981;">R$ 4,00</strong>, independente da sua posição final.</span>
+                </li>
+                <li>
+                    <div class="how-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <span>Se você ficar em <strong style="color:#FFD814;">1º lugar (BOOYAH!)</strong>, ganha <strong style="color:#FFD814;">R$ 15,00</strong> extras.</span>
+                </li>
+                <li>
+                    <div class="how-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <span>Os valores <strong style="color:#FFD814;">se acumulam</strong>: BOOYAH! + Abates = Lucro máximo!</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CARDS DE PREMIAÇÃO -->
+        <div class="prize-grid">
+            <div class="prize-card entry">
+                <div class="prize-icon">🎟️</div>
+                <div class="prize-info">
+                    <div class="prize-label">Investimento</div>
+                    <div class="prize-name">Valor da Inscrição</div>
+                    <div class="prize-desc">Garante sua vaga na partida</div>
+                </div>
+                <div class="prize-value">R$7</div>
+            </div>
+
+            <div class="prize-card kill">
+                <div class="prize-icon">💀</div>
+                <div class="prize-info">
+                    <div class="prize-label">Por Abate</div>
+                    <div class="prize-name">Ganho por Kill</div>
+                    <div class="prize-desc">Cada eliminação confirmada</div>
+                </div>
+                <div class="prize-value">R$4</div>
+            </div>
+
+            <div class="prize-card booyah">
+                <div class="prize-icon">🏆</div>
+                <div class="prize-info">
+                    <div class="prize-label">1º Lugar</div>
+                    <div class="prize-name">BOOYAH!</div>
+                    <div class="prize-desc">Sobreviver até o final</div>
+                </div>
+                <div class="prize-value">R$15</div>
+            </div>
+        </div>
+
+        <!-- DESTAQUE MÁXIMO -->
+        <div class="max-prize">
+            <div class="max-prize-label">💎 Ganho Máximo Possível</div>
+            <div class="max-prize-value">R$ 191,00</div>
+            <div class="max-prize-text">
+                BOOYAH! (R$15) + 44 abates (R$176) = <strong>R$ 191,00</strong><br>
+                <em style="color:#888; font-size:0.8rem;">(Considerando 47 oponentes eliminados)</em>
+            </div>
+        </div>
+
+        <!-- SIMULADOR DE CENÁRIOS -->
+        <div class="simulator">
+            <div class="simulator-title">
+                <span>🎯</span>
+                Exemplos de Ganhos
+            </div>
+            <div class="simulator-subtitle">Veja quanto você pode ganhar em diferentes situações:</div>
+
+            <div class="scenario">
+                <div class="scenario-header">
+                    <div class="scenario-name">
+                        <span></span>
+                        Cenário 1: Sobrevivente
+                    </div>
+                    <div class="scenario-total">R$ 27,00</div>
+                </div>
+                <div class="scenario-detail">
+                    Você fica em <strong>1º lugar</strong> e faz <strong>3 abates</strong>.
+                </div>
+                <div class="math-formula">
+                    R$15 (BOOYAH!) + 3 × R$4 = R$27,00
+                </div>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-header">
+                    <div class="scenario-name">
+                        <span>⚔️</span>
+                        Cenário 2: Matador
+                    </div>
+                    <div class="scenario-total">R$ 35,00</div>
+                </div>
+                <div class="scenario-detail">
+                    Você fica em <strong>1º lugar</strong> e faz <strong>5 abates</strong>.
+                </div>
+                <div class="math-formula">
+                    R$15 (BOOYAH!) + 5 × R$4 = R$35,00
+                </div>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-header">
+                    <div class="scenario-name">
+                        <span>🔥</span>
+                        Cenário 3: Predador
+                    </div>
+                    <div class="scenario-total">R$ 55,00</div>
+                </div>
+                <div class="scenario-detail">
+                    Você fica em <strong>1º lugar</strong> e faz <strong>10 abates</strong>.
+                </div>
+                <div class="math-formula">
+                    R$15 (BOOYAH!) + 10 × R$4 = R$55,00
+                </div>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-header">
+                    <div class="scenario-name">
+                        <span>💀</span>
+                        Cenário 4: Sem BOOYAH!
+                    </div>
+                    <div class="scenario-total">R$ 20,00</div>
+                </div>
+                <div class="scenario-detail">
+                    Você fica em <strong>10º lugar</strong> mas faz <strong>5 abates</strong>.
+                </div>
+                <div class="math-formula">
+                    5 × R$4 = R$20,00 (sem bônus de posição)
+                </div>
+            </div>
+
+            <div class="scenario">
+                <div class="scenario-header">
+                    <div class="scenario-name">
+                        <span>🎯</span>
+                        Cenário 5: Only BOOYAH!
+                    </div>
+                    <div class="scenario-total">R$ 15,00</div>
+                </div>
+                <div class="scenario-detail">
+                    Você fica em <strong>1º lugar</strong> mas <strong>não faz abates</strong>.
+                </div>
+                <div class="math-formula">
+                    R$15 (BOOYAH!) + 0 = R$15,00
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-actions">
+            <a href="index.html" class="btn-action btn-secondary">← Início</a>
+            <a href="index.html" class="btn-action btn-primary">Escolher Minha Sala</a>
+        </div>
+
+        <div class="footer-note">
+            Os pagamentos são processados após a confirmação dos resultados pela organização.<br>
+            Todos os abates devem ser comprovados por vídeo/print quando solicitado.
+        </div>
+    </div>
+
+    <script>
+        // Impedir navegação para trás
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<style>
+    /* Esconde o iframe do Netlify */
+    iframe[id="nl-badge-frame"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .wa-float-btn {
+        position: fixed !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        width: 190px !important;
+        height: 44px !important;
+        background: #25D366 !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
+        transition: all 0.25s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        font-family: 'Inter', -apple-system, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #ffffff !important;
+        letter-spacing: 0.3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        outline: none !important;
+    }
+
+    .wa-float-btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
+        background: #20BD5A !important;
+    }
+
+    .wa-float-btn:active {
+        transform: scale(0.97) !important;
+    }
+
+    .wa-float-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (max-width: 480px) {
+        .wa-float-btn {
+            width: 170px !important;
+            height: 42px !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            font-size: 0.85rem !important;
+        }
+        .wa-float-btn svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+</style>
+
+<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
+   class="wa-float-btn" 
+   id="waFloatBtn"
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    // Remove/esconde o iframe do Netlify
+    (function hideNetlifyBadge() {
+        function removeBadge() {
+            // Tenta esconder pelo ID
+            var iframe = document.getElementById('nl-badge-frame');
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.opacity = '0';
+                iframe.remove(); // Remove completamente do DOM
+            }
+            
+            // Tenta esconder por seletor CSS genérico
+            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
+            badges.forEach(function(badge) {
+                badge.style.display = 'none';
+                badge.remove();
+            });
+        }
+
+        // Executa imediatamente
+        removeBadge();
+
+        // Executa após DOM carregado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', removeBadge);
+        }
+
+        // Executa após página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(removeBadge, 100);
+            setTimeout(removeBadge, 500);
+            setTimeout(removeBadge, 1500);
+        });
+
+        // Usa MutationObserver para detectar quando o iframe for injetado
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'IFRAME' && 
+                            (node.id === 'nl-badge-frame' || 
+                             node.title.indexOf('Netlify') !== -1)) {
+                            node.style.display = 'none';
+                            setTimeout(function() { node.remove(); }, 10);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    })();
+</script>
+<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
+
+
+
+
