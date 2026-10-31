@@ -1360,3 +1360,76 @@
     })();
 </script>
 <!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Tela de Aviso — X SOLO 1 v 47 -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background: #0f0f0f; }
+  .manutencao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 9999;
+  }
+  .caixa {
+    background: #ffffff;
+    color: #1a1a2e;
+    padding: 40px 30px;
+    border-radius: 16px;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  h2 { font-size: 22px; margin-bottom: 20px; color: #25d366; }
+  p { font-size: 16px; line-height: 1.6; margin-bottom: 25px; }
+  .botao-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .botao-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  }
+  .icone-whatsapp { font-size: 22px; }
+</style>
+
+<div class="manutencao">
+  <div class="caixa">
+    <h2>🔧 Estamos em Manutenção</h2>
+    <p>No momento a empresa está em manutenção. Estamos aguardando novos clientes no nosso grupo do WhatsApp oficial.<br><br>Clique no botão abaixo para entrar no grupo. Quando batermos a meta, liberaremos o acesso aos bilhetes para vocês participarem dos diários!</p>
+    <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx" target="_blank" class="botao-whatsapp">
+      <span class="icone-whatsapp">💬</span> Entrar no Grupo do WhatsApp
+    </a>
+  </div>
+</div>
+<!-- Fim — Tela de Manutenção -->
+
