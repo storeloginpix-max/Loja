@@ -3,620 +3,647 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pássaros - X SOLO 1 V 47</title>
+    <title>X SOLO 1 V 47 FREE FIRE</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background-color: #0a0a0a;
-            font-family: 'Inter', sans-serif;
+            background-color: #001a33;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             min-height: 100vh;
-            padding: 20px;
-            color: #e3e6e8;
-            padding-bottom: 40px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* HEADER */
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-            padding: 32px 24px;
-            background: linear-gradient(145deg, #141414, #0f0f0f);
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #FFD814, transparent);
-        }
-
-        .header-icon {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .header-icon svg {
-            width: 48px;
-            height: 48px;
-            stroke: #FFD814;
-        }
-
-        .header h1 {
-            font-family: 'Russo One', sans-serif;
-            font-size: 1.6rem;
-            color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .header h1 span { color: #FFD814; }
-
-        .header-sub {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* INTRO */
-        .intro-box {
-            background: rgba(255, 216, 20, 0.06);
-            border: 1px solid rgba(255, 216, 20, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .intro-icon {
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .intro-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: #FFD814;
-        }
-
-        .intro-text {
-            color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .intro-text strong { color: #FFD814; }
-
-        /* STATS CARDS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: #141414;
-            border: 1px solid #2a2a2a;
-            border-radius: 10px;
-            padding: 20px 16px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: #FFD814;
-            box-shadow: 0 4px 20px rgba(255, 216, 20, 0.05);
-        }
-
-        .stat-icon {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
-
-        .stat-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: #FFD814;
-        }
-
-        .stat-value {
-            font-family: 'Russo One', sans-serif;
-            font-size: 1.6rem;
-            color: #FFD814;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        /* HALL DOS VOADORES */
-        .hall-section {
-            background: #141414;
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .hall-title {
-            font-family: 'Russo One', sans-serif;
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .hall-title svg {
-            width: 22px;
-            height: 22px;
-            stroke: #FFD814;
-        }
-
-        .hall-subtitle {
-            color: #888;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-        }
-
-        .flyer-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            line-height: 1.6;
+            color: #e2e8f0;
         }
 
-        .flyer-card {
+        /* CABEÇALHO FIXO */
+        header {
+            background-color: #000000;
+            padding: 12px 25px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            transition: all 0.2s;
+            gap: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #ffaa00;
         }
 
-        .flyer-card:hover {
-            border-color: rgba(255, 216, 20, 0.3);
-            background: rgba(255, 216, 20, 0.03);
-        }
-
-        .flyer-rank {
-            width: 34px;
-            height: 34px;
-            background: rgba(255, 216, 20, 0.1);
-            border: 1px solid rgba(255, 216, 20, 0.2);
-            border-radius: 50%;
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Russo One', sans-serif;
-            font-size: 0.85rem;
-            color: #FFD814;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 22px;
+            transition: transform 0.3s;
             flex-shrink: 0;
         }
 
-        .flyer-info {
+        .menu-btn:hover { transform: scale(1.1); }
+
+        .menu-btn span {
+            display: block;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #000;
+            line-height: 1.1;
+        }
+
+        h1 .highlight {
+            color: #ffaa00;
+            text-shadow: 2px 2px 0px #000, 0 0 8px rgba(255, 170, 0, 0.6);
+        }
+
+        .cnpj {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        .main-content {
+            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
             flex: 1;
+            width: 100%;
+        }
+
+        /* CARD DO MAPA */
+        .mapa-section {
+            background: linear-gradient(145deg, #0f2942 0%, #0a1f33 100%);
+            border: 1px solid #1e3a5f;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .mapa-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex: 0 0 45%;
             min-width: 0;
         }
 
-        .flyer-name {
-            font-weight: 700;
-            color: #fff;
-            font-size: 0.95rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .mapa-img {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #1e3a5f;
         }
 
-        .flyer-detail {
-            font-size: 0.75rem;
-            color: #888;
-            margin-top: 3px;
+        .mapa-legend {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .flyer-badge {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            flex-shrink: 0;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
-        /* DICAS */
-        .tips-section {
-            background: linear-gradient(145deg, #141414, #0f0f0f);
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
+        .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
+        .legend-dot.green { background-color: #10b981; }
+        .legend-dot.red { background-color: #ef4444; }
+        .legend-dot.blue { background-color: #3b82f6; }
+
+        .mapa-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
         }
 
-        .tips-title {
-            font-family: 'Russo One', sans-serif;
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 20px;
+        .planilha-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 8px;
+            border-bottom: 1px solid #1e3a5f;
+        }
+
+        .planilha-row:last-child { border-bottom: none; }
+
+        .planilha-row .row-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .tips-title svg {
-            width: 22px;
-            height: 22px;
-            stroke: #FFD814;
-        }
-
-        .tip-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .tip-item:last-child { border-bottom: none; }
-
-        .tip-icon {
+        .planilha-row .row-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
             flex-shrink: 0;
-            margin-top: 2px;
         }
 
-        .tip-icon svg {
+        .planilha-row .row-value {
+            color: #fbbf24;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .planilha-row .row-value.gratis {
+            color: #10b981;
+        }
+
+        /* TÍTULO DA SEÇÃO */
+        .secao-titulo {
+            font-family: 'Russo One', sans-serif;
+            color: #f1f5f9;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* BOTÃO WHATSAPP */
+        .whatsapp-btn-container {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            background: linear-gradient(145deg, #25D366, #20BD5A);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-transform: uppercase;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55);
+            background: linear-gradient(145deg, #20BD5A, #1AA851);
+        }
+
+        .whatsapp-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: #ffffff;
+        }
+
+        /* TEXTO EXPLICATIVO */
+        .regras-texto {
+            background: linear-gradient(145deg, #0f2942 0%, #0a1f33 100%);
+            border: 1px solid #1e3a5f;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .regras-texto h3 {
+            font-family: 'Russo One', sans-serif;
+            color: #fbbf24;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .regras-texto p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .regras-texto .destaque {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.7);
+            transition: left 0.4s ease;
+            z-index: 100;
+            padding-top: 70px;
+            border-right: 1px solid #2a2a2a;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover { color: #fbbf24; transform: rotate(90deg); }
+
+        .sidebar ul { list-style: none; margin-top: 10px; }
+
+        .sidebar ul li { border-bottom: 1px solid #1f1f1f; transition: 0.3s; }
+
+        .sidebar ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li:hover { background-color: #1a1a1a; }
+        .sidebar ul li:hover a { color: #fbbf24; padding-left: 35px; }
+
+        .sidebar ul li a svg {
             width: 20px;
             height: 20px;
-            stroke: #FFD814;
-            opacity: 0.9;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            flex-shrink: 0;
         }
 
-        .tip-text {
-            color: #ccc;
-            font-size: 0.85rem;
-            line-height: 1.6;
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 90;
         }
 
-        .tip-text strong { color: #FFD814; }
+        .overlay.active { opacity: 1; visibility: visible; }
 
-        /* FOOTER */
-        .footer-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
+        /* AJUSTES PARA CELULAR - MANTÉM LADO A LADO */
+        @media (max-width: 768px) {
+            .mapa-section {
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .mapa-left {
+                flex: 0 0 40%;
+            }
+
+            .mapa-img {
+                max-width: 130px;
+            }
+
+            .mapa-legend {
+                gap: 8px;
+            }
+
+            .legend-item {
+                font-size: 0.7rem;
+            }
+
+            .legend-dot {
+                width: 7px;
+                height: 7px;
+            }
+
+            .planilha-row {
+                padding: 8px 5px;
+            }
+
+            .planilha-row .row-label {
+                font-size: 0.75rem;
+                gap: 6px;
+            }
+
+            .planilha-row .row-dot {
+                width: 9px;
+                height: 9px;
+            }
+
+            .planilha-row .row-value {
+                font-size: 0.95rem;
+            }
+
+            .secao-titulo {
+                font-size: 0.9rem;
+            }
+
+            .whatsapp-btn {
+                font-size: 0.9rem;
+                padding: 12px 16px;
+            }
+
+            .whatsapp-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .regras-texto {
+                padding: 15px;
+            }
+
+            .regras-texto h3 {
+                font-size: 0.9rem;
+            }
+
+            .regras-texto p {
+                font-size: 0.85rem;
+            }
         }
 
-        .btn-action {
-            flex: 1;
-            padding: 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #FFD814;
-            color: #000;
-        }
-
-        .btn-primary:hover { 
-            background: #F7CA00; 
-            transform: translateY(-2px); 
-            box-shadow: 0 4px 15px rgba(255, 216, 20, 0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #ccc;
-            border: 1px solid #333;
-        }
-
-        .btn-secondary:hover {
-            border-color: #FFD814;
-            color: #FFD814;
-        }
-
-        .footer-note {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 0.8rem;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        /* RESPONSIVIDADE */
         @media (max-width: 480px) {
-            body { padding: 16px; padding-bottom: 32px; }
-            .header { padding: 24px 16px; }
-            .header h1 { font-size: 1.35rem; }
-            .stats-grid { grid-template-columns: 1fr; gap: 12px; }
-            .stat-card { padding: 16px; display: flex; align-items: center; gap: 16px; text-align: left; }
-            .stat-icon { margin-bottom: 0; }
-            .stat-info { flex: 1; }
-            .stat-value { font-size: 1.4rem; margin-bottom: 2px; }
-            .hall-section, .tips-section { padding: 20px 16px; }
-        }
+            .mapa-section {
+                padding: 12px;
+                gap: 8px;
+            }
 
-        @media (min-width: 768px) {
-            .container { max-width: 800px; }
-            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+            .mapa-left {
+                flex: 0 0 38%;
+            }
+
+            .mapa-img {
+                max-width: 110px;
+            }
+
+            .mapa-legend {
+                gap: 6px;
+            }
+
+            .legend-item {
+                font-size: 0.65rem;
+            }
+
+            .legend-dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .planilha-row {
+                padding: 6px 4px;
+            }
+
+            .planilha-row .row-label {
+                font-size: 0.7rem;
+                gap: 5px;
+            }
+
+            .planilha-row .row-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .planilha-row .row-value {
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .cnpj {
+                font-size: 0.7rem;
+            }
+
+            .secao-titulo {
+                font-size: 0.8rem;
+            }
+
+            .whatsapp-btn {
+                font-size: 0.85rem;
+                padding: 11px 14px;
+            }
+
+            .regras-texto p {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="header-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            </div>
-            <h1>HALL DOS <span>PÁSSAROS</span></h1>
-            <div class="header-sub">Os jogadores que "voaram" durante as partidas</div>
+    <header id="mainHeader">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header-info">
+            <h1>X SOLO <span class="highlight">1</span> V 47 FREE FIRE</h1>
+            <p class="cnpj">CNPJ: 69.813.815/0001-96</p>
         </div>
+    </header>
 
-        <!-- INTRO -->
-        <div class="intro-box">
-            <div class="intro-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            </div>
-            <div class="intro-text">
-                Aqui estão registrados os jogadores que <strong>"voaram"</strong> (foram eliminados) durante o campeonato. 
-                No Free Fire, quem não sobrevive... <strong>voa!</strong> Será que você vai aparecer aqui?
-            </div>
-        </div>
-
-        <!-- ESTATÍSTICAS -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-value" id="totalVoos">0</div>
-                    <div class="stat-label">Total de "Voos"</div>
+    <main class="main-content">
+        <!-- PRIMEIRA SEÇÃO - MODALIDADE 1 -->
+        <div class="secao-titulo">Modalidade 1</div>
+        <div class="mapa-section">
+            <div class="mapa-left">
+                <img src="mp.webp" alt="Mapa Free Fire" class="mapa-img">
+                <div class="mapa-legend">
+                    <div class="legend-item"><span class="legend-dot green"></span>Abate</div>
+                    <div class="legend-item"><span class="legend-dot red"></span>Inscrição</div>
+                    <div class="legend-item"><span class="legend-dot blue"></span>BOOYAH!</div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <div class="mapa-right">
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #ef4444;"></span>Valor Pago</span>
+                    <span class="row-value gratis">GRÁTIS</span>
                 </div>
-                <div class="stat-info">
-                    <div class="stat-value" id="totalPartidas">0</div>
-                    <div class="stat-label">Partidas Realizadas</div>
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #10b981;"></span>Ganho por Abate</span>
+                    <span class="row-value">R$ 0,10</span>
                 </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-value" id="totalAbates">0</div>
-                    <div class="stat-label">Total de Abates</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-value" id="taxaSobrev">0%</div>
-                    <div class="stat-label">Taxa de Sobrevivência</div>
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #3b82f6;"></span>Ganho por BOOYAH!</span>
+                    <span class="row-value">R$ 1,00</span>
                 </div>
             </div>
         </div>
 
-        <!-- HALL DOS VOADORES -->
-        <div class="hall-section">
-            <div class="hall-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
-                Últimos a "Voar"
-            </div>
-            <div class="hall-subtitle">Jogadores eliminados nas últimas partidas</div>
-
-            <div class="flyer-list" id="flyerList">
-                <!-- Preenchido via JavaScript -->
-            </div>
-        </div>
-
-        <!-- DICAS PARA NÃO VOAR -->
-        <div class="tips-section">
-            <div class="tips-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path></svg>
-                Dicas para Não "Voar"
-            </div>
-
-            <div class="tip-item">
-                <div class="tip-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </div>
-                <div class="tip-text">
-                    <strong>Posicionamento é tudo:</strong> Fique sempre em áreas com cobertura e evite campos abertos sem proteção.
+        <!-- SEGUNDA SEÇÃO - MODALIDADE 2 -->
+        <div class="secao-titulo">Modalidade 2</div>
+        <div class="mapa-section">
+            <div class="mapa-left">
+                <img src="mp.webp" alt="Mapa Free Fire" class="mapa-img">
+                <div class="mapa-legend">
+                    <div class="legend-item"><span class="legend-dot green"></span>Abate</div>
+                    <div class="legend-item"><span class="legend-dot red"></span>Inscrição</div>
+                    <div class="legend-item"><span class="legend-dot blue"></span>BOOYAH!</div>
                 </div>
             </div>
-
-            <div class="tip-item">
-                <div class="tip-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <div class="mapa-right">
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #ef4444;"></span>Valor Pago</span>
+                    <span class="row-value gratis">GRÁTIS</span>
                 </div>
-                <div class="tip-text">
-                    <strong>Gerencie seus recursos:</strong> Não gaste toda a munição no primeiro inimigo. Guarde para o final da zona.
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #10b981;"></span>Ganho por Abate</span>
+                    <span class="row-value">R$ 0,00</span>
                 </div>
-            </div>
-
-            <div class="tip-item">
-                <div class="tip-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
-                </div>
-                <div class="tip-text">
-                    <strong>Use o som a seu favor:</strong> Fones de ouvido são essenciais para ouvir passos e tiros à distância.
-                </div>
-            </div>
-
-            <div class="tip-item">
-                <div class="tip-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h10"></path><path d="M9 4v16"></path><path d="M3 9l3 3-3 3"></path><path d="M14 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-2"></path></svg>
-                </div>
-                <div class="tip-text">
-                    <strong>Não seja ganancioso:</strong> Às vezes é melhor recuar e sobreviver do que arriscar tudo por um abate.
-                </div>
-            </div>
-
-            <div class="tip-item">
-                <div class="tip-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                </div>
-                <div class="tip-text">
-                    <strong>Conheça o mapa:</strong> Memorize os melhores loot spots e rotas de fuga para cada zona.
+                <div class="planilha-row">
+                    <span class="row-label"><span class="row-dot" style="background-color: #3b82f6;"></span>Ganho por BOOYAH!</span>
+                    <span class="row-value">R$ 2,00</span>
                 </div>
             </div>
         </div>
 
-        <!-- FOOTER -->
-        <div class="footer-actions">
-            <a href="index.html" class="btn-action btn-secondary">← Início</a>
-            <a href="index.html" class="btn-action btn-primary">Escolher Minha Sala</a>
+        <!-- BOTÃO WHATSAPP -->
+        <div class="whatsapp-btn-container">
+            <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" 
+               class="whatsapp-btn" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                Entrar no Grupo do WhatsApp
+            </a>
         </div>
 
-        <div class="footer-note">
-            Quer evitar aparecer aqui? Jogue com estratégia e sobreviva até o final!<br>
-            Lembre-se: cada abate vale R$ 4,00 mesmo se você "voar".
+        <!-- TEXTO EXPLICATIVO -->
+        <div class="regras-texto">
+            <h3> REGRAS PARA PARTICIPAR</h3>
+            <p>
+                Para entrar no campeonato <span class="destaque">GRÁTIS</span>, é obrigatório estar no grupo do WhatsApp. 
+                A sala será anunciada no grupo para todos os participantes. 
+                Fique atento às mensagens para não perder o horário da partida!
+            </p>
         </div>
-    </div>
+    </main>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleMenu()" aria-label="Fechar menu">×</button>
+        </div>
+        <ul>
+            <li><a href="index.html"><svg viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Início</a></li>
+            <li><a href="lista.html"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>Inscrições</a></li>
+            <li><a href="classificacao.html"><svg viewBox="0 0 24 24"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>Classificação</a></li>
+            <li><a href="calendario.html"><svg viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Calendário</a></li>
+            <li><a href="regras.html"><svg viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Regras</a></li>
+            <li><a href="contato.html"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>Contato</a></li>
+            <li><a href="passaros.html"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>grátis</a></li>
+            <li><a href="4v4off.html"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>postagem</a></li>
+        </ul>
+    </aside>
 
     <script>
-        // ==========================================
-        // CONFIGURAÇÕES DO CAMPEONATO
-        // ==========================================
-        const ESTATISTICAS = {
-            totalVoos: 48,
-            totalPartidas: 3000,
-            totalAbates: 4737,
-            taxaSobrevivencia: 87
-        };
-
-        // Lista completa dos 48 jogadores eliminados
-        const voadores = [
-            { nome: 'Jogador_Alpha', sala: '12', posicao: '38º', abates: 2 },
-            { nome: 'Sniper_BR', sala: '07', posicao: '41º', abates: 1 },
-            { nome: 'Rushador_FF', sala: '23', posicao: '35º', abates: 3 },
-            { nome: 'Campeao_2026', sala: '15', posicao: '44º', abates: 0 },
-            { nome: 'NoobMaster', sala: '31', posicao: '47º', abates: 1 },
-            { nome: 'HeadShot_King', sala: '04', posicao: '29º', abates: 4 },
-            { nome: 'Tropa_do_Caos', sala: '18', posicao: '33º', abates: 2 },
-            { nome: 'Silent_Killer', sala: '22', posicao: '40º', abates: 1 },
-            { nome: 'Berserker_FF', sala: '09', posicao: '36º', abates: 3 },
-            { nome: 'Ghost_Rider', sala: '27', posicao: '42º', abates: 0 },
-            { nome: 'Viper_Sniper', sala: '11', posicao: '31º', abates: 2 },
-            { nome: 'Thunder_Bolt', sala: '05', posicao: '39º', abates: 1 },
-            { nome: 'Dark_Phantom', sala: '33', posicao: '45º', abates: 2 },
-            { nome: 'Fire_Storm', sala: '14', posicao: '34º', abates: 3 },
-            { nome: 'Ice_Cold', sala: '28', posicao: '43º', abates: 1 },
-            { nome: 'Shadow_Hunter', sala: '02', posicao: '30º', abates: 2 },
-            { nome: 'Rapid_Fire', sala: '19', posicao: '37º', abates: 1 },
-            { nome: 'Night_Wolf', sala: '25', posicao: '46º', abates: 0 },
-            { nome: 'Blaze_Master', sala: '08', posicao: '32º', abates: 3 },
-            { nome: 'Storm_Breaker', sala: '16', posicao: '41º', abates: 2 },
-            { nome: 'Death_Dealer', sala: '21', posicao: '38º', abates: 1 },
-            { nome: 'Phoenix_Rise', sala: '03', posicao: '28º', abates: 4 },
-            { nome: 'War_Machine', sala: '30', posicao: '44º', abates: 0 },
-            { nome: 'Bullet_Proof', sala: '13', posicao: '35º', abates: 2 },
-            { nome: 'Steel_Nerve', sala: '26', posicao: '42º', abates: 1 },
-            { nome: 'Crimson_Fang', sala: '06', posicao: '33º', abates: 3 },
-            { nome: 'Silver_Arrow', sala: '20', posicao: '39º', abates: 1 },
-            { nome: 'Golden_Eagle', sala: '10', posicao: '31º', abates: 2 },
-            { nome: 'Black_Mamba', sala: '29', posicao: '45º', abates: 0 },
-            { nome: 'Red_Dragon', sala: '17', posicao: '36º', abates: 2 },
-            { nome: 'Blue_Shark', sala: '24', posicao: '40º', abates: 1 },
-            { nome: 'Green_Viper', sala: '01', posicao: '27º', abates: 3 },
-            { nome: 'White_Tiger', sala: '32', posicao: '43º', abates: 1 },
-            { nome: 'Purple_Rain', sala: '15', posicao: '37º', abates: 2 },
-            { nome: 'Orange_Fury', sala: '23', posicao: '41º', abates: 0 },
-            { nome: 'Yellow_Flash', sala: '11', posicao: '34º', abates: 3 },
-            { nome: 'Pink_Panther', sala: '27', posicao: '46º', abates: 1 },
-            { nome: 'Cyan_Storm', sala: '04', posicao: '30º', abates: 2 },
-            { nome: 'Magenta_Bolt', sala: '18', posicao: '38º', abates: 1 },
-            { nome: 'Lime_Light', sala: '34', posicao: '44º', abates: 2 },
-            { nome: 'Coral_Reef', sala: '07', posicao: '32º', abates: 3 },
-            { nome: 'Indigo_Knight', sala: '22', posicao: '40º', abates: 1 },
-            { nome: 'Scarlet_Witch', sala: '12', posicao: '35º', abates: 2 },
-            { nome: 'Turbo_Max', sala: '28', posicao: '42º', abates: 0 },
-            { nome: 'Nitro_Boost', sala: '09', posicao: '33º', abates: 2 },
-            { nome: 'Mega_Power', sala: '25', posicao: '45º', abates: 1 },
-            { nome: 'Ultra_Force', sala: '14', posicao: '37º', abates: 3 },
-            { nome: 'Super_Nova', sala: '31', posicao: '47º', abates: 1 }
-        ];
-
-        // Aplicar estatísticas
-        function atualizarEstatisticas() {
-            document.getElementById('totalVoos').textContent = ESTATISTICAS.totalVoos;
-            document.getElementById('totalPartidas').textContent = ESTATISTICAS.totalPartidas.toLocaleString('pt-BR');
-            document.getElementById('totalAbates').textContent = ESTATISTICAS.totalAbates.toLocaleString('pt-BR');
-            document.getElementById('taxaSobrev').textContent = ESTATISTICAS.taxaSobrevivencia + '%';
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
         }
 
-        // Renderizar lista de voadores
-        function renderizarVoadores() {
-            const container = document.getElementById('flyerList');
-            
-            let html = '';
-            voadores.forEach((voador, index) => {
-                html += `
-                    <div class="flyer-card">
-                        <div class="flyer-rank">${index + 1}</div>
-                        <div class="flyer-info">
-                            <div class="flyer-name">${voador.nome}</div>
-                            <div class="flyer-detail">Sala ${voador.sala} • ${voador.posicao} lugar • ${voador.abates} abate(s)</div>
-                        </div>
-                        <div class="flyer-badge">ELIMINADO</div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
+        function ajustarPosicoes() {
+            const header = document.getElementById('mainHeader');
+            const headerHeight = header.offsetHeight;
+            document.body.style.paddingTop = headerHeight + 'px';
         }
 
-        // Inicialização
-        window.addEventListener('DOMContentLoaded', () => {
-            atualizarEstatisticas();
-            renderizarVoadores();
-        });
+        ajustarPosicoes();
+        window.addEventListener('resize', ajustarPosicoes);
     </script>
 </body>
 </html>

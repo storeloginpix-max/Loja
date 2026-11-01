@@ -6,6 +6,9 @@
     <title>Regras do Campeonato - X SOLO 1 V 47</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Ícones Profissionais (Phosphor Icons) -->
+    <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,18 +22,18 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
         }
 
         /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 24px;
-            padding: 28px 20px;
+            margin-bottom: 28px;
+            padding: 32px 20px;
             background: linear-gradient(145deg, #141414, #0f0f0f);
             border: 1px solid #2a2a2a;
-            border-radius: 12px;
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
         }
@@ -43,148 +46,159 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, transparent, #FFD814, transparent);
+            box-shadow: 0 0 15px rgba(255, 216, 20, 0.5);
         }
 
         .header-icon {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
+            font-size: 3rem;
+            color: #FFD814;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 8px rgba(255, 216, 20, 0.4));
         }
 
         .header h1 {
             font-family: 'Russo One', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: #fff;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
         .header h1 span { color: #FFD814; }
 
         .header-sub {
             color: #888;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         /* INTRO */
         .intro-box {
-            background: rgba(255, 216, 20, 0.08);
-            border: 1px solid rgba(255, 216, 20, 0.3);
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+            background: rgba(255, 216, 20, 0.05);
+            border: 1px solid rgba(255, 216, 20, 0.2);
+            border-left: 4px solid #FFD814;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 16px;
         }
 
         .intro-icon {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            color: #FFD814;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .intro-text {
             color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .intro-text strong { color: #FFD814; }
+        .intro-text strong { color: #FFD814; font-weight: 700; }
 
         /* SEÇÕES DE REGRAS */
         .rule-section {
             background: #141414;
             border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            border-radius: 16px;
+            margin-bottom: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .rule-section:hover {
             border-color: #3a3a3a;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .section-header {
-            padding: 16px 20px;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             border-bottom: 1px solid #2a2a2a;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .section-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
         }
 
         .section-title {
             font-family: 'Russo One', sans-serif;
-            font-size: 1rem;
-            color: #fff;
+            font-size: 1.05rem;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .section-count {
             margin-left: auto;
-            background: rgba(255, 255, 255, 0.1);
-            color: #ccc;
+            background: rgba(255, 255, 255, 0.08);
+            color: #aaa;
             font-size: 0.75rem;
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
         }
 
-        /* Cores temáticas por seção */
-        .section-characters .section-icon { background: rgba(168, 85, 247, 0.2); }
+        /* Cores temáticas por seção com Glow */
+        .section-characters .section-icon { background: rgba(168, 85, 247, 0.15); color: #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.1); }
         .section-characters .section-title { color: #a855f7; }
         
-        .section-vehicles .section-icon { background: rgba(249, 115, 22, 0.2); }
+        .section-vehicles .section-icon { background: rgba(249, 115, 22, 0.15); color: #f97316; box-shadow: 0 0 15px rgba(249, 115, 22, 0.1); }
         .section-vehicles .section-title { color: #f97316; }
         
-        .section-snipers .section-icon { background: rgba(239, 68, 68, 0.2); }
+        .section-snipers .section-icon { background: rgba(239, 68, 68, 0.15); color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.1); }
         .section-snipers .section-title { color: #ef4444; }
         
-        .section-explosives .section-icon { background: rgba(234, 179, 8, 0.2); }
+        .section-explosives .section-icon { background: rgba(234, 179, 8, 0.15); color: #eab308; box-shadow: 0 0 15px rgba(234, 179, 8, 0.1); }
         .section-explosives .section-title { color: #eab308; }
         
-        .section-smg .section-icon { background: rgba(59, 130, 246, 0.2); }
+        .section-smg .section-icon { background: rgba(59, 130, 246, 0.15); color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); }
         .section-smg .section-title { color: #3b82f6; }
         
-        .section-heal .section-icon { background: rgba(16, 185, 129, 0.2); }
+        .section-heal .section-icon { background: rgba(16, 185, 129, 0.15); color: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.1); }
         .section-heal .section-title { color: #10b981; }
         
-        .section-punishment .section-icon { background: rgba(239, 68, 68, 0.2); }
+        .section-punishment .section-icon { background: rgba(239, 68, 68, 0.15); color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.1); }
         .section-punishment .section-title { color: #ef4444; }
 
         /* LISTA DE ITENS */
         .rule-list {
-            padding: 8px 20px 16px;
+            padding: 12px 24px 20px;
         }
 
         .rule-item {
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
-            gap: 12px;
+            gap: 14px;
             align-items: flex-start;
         }
 
         .rule-item:last-child { border-bottom: none; }
 
         .rule-bullet {
-            width: 6px;
-            height: 6px;
-            background: #FFD814;
-            border-radius: 50%;
-            margin-top: 8px;
+            width: 20px;
+            height: 20px;
+            color: #FFD814;
             flex-shrink: 0;
+            margin-top: 2px;
+            opacity: 0.8;
         }
 
         .rule-content { flex: 1; }
@@ -192,68 +206,84 @@
         .rule-name {
             font-weight: 700;
             color: #fff;
-            font-size: 0.95rem;
-            margin-bottom: 3px;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
         }
 
         .rule-desc {
             color: #888;
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         /* AVISO ESPECIAL */
         .special-warning {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-left: 4px solid #ef4444;
-            border-radius: 8px;
-            padding: 12px 16px;
-            margin-top: 12px;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 0 24px 20px;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 14px;
         }
 
         .special-warning-icon {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            color: #ef4444;
             flex-shrink: 0;
+            margin-top: 1px;
         }
 
         .special-warning-text {
-            color: #ff6b6b;
-            font-size: 0.85rem;
+            color: #fca5a5;
+            font-size: 0.9rem;
             font-weight: 600;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .special-warning-text strong {
+            color: #ef4444;
+            font-weight: 800;
         }
 
         /* PUNIÇÕES */
         .punishment-list {
-            padding: 16px 20px 20px;
+            padding: 20px 24px 24px;
         }
 
         .punishment-item {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 12px 16px;
-            background: rgba(239, 68, 68, 0.06);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            border-radius: 8px;
-            margin-bottom: 10px;
+            gap: 14px;
+            padding: 16px;
+            background: rgba(239, 68, 68, 0.04);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .punishment-item:hover {
+            background: rgba(239, 68, 68, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
         }
 
         .punishment-item:last-child { margin-bottom: 0; }
 
         .punishment-icon {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            color: #ef4444;
             flex-shrink: 0;
+            margin-top: 1px;
         }
 
         .punishment-text {
             color: #ccc;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         .punishment-text strong {
@@ -264,29 +294,38 @@
         /* FOOTER */
         .footer-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 24px;
+            gap: 12px;
+            margin-top: 32px;
         }
 
         .btn-action {
             flex: 1;
-            padding: 14px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 10px;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-decoration: none;
             text-align: center;
             transition: all 0.2s;
             border: none;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary {
             background: #FFD814;
             color: #000;
+            box-shadow: 0 4px 15px rgba(255, 216, 20, 0.2);
         }
 
-        .btn-primary:hover { background: #F7CA00; transform: translateY(-2px); }
+        .btn-primary:hover { 
+            background: #F7CA00; 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(255, 216, 20, 0.3);
+        }
 
         .btn-secondary {
             background: transparent;
@@ -297,22 +336,25 @@
         .btn-secondary:hover {
             border-color: #FFD814;
             color: #FFD814;
+            background: rgba(255, 216, 20, 0.05);
         }
 
         .footer-note {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
+            margin-top: 24px;
+            font-size: 0.85rem;
             color: #555;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         @media (max-width: 480px) {
             body { padding: 12px; padding-bottom: 30px; }
-            .header h1 { font-size: 1.25rem; }
-            .section-header { padding: 14px 16px; }
-            .rule-list { padding: 8px 16px 14px; }
-            .punishment-list { padding: 14px 16px 18px; }
+            .header h1 { font-size: 1.3rem; }
+            .section-header { padding: 16px; }
+            .rule-list { padding: 12px 16px 16px; }
+            .punishment-list { padding: 16px; }
+            .special-warning { margin: 0 16px 16px; padding: 14px 16px; }
+            .footer-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -321,14 +363,14 @@
     <div class="container">
         <!-- HEADER -->
         <div class="header">
-            <div class="header-icon">📋</div>
+            <i class="ph ph-scroll header-icon"></i>
             <h1>REGULAMENTO <span>X SOLO 1 V 47</span></h1>
             <div class="header-sub">Leia com atenção antes de se inscrever</div>
         </div>
 
         <!-- INTRO -->
         <div class="intro-box">
-            <div class="intro-icon">⚠️</div>
+            <i class="ph ph-warning-circle intro-icon"></i>
             <div class="intro-text">
                 O descumprimento de qualquer regra abaixo resultará em <strong>penalizações automáticas</strong>, incluindo W.O. (Derrota) e possível <strong>banimento do campeonato</strong>. A organização tem a palavra final em todas as decisões.
             </div>
@@ -337,48 +379,48 @@
         <!-- PERSONAGENS PROIBIDOS -->
         <div class="rule-section section-characters">
             <div class="section-header">
-                <div class="section-icon">🚫</div>
-                <div class="section-title">PERSONAGENS PROIBIDOS</div>
+                <i class="ph ph-user-minus section-icon"></i>
+                <div class="section-title">Personagens Proibidos</div>
                 <div class="section-count">6 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Sônia</div>
                         <div class="rule-desc">Proibida por sua habilidade passiva que concede um escudo de proteção temporário e sobrevida após receber dano letal, alterando o resultado imediato das trocas de tiro.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Orion</div>
                         <div class="rule-desc">Banido devido ao seu escudo de energia esférico que o torna temporariamente imune a qualquer tipo de dano enquanto suga a vida de oponentes próximos.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Ryden</div>
                         <div class="rule-desc">Proibido pelo uso do robô-aranha que rastreia, reduz a velocidade e causa dano contínuo aos adversários de forma automática.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Íris</div>
                         <div class="rule-desc">Banida porque sua habilidade permite marcar e atravessar paredes de gelo com tiros, anulando a principal mecânica de defesa do jogo.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">A124</div>
                         <div class="rule-desc">Constantemente proibida por sua capacidade de desativar temporariamente as habilidades ativas e interromper a contagem de recarga dos inimigos.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Misha</div>
                         <div class="rule-desc">Banida com frequência em formatos de mapa aberto devido ao bônus extremo de velocidade de condução e à redução drástica de dano sofrido dentro de veículos.</div>
@@ -390,46 +432,44 @@
         <!-- VEÍCULOS PROIBIDOS -->
         <div class="rule-section section-vehicles">
             <div class="section-header">
-                <div class="section-icon">🚗</div>
-                <div class="section-title">VEÍCULOS / LOCOMOÇÃO PROIBIDA</div>
-                <div class="section-count">5 itens</div>
+                <i class="ph ph-car-profile section-icon"></i>
+                <div class="section-title">Veículos / Locomoção</div>
+                <div class="section-count">4 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Carro comum</div>
                         <div class="rule-desc">Totalmente proibido durante a partida.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Carro Monstro</div>
                         <div class="rule-desc">Totalmente proibido durante a partida.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Cavalo / Montaria</div>
                         <div class="rule-desc">Totalmente proibido durante a partida.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Qualquer veículo motorizado</div>
                         <div class="rule-desc">Totalmente proibido durante a partida.</div>
                     </div>
                 </div>
             </div>
-            <div class="punishment-list" style="padding-top: 0;">
-                <div class="special-warning">
-                    <div class="special-warning-icon">⚠️</div>
-                    <div class="special-warning-text">
-                        PUNIÇÃO: Se for pego usando, ou usar para causar dano/atropelar → <strong>W.O. (Derrota automática)</strong> com vídeo/provas.
-                    </div>
+            <div class="special-warning">
+                <i class="ph ph-warning-diamond special-warning-icon"></i>
+                <div class="special-warning-text">
+                    PUNIÇÃO: Se for pego usando, ou usar para causar dano/atropelar → <strong>W.O. (Derrota automática)</strong> com vídeo/provas.
                 </div>
             </div>
         </div>
@@ -437,69 +477,69 @@
         <!-- SNIPERS PROIBIDOS -->
         <div class="rule-section section-snipers">
             <div class="section-header">
-                <div class="section-icon">🎯</div>
-                <div class="section-title">SNIPERS / RIFLES DE PRECISÃO</div>
+                <i class="ph ph-crosshair section-icon"></i>
+                <div class="section-title">Snipers / Rifles de Precisão</div>
                 <div class="section-count">9 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">AWM</div>
                         <div class="rule-desc">Dano altíssimo, eliminação instantânea.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">M82B / Barrett</div>
                         <div class="rule-desc">Penetra Parede de Gel, dano massivo.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">AC80</div>
                         <div class="rule-desc">Dano alto + precisão desequilibrada.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Carapina</div>
                         <div class="rule-desc">Dano elevado sem recuo significativo.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">SVD</div>
                         <div class="rule-desc">Fuzil de atirador com dano e cadência injustos.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">SKS</div>
                         <div class="rule-desc">Fuzil de atirador de longo alcance.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Kar98k</div>
                         <div class="rule-desc">Sniper de um só tiro.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">M24</div>
                         <div class="rule-desc">Sniper de alta mobilidade.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">VSK94</div>
                         <div class="rule-desc">Sniper silencioso, difícil de detectar.</div>
@@ -511,30 +551,30 @@
         <!-- ARMAS EXPLOSIVAS -->
         <div class="rule-section section-explosives">
             <div class="section-header">
-                <div class="section-icon">💥</div>
-                <div class="section-title">ARMAS EXPLOSIVAS E LANÇADORES</div>
+                <i class="ph ph-bomb section-icon"></i>
+                <div class="section-title">Armamentos Explosivos</div>
                 <div class="section-count">3 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
-                        <div class="rule-name">M79 (Lança-granadas / "Lança")</div>
+                        <div class="rule-name">M79 (Lança-granadas)</div>
                         <div class="rule-desc">Dano em área, impossível de se esquivar.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
-                        <div class="rule-name">MGL140 (Lança-granadas múltiplo)</div>
-                        <div class="rule-desc">Explosão repetida injusta.</div>
+                        <div class="rule-name">MGL140</div>
+                        <div class="rule-desc">Lança-granadas múltiplo, explosão repetida injusta.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
-                        <div class="rule-name">RGS50 (Lançador de mísseis)</div>
-                        <div class="rule-desc">Dano absurdo em área.</div>
+                        <div class="rule-name">RGS50</div>
+                        <div class="rule-desc">Lançador de mísseis, dano absurdo em área.</div>
                     </div>
                 </div>
             </div>
@@ -543,41 +583,41 @@
         <!-- ESCOPETAS E SMGs -->
         <div class="rule-section section-smg">
             <div class="section-header">
-                <div class="section-icon">🔫</div>
-                <div class="section-title">ESCOPETAS E SUBMETRALHADORAS</div>
+                <i class="ph ph-gun section-icon"></i>
+                <div class="section-title">Escopetas e Submetralhadoras</div>
                 <div class="section-count">5 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Trogon</div>
                         <div class="rule-desc">Possui modo escopeta e lançador integrado.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Carga Extra</div>
                         <div class="rule-desc">Dano massivo acumulado.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Duas Vectors</div>
                         <div class="rule-desc">Uso de Vector com as duas mãos / modo Atchim proibido.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">MAG-7</div>
                         <div class="rule-desc">Cadência e precisão elevadas, restrita em X1 e torneios solos.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">M590</div>
                         <div class="rule-desc">Equilibrada demais para curta distância, restrita em torneios fechados.</div>
@@ -589,27 +629,27 @@
         <!-- ARMAS DE TRATAMENTO -->
         <div class="rule-section section-heal">
             <div class="section-header">
-                <div class="section-icon">🩹</div>
-                <div class="section-title">ARMAS DE TRATAMENTO E SUPORTE</div>
+                <i class="ph ph-first-aid section-icon"></i>
+                <div class="section-title">Tratamento e Suporte</div>
                 <div class="section-count">3 itens</div>
             </div>
             <div class="rule-list">
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
-                        <div class="rule-name">Arma de Tratamento (Pistola de Cura)</div>
-                        <div class="rule-desc">Cura aliados em combate.</div>
+                        <div class="rule-name">Arma de Tratamento</div>
+                        <div class="rule-desc">Pistola de Cura: cura aliados em combate.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
-                        <div class="rule-name">Atirador de Tratamento (Sniper de Cura)</div>
-                        <div class="rule-desc">Cura a longa distância sem risco.</div>
+                        <div class="rule-name">Atirador de Tratamento</div>
+                        <div class="rule-desc">Sniper de Cura: cura a longa distância sem risco.</div>
                     </div>
                 </div>
                 <div class="rule-item">
-                    <div class="rule-bullet"></div>
+                    <i class="ph ph-caret-right rule-bullet"></i>
                     <div class="rule-content">
                         <div class="rule-name">Arma de Escudo</div>
                         <div class="rule-desc">Proteção extra enquanto atira.</div>
@@ -621,24 +661,24 @@
         <!-- PUNIÇÕES GERAIS -->
         <div class="rule-section section-punishment">
             <div class="section-header">
-                <div class="section-icon">⚖️</div>
-                <div class="section-title">PUNIÇÕES GERAIS</div>
+                <i class="ph ph-gavel section-icon"></i>
+                <div class="section-title">Punições Gerais</div>
             </div>
             <div class="punishment-list">
                 <div class="punishment-item">
-                    <div class="punishment-icon">🚫</div>
+                    <i class="ph ph-x-circle punishment-icon"></i>
                     <div class="punishment-text">
                         Usar <strong>personagem proibido</strong> → <strong>W.O. automático</strong>
                     </div>
                 </div>
                 <div class="punishment-item">
-                    <div class="punishment-icon">🔫</div>
+                    <i class="ph ph-warning punishment-icon"></i>
                     <div class="punishment-text">
                         Usar <strong>arma proibida</strong> → Aviso na primeira vez, <strong>W.O. na reincidência</strong>
                     </div>
                 </div>
                 <div class="punishment-item">
-                    <div class="punishment-icon">🚗</div>
+                    <i class="ph ph-car-profile punishment-icon"></i>
                     <div class="punishment-text">
                         Usar <strong>veículo</strong> → <strong>W.O. imediato</strong> com vídeo/provas
                     </div>
@@ -648,8 +688,12 @@
 
         <!-- FOOTER -->
         <div class="footer-actions">
-            <a href="index.html" class="btn-action btn-secondary">← Início</a>
-            <a href="index.html" class="btn-action btn-primary">Escolher Minha Sala</a>
+            <a href="index.html" class="btn-action btn-secondary">
+                <i class="ph ph-arrow-left"></i> Início
+            </a>
+            <a href="index.html" class="btn-action btn-primary">
+                Escolher Minha Sala <i class="ph ph-arrow-right"></i>
+            </a>
         </div>
 
         <div class="footer-note">
@@ -661,13 +705,8 @@
 </body>
 </html>
 
-
-
-
-
 <!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
 <style>
-    /* Esconde o iframe do Netlify */
     iframe[id="nl-badge-frame"] {
         display: none !important;
         visibility: hidden !important;
@@ -748,42 +787,30 @@
 </a>
 
 <script>
-    // Remove/esconde o iframe do Netlify
     (function hideNetlifyBadge() {
         function removeBadge() {
-            // Tenta esconder pelo ID
             var iframe = document.getElementById('nl-badge-frame');
             if (iframe) {
                 iframe.style.display = 'none';
                 iframe.style.visibility = 'hidden';
                 iframe.style.opacity = '0';
-                iframe.remove(); // Remove completamente do DOM
+                iframe.remove();
             }
-            
-            // Tenta esconder por seletor CSS genérico
             var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
             badges.forEach(function(badge) {
                 badge.style.display = 'none';
                 badge.remove();
             });
         }
-
-        // Executa imediatamente
         removeBadge();
-
-        // Executa após DOM carregado
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', removeBadge);
         }
-
-        // Executa após página carregar completamente
         window.addEventListener('load', function() {
             setTimeout(removeBadge, 100);
             setTimeout(removeBadge, 500);
             setTimeout(removeBadge, 1500);
         });
-
-        // Usa MutationObserver para detectar quando o iframe for injetado
         if (window.MutationObserver) {
             var observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
@@ -797,7 +824,6 @@
                     });
                 });
             });
-
             observer.observe(document.body || document.documentElement, {
                 childList: true,
                 subtree: true
@@ -805,4 +831,3 @@
         }
     })();
 </script>
-<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->

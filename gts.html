@@ -64,7 +64,7 @@
             color: #ccc;
             display: none;
             line-height: 1.5;
-            white-space: pre-line; /* Permite quebra de linha na mensagem */
+            white-space: pre-line;
         }
 
         .status-message.error {
@@ -107,7 +107,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* MENSAGEM FLUTUANTE DE FRAUDE */
         .fraud-toast {
             position: fixed;
             top: 20px;
@@ -141,7 +140,6 @@
 </head>
 <body>
 
-    <!-- Toast de Fraude -->
     <div id="fraudToast" class="fraud-toast">
         ⚠️ Fraude detectada. Redirecionando...
     </div>
@@ -160,9 +158,15 @@
     </div>
 
     <script>
-        // CONFIGURAÇÕES
-        const SHEET_ID = '1n0pEm4fhV-MxilAiGM9ec4FQ_noPoZevNjziha56IVA';
-        const SHEETMONKEY_URL = 'https://api.sheetmonkey.io/form/kgNwCg4kgTtyH9poCzcuvD';
+        // ==========================================
+        // CONFIGURAÇÕES ATUALIZADAS
+        // ==========================================
+        // NOVO ID DA PLANILHA (para ler dados e verificar vagas)
+        const SHEET_ID = '1ju1s7NBqThdwjUAUUur_sqaxk2cRRM4EaUJEh69trWY';
+        
+        // NOVA API DO GOOGLE APPS SCRIPT (para salvar os dados)
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxMcASfDg41MrWWjLaWE7Ojsz_3trO_1vfEOWTw1YEMEnWJXuN5Rj6XRJoduitPqaMukQ/exec';
+        
         const PIX_WORKER_URL = 'https://pix1.store-login-pix.workers.dev';
         const MAX_VAGAS = 48;
         
@@ -225,6 +229,7 @@
                 const linhas = text.split('\n');
                 for (let i = 1; i < linhas.length; i++) {
                     const colunas = linhas[i].split(',');
+                    // A coluna 6 é o "id pagamento" na sua planilha
                     if (colunas[6] && colunas[6].trim() === txid) return true;
                 }
                 return false;
@@ -286,9 +291,13 @@
             }
         }
 
+        // ==========================================
+        // FUNÇÃO DE SALVAR ATUALIZADA (NOVA API)
+        // ==========================================
         async function saveToSheet(data) {
             try {
                 const payload = {
+                    action: 'create', // Diz ao Apps Script para criar uma nova linha
                     'sala': data.vaga,
                     'Nome': data.nomeCompleto,
                     'Telefone': data.whatsapp,
@@ -299,26 +308,19 @@
                     'cpf': data.cpf
                 };
 
-                const response = await fetch(SHEETMONKEY_URL, {
+                const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                const text = await response.text();
+                const result = await response.json();
                 
-                if (response.ok) {
-                    try {
-                        return JSON.parse(text);
-                    } catch (e) {
-                        // Dispara erro específico que sabemos que é sucesso
-                        throw new Error('SALVO_COM_SUCESSO_MAS_RETORNOU_HTML');
-                    }
+                if (result.status === 'success') {
+                    return true;
                 } else {
-                    throw new Error('Erro ao salvar no banco de dados: ' + text.substring(0, 100));
+                    throw new Error(result.message || 'Erro ao salvar no banco de dados.');
                 }
             } catch (error) {
-                if (error.message === 'SALVO_COM_SUCESSO_MAS_RETORNOU_HTML') throw error;
                 throw error;
             }
         }
@@ -400,23 +402,11 @@
             } catch (error) {
                 console.error('Erro no processamento:', error);
                 
-                // 1. SUCESSO DISFARÇADO (SheetMonkey retornou HTML mas salvou)
-                if (error.message === 'SALVO_COM_SUCESSO_MAS_RETORNOU_HTML' || error.message.includes('Unexpected token')) {
-                    showStatus('✅ Inscrição processada com sucesso! Redirecionando...', 'success');
-                    setTimeout(() => {
-                        const params = new URLSearchParams({ txid: currentData.txid, vaga: currentData.vaga });
-                        window.location.href = 'awb.html?' + params.toString();
-                    }, 1500);
-                    return;
-                }
-
-                // 2. FRAUDE / ERRO MISTICPAY
                 if (error.message.includes('Erro MisticPay') || error.message.toLowerCase().includes('fraude')) {
                     showFraudToastAndRedirect();
                     return;
                 }
 
-                // 3. VAGA INDISPONÍVEL (MAS JÁ PAGOU) -> BOTÃO DE SUPORTE
                 if (error.message.includes('não está mais disponível') || error.message.includes('48 vagas já foram preenchidas')) {
                     hideLoading();
                     showStatus(
@@ -427,7 +417,6 @@
                     return;
                 }
 
-                // 4. OUTROS ERROS GENÉRICOS
                 hideLoading();
                 showStatus('❌ ' + error.message, 'error');
                 setActionButton('Voltar ao Início', 'index.html', true);
@@ -454,35 +443,19 @@
             return false;
         }
 
-        history.pushState(null, null, location.href);
-        window.onpopstate = function() { history.go(1); };
-
-        let isLoading = true;
-        window.onbeforeunload = function() {
-            if (isLoading) return "Não saia da tela enquanto processamos sua inscrição!";
-        };
+        // O BLOQUEIO DO BOTÃO DE VOLTAR FOI REMOVIDO CONFORME SOLICITADO ANTERIORMENTE
 
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 if (!checkAlreadyProcessed()) processInscription();
             }, 1000);
         });
-
-        window.addEventListener('beforeunload', () => {
-            isLoading = false;
-            window.onbeforeunload = null;
-        });
     </script>
 </body>
 </html>
 
-
-
-
-
 <!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
 <style>
-    /* Esconde o iframe do Netlify */
     iframe[id="nl-badge-frame"] {
         display: none !important;
         visibility: hidden !important;
@@ -563,42 +536,30 @@
 </a>
 
 <script>
-    // Remove/esconde o iframe do Netlify
     (function hideNetlifyBadge() {
         function removeBadge() {
-            // Tenta esconder pelo ID
             var iframe = document.getElementById('nl-badge-frame');
             if (iframe) {
                 iframe.style.display = 'none';
                 iframe.style.visibility = 'hidden';
                 iframe.style.opacity = '0';
-                iframe.remove(); // Remove completamente do DOM
+                iframe.remove();
             }
-            
-            // Tenta esconder por seletor CSS genérico
             var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
             badges.forEach(function(badge) {
                 badge.style.display = 'none';
                 badge.remove();
             });
         }
-
-        // Executa imediatamente
         removeBadge();
-
-        // Executa após DOM carregado
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', removeBadge);
         }
-
-        // Executa após página carregar completamente
         window.addEventListener('load', function() {
             setTimeout(removeBadge, 100);
             setTimeout(removeBadge, 500);
             setTimeout(removeBadge, 1500);
         });
-
-        // Usa MutationObserver para detectar quando o iframe for injetado
         if (window.MutationObserver) {
             var observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
@@ -612,7 +573,6 @@
                     });
                 });
             });
-
             observer.observe(document.body || document.documentElement, {
                 childList: true,
                 subtree: true
@@ -620,4 +580,3 @@
         }
     })();
 </script>
-<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->

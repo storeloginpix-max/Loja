@@ -381,14 +381,14 @@
         <!-- FOOTER ACTIONS -->
         <div class="footer-actions">
             <a href="index.html" class="btn-action btn-secondary">← Início</a>
-            <!-- CORRIGIDO: Agora redireciona para index.html onde estão as salas disponíveis -->
             <a href="index.html" class="btn-action btn-primary">Ver Salas Disponíveis</a>
         </div>
     </div>
 
     <script>
         // CONFIGURAÇÕES
-        const SHEET_ID = '1n0pEm4fhV-MxilAiGM9ec4FQ_noPoZevNjziha56IVA';
+        // ID DA NOVA PLANILHA ATUALIZADO
+        const SHEET_ID = '1ju1s7NBqThdwjUAUUur_sqaxk2cRRM4EaUJEh69trWY';
         const MAX_VAGAS = 48;
         const AUTO_REFRESH_INTERVAL = 15000; // 15 segundos
 
@@ -453,7 +453,7 @@
                 if (container.children.length <= 1) {
                     container.innerHTML = `
                         <div class="empty-state">
-                            <div class="empty-icon">⚠️</div>
+                            <div class="empty-icon">️</div>
                             <div class="empty-text">Erro ao carregar a lista. Tente novamente.</div>
                         </div>
                     `;
@@ -470,7 +470,7 @@
             if (players.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">📭</div>
                         <div class="empty-text">Nenhum jogador inscrito ainda.<br>Seja o primeiro!</div>
                     </div>
                 `;
@@ -554,10 +554,6 @@
     </script>
 </body>
 </html>
-
-
-
-
 
 <!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
 <style>
@@ -700,4 +696,3 @@
     })();
 </script>
 <!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
-
