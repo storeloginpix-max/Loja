@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Vagas Grátis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 0;
+            color: #e3e6e8;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+        /* CABEÇALHO LIMPO */
+        .new-header {
+            width: 100%; background: #141414; border-bottom: 1px solid #2a2a2a;
+            padding: 20px 24px; display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .new-header::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+        .header-title { font-family: 'Russo One', sans-serif; font-size: 1.5rem; color: #fff; text-align: center; }
+        .header-title span { color: #FFD814; }
+        .header-subtitle { color: #888; font-size: 0.85rem; position: absolute; right: 24px; }
+        @media (max-width: 768px) { .header-subtitle { display: none; } }
+
+        /* ESTATÍSTICAS */
+        .stats-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .stat-card {
+            flex: 1; min-width: 150px; background: #141414; border: 1px solid #2a2a2a;
+            border-radius: 10px; padding: 16px; text-align: center;
+        }
+        .stat-value { font-family: 'Russo One', sans-serif; font-size: 1.8rem; color: #FFD814; }
+        .stat-label { font-size: 0.8rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* AÇÕES */
+        .action-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 20px; border: none; border-radius: 8px; font-weight: 600;
+            font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; text-decoration: none;
+        }
+        .btn-primary { background: #FFD814; color: #000; }
+        .btn-primary:hover { background: #F7CA00; transform: translateY(-2px); }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-secondary { background: #141414; color: #ccc; border: 1px solid #2a2a2a; }
+        .btn-secondary:hover { border-color: #FFD814; color: #FFD814; }
+        .btn-test { background: #8b5cf6; color: #fff; }
+        .btn-test:hover { background: #7c3aed; transform: translateY(-2px); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+        /* BARRA DE PROGRESSO */
+        .progress-container {
+            display: none;
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        .progress-container.active { display: block; }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #0a0a0a;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* TABELA */
+        .players-table {
+            width: 100%; background: #141414; border: 1px solid #2a2a2a;
+            border-radius: 12px; overflow: hidden;
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 70px 120px 1fr 120px 100px 100px;
+            padding: 14px 16px; background: rgba(255, 216, 20, 0.05);
+            border-bottom: 1px solid #2a2a2a; font-size: 0.8rem; font-weight: 700;
+            color: #FFD814; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .table-row {
+            display: grid;
+            grid-template-columns: 70px 120px 1fr 120px 100px 100px;
+            padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center; font-size: 0.9rem; transition: background 0.2s;
+        }
+        .table-row:hover { background: rgba(255, 255, 255, 0.02); }
+        .table-row:last-child { border-bottom: none; }
+        .table-cell { color: #ccc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .table-cell.vaga { font-family: 'Russo One', sans-serif; color: #FFD814; text-align: center; }
+        .table-actions { display: flex; gap: 6px; }
+        .btn-icon {
+            width: 32px; height: 32px; border: none; border-radius: 6px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; transition: all 0.2s;
+        }
+        .btn-icon.edit { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .btn-icon.edit:hover { background: rgba(59, 130, 246, 0.3); }
+        .btn-icon.delete { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .btn-icon.delete:hover { background: rgba(239, 68, 68, 0.3); }
+
+        .empty-state, .loading-state { text-align: center; padding: 60px 20px; color: #666; }
+        .loading-state i { animation: spin 1s linear infinite; font-size: 2rem; color: #FFD814; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8); z-index: 1000;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: #141414; border: 1px solid #2a2a2a; border-radius: 16px;
+            max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-family: 'Russo One', sans-serif; font-size: 1.3rem; color: #FFD814; }
+        .modal-close {
+            background: none; border: none; color: #888; font-size: 1.5rem;
+            cursor: pointer; width: 32px; height: 32px; display: flex;
+            align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s;
+        }
+        .modal-close:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block; font-size: 0.8rem; color: #888; margin-bottom: 6px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .form-group input {
+            width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #2a2a2a;
+            border-radius: 8px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif;
+        }
+        .form-group input:focus { outline: none; border-color: #FFD814; }
+        .form-group input[readonly] { opacity: 0.6; cursor: not-allowed; }
+
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-actions .btn { flex: 1; }
+
+        /* TOAST */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+            z-index: 2000; opacity: 0; transition: all 0.4s ease; pointer-events: none;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { background: #10b981; color: #fff; }
+        .toast.error { background: #ef4444; color: #fff; }
+        .toast.info { background: #8b5cf6; color: #fff; }
+
+        @media (max-width: 768px) {
+            .table-header { display: none; }
+            .table-row { grid-template-columns: 1fr; gap: 8px; padding: 16px; }
+            .table-cell { font-size: 0.85rem; }
+            .table-cell::before {
+                content: attr(data-label); display: block; font-size: 0.7rem;
+                color: #666; text-transform: uppercase; margin-bottom: 2px;
+            }
+            .table-actions { justify-content: flex-end; margin-top: 8px; }
+            .stats-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="new-header">
+        <div class="header-title">PAINEL <span>GRÁTIS</span></div>
+        <div class="header-subtitle">Gerenciamento de Vagas Gratuitas</div>
+    </header>
+
+    <div class="container">
+        <!-- ESTATÍSTICAS -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Total Inscritos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statVagas">48</div>
+                <div class="stat-label">Vagas Disponíveis</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPercent">0%</div>
+                <div class="stat-label">Preenchido</div>
+            </div>
+        </div>
+
+        <!-- AÇÕES -->
+        <div class="action-bar">
+            <button class="btn btn-primary" onclick="carregarJogadores()">
+                <i class="ph ph-arrows-clockwise"></i> Atualizar Lista
+            </button>
+            <button class="btn btn-test" onclick="confirmarPreencherTeste()">
+                <i class="ph ph-magic-wand"></i> Preencher 48 Vagas (Teste)
+            </button>
+            <button class="btn btn-danger" onclick="confirmarLimparTudo()">
+                <i class="ph ph-trash"></i> Apagar Todos
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                <i class="ph ph-arrow-left"></i> Voltar ao Site
+            </a>
+        </div>
+
+        <!-- BARRA DE PROGRESSO (oculta por padrão) -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-header">
+                <span id="progressText">Preparando...</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+        </div>
+
+        <!-- TABELA -->
+        <div class="players-table" id="playersTable">
+            <div class="loading-state" id="loadingState">
+                <i class="ph ph-spinner"></i>
+                <p style="color: #888; margin-top: 12px;">Carregando jogadores...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Editar Jogador</div>
+                <button class="modal-close" onclick="fecharModal()">&times;</button>
+            </div>
+            <form id="editForm" onsubmit="salvarEdicao(event)">
+                <div class="form-group">
+                    <label>Número da Sala (Identificador)</label>
+                    <input type="text" id="editSala" readonly style="opacity: 0.6; cursor: not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>ID Free Fire</label>
+                    <input type="text" id="editIdFF" required>
+                </div>
+                <div class="form-group">
+                    <label>Nome no Jogo (Nick)</label>
+                    <input type="text" id="editNomeJogo" required>
+                </div>
+                <div class="form-group">
+                    <label>Chave PIX</label>
+                    <input type="text" id="editPix" required>
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp</label>
+                    <input type="text" id="editTelefone" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="ph ph-floppy-disk"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbz-TFTchINF5Gl3rR2NA3m9J4Q3enh2mZMVCYUXAHXz-gz0i_5zbIpq8eAQANvT7hEi/exec';
+        const MAX_VAGAS = 48;
+        let jogadores = [];
+
+        // ===============================
+        // DADOS FICTÍCIOS PARA TESTES
+        // ===============================
+        const NOMES = [
+            'João Silva', 'Maria Santos', 'Pedro Oliveira', 'Ana Costa', 'Lucas Pereira',
+            'Juliana Lima', 'Carlos Souza', 'Fernanda Alves', 'Rafael Rodrigues', 'Beatriz Araújo',
+            'Gabriel Martins', 'Larissa Ferreira', 'Matheus Barbosa', 'Camila Ribeiro', 'Diego Cardoso',
+            'Amanda Gomes', 'Thiago Nascimento', 'Letícia Moreira', 'Bruno Carvalho', 'Isabela Mendes',
+            'Felipe Araújo', 'Mariana Dias', 'Rodrigo Pinto', 'Carolina Lopes', 'Gustavo Freitas',
+            'Patrícia Cunha', 'Leonardo Teixeira', 'Vanessa Correia', 'Henrique Monteiro', 'Aline Barbosa',
+            'Daniel Rocha', 'Priscila Nunes', 'Vinícius Cardoso', 'Tatiane Silva', 'Eduardo Almeida',
+            'Renata Souza', 'Fábio Lima', 'Cristina Oliveira', 'Marcos Pereira', 'Adriana Costa',
+            'André Santos', 'Mônica Rodrigues', 'Paulo Alves', 'Sandra Martins', 'Ricardo Ferreira',
+            'Elaine Barbosa', 'Jorge Ribeiro', 'Luciana Gomes'
+        ];
+
+        const NICKS = [
+            '[BK] Jin WoO', 'xXSniperXx', 'ProGamer99', 'KingSlayer', 'ShadowHunter',
+            'NightWolf', 'DragonFire', 'StormBreaker', 'PhantomAce', 'BlazeRunner',
+            'CyberNinja', 'IronFist', 'ThunderBolt', 'SilentKill', 'DarkReaper',
+            'FrostByte', 'ViperStrike', 'RogueAgent', 'OmegaForce', 'ZeroGravity',
+            'AlphaWolf', 'BetaTest', 'GammaRay', 'DeltaForce', 'EpsilonEdge',
+            'ZetaPrime', 'EtaStorm', 'ThetaBolt', 'IotaFlash', 'KappaWave',
+            'LambdaX', 'MuStrike', 'NuBlade', 'XiFury', 'OmicronX',
+            'PiMaster', 'RhoKing', 'SigmaGod', 'TauLord', 'UpsilonPro',
+            'PhiElite', 'ChiWar', 'PsiMax', 'OmegaEnd', 'NeoPlayer',
+            'MegaBoss', 'UltraKill', 'HyperShot'
+        ];
+
+        function gerarIdAleatorio() {
+            return Math.floor(100000000 + Math.random() * 900000000).toString();
+        }
+
+        function gerarTelefoneAleatorio() {
+            const ddd = Math.floor(11 + Math.random() * 89);
+            const numero = Math.floor(900000000 + Math.random() * 100000000);
+            return `${ddd}${numero}`;
+        }
+
+        function gerarPixAleatorio() {
+            const tipos = ['cpf', 'email', 'telefone', 'aleatoria'];
+            const tipo = tipos[Math.floor(Math.random() * tipos.length)];
+            
+            if (tipo === 'cpf') {
+                return Math.floor(10000000000 + Math.random() * 90000000000).toString();
+            } else if (tipo === 'email') {
+                const nomes = ['joao', 'maria', 'pedro', 'ana', 'lucas', 'julia', 'carlos', 'fernanda'];
+                const nome = nomes[Math.floor(Math.random() * nomes.length)];
+                return `${nome}${Math.floor(Math.random() * 999)}@gmail.com`;
+            } else if (tipo === 'telefone') {
+                return gerarTelefoneAleatorio();
+            } else {
+                const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                for (let i = 0; i < 32; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+        }
+
+        function embaralharArray(arr) {
+            const novo = [...arr];
+            for (let i = novo.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [novo[i], novo[j]] = [novo[j], novo[i]];
+            }
+            return novo;
+        }
+
+        // ===============================
+        // FUNÇÕES DE INTERFACE
+        // ===============================
+        function mostrarToast(mensagem, tipo = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = mensagem;
+            toast.className = `toast ${tipo} show`;
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function atualizarProgresso(atual, total, texto) {
+            const container = document.getElementById('progressContainer');
+            const bar = document.getElementById('progressBarFill');
+            const percentEl = document.getElementById('progressPercent');
+            const textEl = document.getElementById('progressText');
+            
+            container.classList.add('active');
+            const percent = Math.round((atual / total) * 100);
+            bar.style.width = `${percent}%`;
+            percentEl.textContent = `${percent}%`;
+            textEl.textContent = texto || `Processando ${atual} de ${total}...`;
+        }
+
+        function esconderProgresso() {
+            document.getElementById('progressContainer').classList.remove('active');
+            document.getElementById('progressBarFill').style.width = '0%';
+        }
+
+        // ===============================
+        // PREENCHER 48 VAGAS (TESTE)
+        // ===============================
+        async function confirmarPreencherTeste() {
+            if (jogadores.length > 0) {
+                if (!confirm(`⚠️ ATENÇÃO!\n\nJá existem ${jogadores.length} jogador(es) na planilha.\n\nO sistema vai preencher APENAS as vagas que ainda estão vazias.\n\nDeseja continuar?`)) {
+                    return;
+                }
+            } else {
+                if (!confirm('⚠️ ATENÇÃO!\n\nIsso vai preencher TODAS as 48 vagas com dados fictícios.\n\nDeseja continuar?')) {
+                    return;
+                }
+            }
+
+            // Identificar quais vagas já estão ocupadas
+            const salasOcupadas = new Set(jogadores.map(j => String(j.sala).trim()));
+            const salasParaPreencher = [];
+            
+            for (let i = 1; i <= MAX_VAGAS; i++) {
+                if (!salasOcupadas.has(String(i).padStart(2, '0'))) {
+                    salasParaPreencher.push(String(i).padStart(2, '0'));
+                }
+            }
+
+            if (salasParaPreencher.length === 0) {
+                mostrarToast('Todas as 48 vagas já estão ocupadas!', 'error');
+                return;
+            }
+
+            // Embaralhar os arrays para dados aleatórios
+            const nomesEmbaralhados = embaralharArray(NOMES);
+            const nicksEmbaralhados = embaralharArray(NICKS);
+
+            const btnTeste = document.querySelector('.btn-test');
+            btnTeste.disabled = true;
+
+            let sucesso = 0;
+            let falhas = 0;
+
+            for (let i = 0; i < salasParaPreencher.length; i++) {
+                const sala = salasParaPreencher[i];
+                const nome = nomesEmbaralhados[i % nomesEmbaralhados.length];
+                const nick = nicksEmbaralhados[i % nicksEmbaralhados.length];
+                
+                const payload = {
+                    action: 'create',
+                    sala: sala,
+                    id: gerarIdAleatorio(),
+                    'o jogador': `${nick} ${Math.floor(Math.random() * 99)}`,
+                    pix: gerarPixAleatorio(),
+                    telefone: gerarTelefoneAleatorio()
+                };
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        sucesso++;
+                    } else {
+                        falhas++;
+                    }
+                } catch (error) {
+                    falhas++;
+                }
+
+                atualizarProgresso(i + 1, salasParaPreencher.length, `Enviando vaga ${sala}...`);
+                
+                // Pequeno delay para não sobrecarregar a API
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+
+            esconderProgresso();
+            btnTeste.disabled = false;
+
+            if (falhas === 0) {
+                mostrarToast(`✅ ${sucesso} vaga(s) preenchida(s) com sucesso!`, 'success');
+            } else {
+                mostrarToast(`⚠️ ${sucesso} sucesso(s), ${falhas} falha(s)`, 'info');
+            }
+
+            carregarJogadores();
+        }
+
+        // ===============================
+        // CARREGAR, EDITAR, APAGAR
+        // ===============================
+        async function carregarJogadores() {
+            const table = document.getElementById('playersTable');
+            table.innerHTML = `
+                <div class="loading-state">
+                    <i class="ph ph-spinner"></i>
+                    <p style="color: #888; margin-top: 12px;">Carregando jogadores...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'read' })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    jogadores = result.data || [];
+                    atualizarEstatisticas();
+                    renderizarTabela();
+                } else {
+                    throw new Error(result.message || 'Erro ao carregar dados');
+                }
+            } catch (error) {
+                table.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ph ph-warning-circle"></i>
+                        <p>Erro ao carregar: ${error.message}</p>
+                    </div>
+                `;
+                mostrarToast('Erro ao carregar jogadores', 'error');
+            }
+        }
+
+        function atualizarEstatisticas() {
+            const total = jogadores.length;
+            const vagas = Math.max(0, MAX_VAGAS - total);
+            const percent = MAX_VAGAS > 0 ? Math.round((total / MAX_VAGAS) * 100) : 0;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statVagas').textContent = vagas;
+            document.getElementById('statPercent').textContent = percent + '%';
+        }
+
+        function renderizarTabela() {
+            const table = document.getElementById('playersTable');
+
+            if (jogadores.length === 0) {
+                table.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ph ph-users"></i>
+                        <p>Nenhum jogador inscrito ainda</p>
+                    </div>
+                `;
+                return;
+            }
+
+            jogadores.sort((a, b) => parseInt(a.sala) - parseInt(b.sala));
+
+            let html = `
+                <div class="table-header">
+                    <div>Vaga</div>
+                    <div>ID FF</div>
+                    <div>Nome no Jogo</div>
+                    <div>Chave PIX</div>
+                    <div>WhatsApp</div>
+                    <div>Ações</div>
+                </div>
+            `;
+
+            jogadores.forEach((jogador, index) => {
+                html += `
+                    <div class="table-row">
+                        <div class="table-cell vaga" data-label="Vaga">${String(jogador.sala).padStart(2, '0')}</div>
+                        <div class="table-cell" data-label="ID FF">${jogador.id || '-'}</div>
+                        <div class="table-cell" data-label="Nome no Jogo">${jogador['o jogador'] || '-'}</div>
+                        <div class="table-cell" data-label="Chave PIX">${jogador.pix || '-'}</div>
+                        <div class="table-cell" data-label="WhatsApp">${jogador.telefone || '-'}</div>
+                        <div class="table-actions">
+                            <button class="btn-icon edit" onclick="abrirEdicao(${index})" title="Editar">
+                                <i class="ph ph-pencil-simple"></i>
+                            </button>
+                            <button class="btn-icon delete" onclick="confirmarApagar(${index})" title="Apagar">
+                                <i class="ph ph-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            table.innerHTML = html;
+        }
+
+        function abrirEdicao(index) {
+            const jogador = jogadores[index];
+            document.getElementById('editSala').value = String(jogador.sala).padStart(2, '0');
+            document.getElementById('editIdFF').value = jogador.id || '';
+            document.getElementById('editNomeJogo').value = jogador['o jogador'] || '';
+            document.getElementById('editPix').value = jogador.pix || '';
+            document.getElementById('editTelefone').value = jogador.telefone || '';
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        async function salvarEdicao(event) {
+            event.preventDefault();
+
+            const payload = {
+                action: 'update',
+                'sala': document.getElementById('editSala').value.trim(),
+                'id': document.getElementById('editIdFF').value.trim(),
+                'o jogador': document.getElementById('editNomeJogo').value.trim(),
+                'pix': document.getElementById('editPix').value.trim(),
+                'telefone': document.getElementById('editTelefone').value.trim()
+            };
+
+            const btn = event.target.querySelector('button[type="submit"]');
+            const textoOriginal = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-spinner"></i> Salvando...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    mostrarToast('Jogador atualizado com sucesso!');
+                    fecharModal();
+                    carregarJogadores();
+                } else {
+                    throw new Error(result.message || 'Erro ao salvar');
+                }
+            } catch (error) {
+                mostrarToast('Erro: ' + error.message, 'error');
+            } finally {
+                btn.innerHTML = textoOriginal;
+                btn.disabled = false;
+            }
+        }
+
+        function confirmarApagar(index) {
+            const jogador = jogadores[index];
+            const nome = jogador['o jogador'] || 'Jogador';
+            const vaga = String(jogador.sala).padStart(2, '0');
+
+            if (confirm(`Apagar "${nome}" da vaga ${vaga}?\n\nEsta ação não pode ser desfeita.`)) {
+                apagarJogador(index);
+            }
+        }
+
+        async function apagarJogador(index) {
+            const jogador = jogadores[index];
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        'sala': String(jogador.sala).trim()
+                    })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    mostrarToast('Jogador apagado com sucesso!');
+                    carregarJogadores();
+                } else {
+                    throw new Error(result.message || 'Erro ao apagar');
+                }
+            } catch (error) {
+                mostrarToast('Erro: ' + error.message, 'error');
+            }
+        }
+
+        function confirmarLimparTudo() {
+            if (jogadores.length === 0) {
+                mostrarToast('Não há jogadores para apagar', 'error');
+                return;
+            }
+
+            if (confirm(`⚠️ ATENÇÃO!\n\nVocê está prestes a APAGAR TODOS os ${jogadores.length} jogadores.\n\nEsta ação NÃO pode ser desfeita.\n\nDeseja continuar?`)) {
+                if (confirm('ÚLTIMA CHANCE!\n\nTem CERTEZA ABSOLUTA que quer apagar todos?\n\nToque OK para confirmar.')) {
+                    limparTudo();
+                }
+            }
+        }
+
+        async function limparTudo() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'clearAll' })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    mostrarToast('Todos os jogadores foram apagados!');
+                    carregarJogadores();
+                } else {
+                    throw new Error(result.message || 'Erro ao limpar');
+                }
+            } catch (error) {
+                mostrarToast('Erro: ' + error.message, 'error');
+            }
+        }
+
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            carregarJogadores();
+        });
+    </script>
+</body>
+</html>

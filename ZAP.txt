@@ -1,0 +1,151 @@
+const SHEET_NAME = "Página1";
+
+// Função para salvar/substituir o link do WhatsApp na célula A2
+function doGet(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    
+    if (!sheet) {
+      return response({ status: 'error', message: 'Aba da planilha não encontrada.' });
+    }
+
+    const link = e.parameter.link;
+
+    if (link) {
+      // Salva/substitui o link na célula A2 (linha 2, coluna 1)
+      sheet.getRange(2, 1).setValue(link);
+      return response({ 
+        status: 'success', 
+        message: 'Link do WhatsApp salvo com sucesso!',
+        link: link 
+      });
+    } else {
+      // Retorna o link que está salvo em A2
+      const savedLink = sheet.getRange(2, 1).getValue();
+      return response({ 
+        status: 'success', 
+        message: 'Link atual recuperado.',
+        link: savedLink 
+      });
+    }
+
+  } catch (error) {
+    return response({ status: 'error', message: 'Erro: ' + error.toString() });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// Função POST para CRUD (create, read, update, delete, clearAll)
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+
+  try {
+    const requestData = JSON.parse(e.postData.contents);
+    const action = requestData.action;
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    
+    if (!sheet) {
+      return response({ status: 'error', message: 'Aba da planilha não encontrada.' });
+    }
+
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    let result = {};
+
+    if (action === 'create') {
+      const newRow = headers.map(header => requestData[header] !== undefined ? requestData[header] : "");
+      sheet.appendRow(newRow);
+      result = { status: 'success', message: 'Dados salvos com sucesso!' };
+    } 
+    else if (action === 'read') {
+      const values = sheet.getDataRange().getValues();
+      const jsonData = [];
+      for (let i = 1; i < values.length; i++) {
+        let rowObj = {};
+        for (let j = 0; j < headers.length; j++) {
+          rowObj[headers[j]] = values[i][j];
+        }
+        jsonData.push(rowObj);
+      }
+      result = { status: 'success', data: jsonData };
+    }
+    else if (action === 'update') {
+      const targetId = String(requestData['id pagamento']).trim();
+      const values = sheet.getDataRange().getValues();
+      let rowIndex = -1;
+      const idColIndex = headers.indexOf('id pagamento');
+      
+      if (idColIndex === -1) throw new Error('Coluna "id pagamento" não encontrada.');
+
+      for (let i = 1; i < values.length; i++) {
+        if (String(values[i][idColIndex]).trim() === targetId) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      
+      if (rowIndex !== -1) {
+        headers.forEach(header => {
+          if (requestData[header] !== undefined) {
+            const colIndex = headers.indexOf(header) + 1;
+            sheet.getRange(rowIndex, colIndex).setValue(requestData[header]);
+          }
+        });
+        result = { status: 'success', message: 'Dados atualizados com sucesso!' };
+      } else {
+        result = { status: 'error', message: 'ID de pagamento não encontrado.' };
+      }
+    }
+    else if (action === 'delete') {
+      const targetId = String(requestData['id pagamento']).trim();
+      const values = sheet.getDataRange().getValues();
+      let rowIndex = -1;
+      const idColIndex = headers.indexOf('id pagamento');
+      
+      if (idColIndex === -1) throw new Error('Coluna "id pagamento" não encontrada.');
+      
+      for (let i = 1; i < values.length; i++) {
+        if (String(values[i][idColIndex]).trim() === targetId) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      
+      if (rowIndex !== -1) {
+        sheet.deleteRow(rowIndex);
+        result = { status: 'success', message: 'Registro apagado com sucesso!' };
+      } else {
+        result = { status: 'error', message: 'ID de pagamento não encontrado.' };
+      }
+    }
+    else if (action === 'clearAll') {
+      const lastRow = sheet.getLastRow();
+      if (lastRow > 1) {
+        sheet.deleteRows(2, lastRow - 1);
+        result = { status: 'success', message: 'Todos os registros foram apagados!' };
+      } else {
+        result = { status: 'success', message: 'A planilha já está vazia.' };
+      }
+    }
+    else {
+      result = { status: 'error', message: 'Ação inválida.' };
+    }
+
+    return response(result);
+
+  } catch (error) {
+    return response({ status: 'error', message: 'Erro: ' + error.toString() });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// Função auxiliar para retornar respostas em JSON
+function response(data) {
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}

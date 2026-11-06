@@ -1,0 +1,136 @@
+const SHEET_NAME = "Página1";
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+
+  try {
+    const requestData = JSON.parse(e.postData.contents);
+    const action = requestData.action;
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    
+    if (!sheet) {
+      return response({ status: 'error', message: 'Aba da planilha não encontrada.' });
+    }
+
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    let result = {};
+
+    if (action === 'create') {
+      // Cria nova linha com os dados recebidos
+      const newRow = headers.map(header => {
+        if (requestData[header] !== undefined) {
+          return requestData[header];
+        }
+        return "";
+      });
+      sheet.appendRow(newRow);
+      result = { status: 'success', message: 'Dados salvos com sucesso!' };
+    } 
+    else if (action === 'read') {
+      // Lê todos os dados da planilha
+      const values = sheet.getDataRange().getValues();
+      const jsonData = [];
+      for (let i = 1; i < values.length; i++) {
+        let rowObj = {};
+        for (let j = 0; j < headers.length; j++) {
+          rowObj[headers[j]] = values[i][j];
+        }
+        jsonData.push(rowObj);
+      }
+      result = { status: 'success', data: jsonData };
+    }
+    else if (action === 'update') {
+      // Atualiza registro pelo ID
+      const targetId = String(requestData['id']).trim();
+      const values = sheet.getDataRange().getValues();
+      let rowIndex = -1;
+      const idColIndex = headers.indexOf('id');
+      
+      if (idColIndex === -1) {
+        throw new Error('Coluna "id" não encontrada na planilha.');
+      }
+
+      // Busca a linha com o ID correspondente
+      for (let i = 1; i < values.length; i++) {
+        if (String(values[i][idColIndex]).trim() === targetId) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      
+      if (rowIndex !== -1) {
+        // Atualiza apenas os campos enviados
+        headers.forEach((header, index) => {
+          if (requestData[header] !== undefined) {
+            sheet.getRange(rowIndex, index + 1).setValue(requestData[header]);
+          }
+        });
+        result = { status: 'success', message: 'Dados atualizados com sucesso!' };
+      } else {
+        result = { status: 'error', message: 'ID não encontrado.' };
+      }
+    }
+    else if (action === 'delete') {
+      // Deleta registro pelo ID
+      const targetId = String(requestData['id']).trim();
+      const values = sheet.getDataRange().getValues();
+      let rowIndex = -1;
+      const idColIndex = headers.indexOf('id');
+      
+      for (let i = 1; i < values.length; i++) {
+        if (String(values[i][idColIndex]).trim() === targetId) {
+          rowIndex = i + 1;
+          break;
+        }
+      }
+      
+      if (rowIndex !== -1) {
+        sheet.deleteRow(rowIndex);
+        result = { status: 'success', message: 'Registro apagado com sucesso!' };
+      } else {
+        result = { status: 'error', message: 'ID não encontrado.' };
+      }
+    }
+    else if (action === 'clearAll') {
+      // Limpa todos os registros (mantém o cabeçalho)
+      const lastRow = sheet.getLastRow();
+      if (lastRow > 1) {
+        sheet.deleteRows(2, lastRow - 1);
+        result = { status: 'success', message: 'Todos os registros foram apagados! A planilha está limpa.' };
+      } else {
+        result = { status: 'success', message: 'A planilha já está vazia.' };
+      }
+    }
+    else {
+      result = { status: 'error', message: 'Ação inválida. Use: create, read, update ou delete.' };
+    }
+
+    return response(result);
+
+  } catch (error) {
+    return response({ status: 'error', message: 'Erro: ' + error.toString() });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function response(data) {
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Função auxiliar para testes (GET)
+function doGet(e) {
+  return response({ 
+    status: 'success', 
+    message: 'API funcionando! Use POST para enviar dados.',
+    endpoints: {
+      create: 'Adiciona novo registro',
+      read: 'Lê todos os registros',
+      update: 'Atualiza registro por ID',
+      delete: 'Deleta registro por ID',
+      clearAll: 'Limpa todos os registros'
+    }
+  });
+}

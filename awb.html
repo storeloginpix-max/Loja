@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acesso ao Grupo - X SOLO 1 V 47</title>
+    <title>Acesso Confirmado - X SOLO 1 V 47</title>
     <link rel="icon" type="image/jpeg" href="favicon.jpeg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,92 +19,95 @@
             justify-content: center;
             padding: 20px;
             color: #e3e6e8;
+            background-image: radial-gradient(circle at 50% 0%, rgba(255, 216, 20, 0.03) 0%, transparent 50%);
         }
 
         .container {
             text-align: center;
-            max-width: 440px;
+            max-width: 500px;
             width: 100%;
             background: #141414;
             border: 1px solid #2a2a2a;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 32px 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
         }
 
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+
+        /* LOADING */
         .loading-circle {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 216, 20, 0.1);
-            border-top: 4px solid #FFD814;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 216, 20, 0.1);
+            border-top: 3px solid #FFD814;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
         }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .title { font-size: 1.2rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
-        .subtitle { font-size: 0.9rem; color: #888; margin-bottom: 24px; transition: color 0.3s; }
+        .title { font-family: 'Russo One', sans-serif; font-size: 1.3rem; color: #fff; margin-bottom: 8px; }
+        .subtitle { font-size: 0.9rem; color: #888; }
         .subtitle.waiting { color: #FFD814; }
 
-        /* CARD DE SUCESSO */
-        .success-card {
-            display: none;
-            animation: fadeIn 0.5s ease;
+        /* SUCCESS SCREEN */
+        .success-card { display: none; animation: fadeIn 0.6s ease; text-align: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .success-header {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #2a2a2a;
         }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
         .success-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(6, 125, 98, 0.15);
+            width: 64px;
+            height: 64px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 16px;
+            color: #10b981;
             font-size: 2rem;
         }
-
-        .congrats-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .congrats-text {
-            font-size: 0.95rem;
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
+        .congrats-title { font-family: 'Russo One', sans-serif; font-size: 1.4rem; color: #fff; margin-bottom: 8px; }
+        .congrats-subtitle { font-size: 0.95rem; color: #ccc; line-height: 1.5; margin-bottom: 16px; }
         .vaga-badge {
             display: inline-block;
-            background: rgba(255, 216, 20, 0.15);
+            background: rgba(255, 216, 20, 0.1);
             color: #FFD814;
             padding: 6px 16px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
             border: 1px solid rgba(255, 216, 20, 0.3);
+            text-align: center;
+            margin-top: 8px;
         }
 
+        /* BUTTONS */
         .btn-whatsapp {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: #25D366;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 700;
             font-size: 1rem;
             transition: all 0.2s;
@@ -111,8 +115,7 @@
             cursor: pointer;
             margin-bottom: 12px;
         }
-
-        .btn-whatsapp:hover { background: #1ebc57; transform: translateY(-2px); }
+        .btn-whatsapp:hover { background: #1ebc57; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
 
         .btn-secondary {
             display: flex;
@@ -120,60 +123,47 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: transparent;
             color: #FFD814;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 0.95rem;
             transition: all 0.2s;
-            border: 1px solid rgba(255, 216, 20, 0.4);
+            border: 1px solid rgba(255, 216, 20, 0.3);
             cursor: pointer;
             margin-bottom: 20px;
         }
+        .btn-secondary:hover { background: rgba(255, 216, 20, 0.1); border-color: #FFD814; }
 
-        .btn-secondary:hover { 
-            background: rgba(255, 216, 20, 0.1); 
-            border-color: #FFD814;
-        }
-
-        /* ALERTA DE SEGURANÇA */
+        /* SECURITY ALERT */
         .security-alert {
-            background: rgba(204, 12, 57, 0.08);
-            border: 1px solid rgba(204, 12, 57, 0.3);
-            border-left: 4px solid #cc0c39;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-left: 3px solid #ef4444;
             border-radius: 8px;
             padding: 14px 16px;
             margin-bottom: 20px;
             text-align: left;
         }
-
         .security-alert-title {
             display: flex;
             align-items: center;
             gap: 6px;
-            color: #ff6b6b;
+            color: #ef4444;
             font-weight: 700;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-
-        .security-alert-text {
-            color: #ccc;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        .security-alert-text strong {
-            color: #ff6b6b;
-            font-weight: 700;
-        }
+        .security-alert-text { color: #ccc; font-size: 0.8rem; line-height: 1.5; }
+        .security-alert-text strong { color: #fff; }
 
         .btn-back {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             color: #888;
             text-decoration: none;
             font-size: 0.85rem;
@@ -181,122 +171,131 @@
             padding: 8px 16px;
             border-radius: 6px;
             transition: all 0.2s;
-            border: 1px solid transparent;
         }
+        .btn-back:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
 
-        .btn-back:hover {
-            color: #fff;
-            border-color: #333;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* TELA DE ERRO */
-        .error-screen {
-            display: none;
-        }
-        .error-icon { font-size: 3rem; margin-bottom: 16px; }
-        .error-text { color: #ff6b6b; font-weight: 600; margin-bottom: 8px; }
+        /* ERROR SCREEN */
+        .error-screen { display: none; text-align: center; padding: 20px 0; }
+        .error-icon { font-size: 3rem; color: #ef4444; margin-bottom: 16px; }
+        .error-text { color: #ef4444; font-weight: 700; font-size: 1.2rem; margin-bottom: 8px; }
         .error-sub { color: #888; font-size: 0.9rem; }
 
         @media (max-width: 480px) {
             .container { padding: 24px 18px; }
-            .congrats-title { font-size: 1.15rem; }
+            .congrats-title { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- TELA DE CARREGAMENTO / SINCRONIZAÇÃO -->
+        <!-- TELA DE CARREGAMENTO -->
         <div id="loadingScreen">
             <div class="loading-circle"></div>
             <div class="title">Validando Inscrição</div>
-            <div class="subtitle" id="loadingSubtitle">Sincronizando com o banco de dados...</div>
+            <div class="subtitle waiting" id="loadingSubtitle">Verificando integridade dos dados...</div>
         </div>
 
         <!-- TELA DE SUCESSO -->
         <div id="successScreen" class="success-card">
-            <div class="success-icon">🏆</div>
-            <div class="congrats-title">Parabéns! Inscrição Confirmada</div>
-            <div class="vaga-badge" id="displayVaga">Sala --</div>
-            <p class="congrats-text">
-                Agora você já está fazendo parte da lista oficial de jogadores do <strong style="color:#FFD814;">X SOLO 1 V 47</strong>. 
-                Seu pagamento foi validado com sucesso!
-            </p>
+            <div class="success-header">
+                <div class="success-icon"><i class="ph ph-seal-check"></i></div>
+                <div class="congrats-title">Inscrição Confirmada!</div>
+                <p class="congrats-subtitle">
+                    Sua vaga está garantida. Para receber os dados da sala e participar do torneio, é <strong>obrigatório</strong> entrar no grupo do WhatsApp abaixo.
+                </p>
+                <div class="vaga-badge">VAGA GARANTIDA</div>
+            </div>
 
-            <!-- Botão Principal: Entrar no Grupo -->
             <a id="btnZap" href="#" target="_blank" class="btn-whatsapp">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                <i class="ph ph-whatsapp-logo" style="font-size: 1.3rem;"></i>
                 Entrar no Grupo do WhatsApp
             </a>
 
-            <!-- Botão Secundário: Ver Lista de Jogadores -->
             <a href="lista.html" class="btn-secondary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <i class="ph ph-users"></i>
                 Ver Lista de Jogadores Inscritos
             </a>
 
-            <!-- Alerta de Segurança -->
             <div class="security-alert">
                 <div class="security-alert-title">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    ATENÇÃO - LEIA COM CUIDADO
+                    <i class="ph ph-warning"></i>
+                    PROTEÇÃO DE LINK ATIVA
                 </div>
                 <p class="security-alert-text">
-                    <strong>Não compartilhe</strong> seu link, esta página ou o grupo do campeonato com amigos, outros jogadores ou pessoas que <strong>não tenham pago</strong> a inscrição. Isso pode levar à <strong>remoção imediata da sua conta</strong> do campeonato. Seu link é <strong>único e rastreado</strong> — se outra pessoa acessá-lo, saberemos.
+                    Este link é <strong>único, criptografado e rastreado</strong>. A tentativa de alterar parâmetros na URL ou compartilhar esta página resultará no <strong>banimento imediato</strong> sem direito a reembolso.
                 </p>
             </div>
 
-            <!-- Botão Voltar ao Início -->
-            <a href="index.html" class="btn-back">← Voltar para o início</a>
+            <div style="text-align: center;">
+                <a href="index.html" class="btn-back"><i class="ph ph-arrow-left"></i> Voltar para o início</a>
+            </div>
         </div>
 
-        <!-- TELA DE ERRO -->
+        <!-- TELA DE ERRO / SEGURANÇA -->
         <div id="errorScreen" class="error-screen">
-            <div class="error-icon">🚫</div>
+            <div class="error-icon"><i class="ph ph-prohibit"></i></div>
             <div class="error-text">Acesso Negado</div>
-            <div class="error-sub">Não foi possível localizar sua inscrição no banco de dados. Redirecionando...</div>
+            <div class="error-sub">Inscrição não encontrada ou tentativa de violação de segurança detectada. Redirecionando...</div>
         </div>
     </div>
 
     <script>
         // CONFIGURAÇÕES
-        const SHEET_ID = '1n0pEm4fhV-MxilAiGM9ec4FQ_noPoZevNjziha56IVA';
-        const ZAP_TXT_URL = 'zap.txt';
+        const SHEET_ID = '1ju1s7NBqThdwjUAUUur_sqaxk2cRRM4EaUJEh69trWY';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLz_PoYbtqxcrTwoQSbn42oIXUDP3vcPvW4qaGfNEqCquaQUmfbzg5KlgvfVM6yCpM8g/exec';
         const FALLBACK_ZAP = 'https://chat.whatsapp.com/K7OW5PK2i7j4OI17G8TmlE?s=cl&p=a&iam=2';
+        const TIKTOK_URL = 'https://www.tiktok.com/@xsolo1v47';
         
-        // Configurações de Tentativa (Polling)
-        const MAX_RETRIES = 20;
-        const RETRY_DELAY = 3000;
+        const MAX_RETRIES = 15;
+        const RETRY_DELAY = 2500;
         let currentRetry = 0;
 
-        // Obter parâmetros da URL e limpar espaços em branco
         const params = new URLSearchParams(window.location.search);
-        const urlTxid = params.get('txid') ? params.get('txid').trim() : '';
-        const urlVaga = params.get('vaga') ? params.get('vaga').trim() : '';
-
-        // 1. VERIFICAÇÃO INICIAL: Se não tiver os parâmetros, bloqueia imediatamente
-        if (!urlTxid || !urlVaga) {
-            window.location.href = 'index.html';
+        const urlTxid = params.get('txid') ? params.get('txid').trim().toUpperCase() : '';
+        // Mantemos a extração da vaga para compatibilidade com links antigos, mas a validação será focada apenas no TXID
+        
+        // SEGURANÇA NÍVEL 1: Bloqueio imediato se faltar o parâmetro principal
+        if (!urlTxid) {
+            window.location.replace('index.html');
         }
 
-        // Função para buscar o link do zap.txt
+        // Função para buscar o link do WhatsApp dinamicamente
         async function getZapLink() {
             try {
-                const response = await fetch(ZAP_TXT_URL + '?t=' + Date.now());
-                if (response.ok) {
-                    const text = await response.text();
-                    const link = text.trim();
-                    if (link.startsWith('http')) return link;
+                const response = await fetch(APPS_SCRIPT_URL);
+                const data = await response.json();
+                if (data.status === 'success' && data.link && data.link.trim() !== '') {
+                    return data.link;
                 }
             } catch (error) {
-                console.warn('Não foi possível ler zap.txt, usando fallback.');
+                console.warn('Fallback de link do WhatsApp ativado.');
             }
             return FALLBACK_ZAP;
         }
 
-        // 2. VERIFICAÇÃO CRUZADA NA PLANILHA (Mesma linha)
-        async function verifyOnSheet(targetTxid, targetVaga) {
+        // Parser de CSV robusto que respeita aspas
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim().replace(/^"|"$/g, ''));
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim().replace(/^"|"$/g, ''));
+            return result;
+        }
+
+        // VERIFICAÇÃO FLEXÍVEL: Busca o TXID em qualquer uma das linhas da planilha (cobrindo as 48 vagas)
+        async function verifyTxid(targetTxid) {
             try {
                 const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
                 const response = await fetch(csvUrl, { method: 'GET', cache: 'no-cache' });
@@ -306,51 +305,57 @@
                 if (text.trim().startsWith('<')) return false;
 
                 const lines = text.split('\n');
+                
+                // Varre todas as linhas da planilha (pulando o cabeçalho, índice 0)
                 for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split(',').map(col => col.replace(/"/g, '').trim());
-                    
-                    const rowVaga = cols[0]; // Coluna A: sala
-                    const rowTxid = cols[6]; // Coluna G: id pagamento
+                    if (!lines[i].trim()) continue;
 
-                    if (rowVaga === targetVaga && rowTxid === targetTxid) {
+                    const cols = parseCSVLine(lines[i]);
+                    const rowTxid = (cols[6] || '').trim().toUpperCase();
+
+                    // Se o ID de pagamento for encontrado em QUALQUER linha, libera o acesso
+                    if (rowTxid === targetTxid) {
                         return true; 
                     }
                 }
-                return false;
+
+                return false; // Não encontrado em nenhuma linha
             } catch (error) {
-                console.error('Erro ao verificar planilha:', error);
+                console.error('Erro na validação de segurança:', error);
                 return false;
             }
         }
 
-        // Função para redirecionar em caso de erro final
-        function redirectToError() {
+        // Redirecionamento que limpa o histórico do navegador
+        function redirectToError(immediate = false) {
             document.getElementById('loadingScreen').style.display = 'none';
             document.getElementById('errorScreen').style.display = 'block';
             
+            const delay = immediate ? 1500 : 3500;
             setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 4000);
+                window.location.replace('index.html');
+            }, delay);
         }
 
-        // 3. LÓGICA DE SINCRONIZAÇÃO COM TENTATIVAS (POLLING)
         async function checkAndProceed() {
             currentRetry++;
-            
             const subtitle = document.getElementById('loadingSubtitle');
-            subtitle.textContent = `Sincronizando com o banco de dados... (${currentRetry}/${MAX_RETRIES})`;
-            subtitle.classList.add('waiting');
+            subtitle.textContent = `Validando pagamento... (${currentRetry}/${MAX_RETRIES})`;
 
-            const sheetValid = await verifyOnSheet(urlTxid, urlVaga);
+            const isValid = await verifyTxid(urlTxid);
 
-            if (sheetValid) {
+            if (isValid) {
+                // DADOS VALIDADOS COM SUCESSO
                 const zapLink = await getZapLink();
+                document.getElementById('btnZap').href = zapLink;
                 
+                const floatBtn = document.getElementById('tiktokFloatBtn');
+                if (floatBtn) floatBtn.href = TIKTOK_URL;
+
                 document.getElementById('loadingScreen').style.display = 'none';
                 document.getElementById('successScreen').style.display = 'block';
-                document.getElementById('displayVaga').textContent = `Sala ${urlVaga}`;
-                document.getElementById('btnZap').href = zapLink;
             } else {
+                // Dados ainda não sincronizados ou inválidos, continua tentando
                 if (currentRetry < MAX_RETRIES) {
                     setTimeout(checkAndProceed, RETRY_DELAY);
                 } else {
@@ -359,163 +364,71 @@
             }
         }
 
-        // Inicia a verificação ao carregar a página
         window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(checkAndProceed, 1500);
+            setTimeout(checkAndProceed, 1000);
         });
 
-        // Impede o usuário de voltar para a tela anterior (segurança)
+        // Proteção do botão voltar do navegador
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
-            history.go(1);
+            window.location.replace('index.html');
         };
     </script>
 </body>
 </html>
 
-
-
-
-
-<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<!-- BOTÃO FLUTUANTE TIKTOK + REMOVE MARCA NETLIFY -->
 <style>
-    /* Esconde o iframe do Netlify */
-    iframe[id="nl-badge-frame"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-
-    .wa-float-btn {
-        position: fixed !important;
-        bottom: 16px !important;
-        right: 16px !important;
-        width: 190px !important;
-        height: 44px !important;
-        background: #25D366 !important;
-        border-radius: 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        cursor: pointer !important;
-        z-index: 2147483647 !important;
-        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
-        transition: all 0.25s ease !important;
-        text-decoration: none !important;
-        border: none !important;
-        font-family: 'Inter', -apple-system, sans-serif !important;
-        font-weight: 700 !important;
-        font-size: 0.9rem !important;
+    iframe[id="nl-badge-frame"] { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+    .tiktok-float-btn {
+        position: fixed !important; bottom: 16px !important; right: 16px !important;
+        width: 180px !important; height: 44px !important; 
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%) !important;
+        border: 1px solid rgba(255, 0, 80, 0.4) !important;
+        border-radius: 8px !important; display: flex !important; align-items: center !important;
+        justify-content: center !important; gap: 8px !important; cursor: pointer !important;
+        z-index: 2147483647 !important; 
+        box-shadow: 0 4px 16px rgba(255, 0, 80, 0.3) !important;
+        transition: all 0.25s ease !important; text-decoration: none !important;
+        font-family: 'Inter', sans-serif !important; font-weight: 700 !important; font-size: 0.9rem !important;
         color: #ffffff !important;
-        letter-spacing: 0.3px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        outline: none !important;
     }
-
-    .wa-float-btn:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
-        background: #20BD5A !important;
+    .tiktok-float-btn:hover { 
+        transform: translateY(-3px) !important; 
+        box-shadow: 0 6px 22px rgba(255, 0, 80, 0.5) !important; 
+        border-color: rgba(255, 0, 80, 0.8) !important;
     }
-
-    .wa-float-btn:active {
-        transform: scale(0.97) !important;
-    }
-
-    .wa-float-btn svg {
-        width: 22px !important;
-        height: 22px !important;
-        fill: #ffffff !important;
-        flex-shrink: 0 !important;
-    }
-
+    .tiktok-float-btn svg { width: 22px !important; height: 22px !important; fill: #ffffff !important; }
     @media (max-width: 480px) {
-        .wa-float-btn {
-            width: 170px !important;
-            height: 42px !important;
-            bottom: 12px !important;
-            right: 12px !important;
-            font-size: 0.85rem !important;
-        }
-        .wa-float-btn svg {
-            width: 20px !important;
-            height: 20px !important;
-        }
+        .tiktok-float-btn { width: 160px !important; height: 42px !important; bottom: 12px !important; right: 12px !important; font-size: 0.85rem !important; }
     }
 </style>
 
-<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
-   class="wa-float-btn" 
-   id="waFloatBtn"
-   target="_blank" 
-   rel="noopener noreferrer"
-   aria-label="Conversar no WhatsApp">
+<a href="https://www.tiktok.com/@xsolo1v47" class="tiktok-float-btn" id="tiktokFloatBtn" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
     </svg>
-    <span>WhatsApp</span>
+    <span>TikTok</span>
 </a>
 
 <script>
-    // Remove/esconde o iframe do Netlify
     (function hideNetlifyBadge() {
         function removeBadge() {
-            // Tenta esconder pelo ID
             var iframe = document.getElementById('nl-badge-frame');
-            if (iframe) {
-                iframe.style.display = 'none';
-                iframe.style.visibility = 'hidden';
-                iframe.style.opacity = '0';
-                iframe.remove(); // Remove completamente do DOM
-            }
-            
-            // Tenta esconder por seletor CSS genérico
-            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
-            badges.forEach(function(badge) {
-                badge.style.display = 'none';
-                badge.remove();
-            });
+            if (iframe) iframe.remove();
+            document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]').forEach(b => b.remove());
         }
-
-        // Executa imediatamente
         removeBadge();
-
-        // Executa após DOM carregado
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', removeBadge);
-        }
-
-        // Executa após página carregar completamente
-        window.addEventListener('load', function() {
-            setTimeout(removeBadge, 100);
-            setTimeout(removeBadge, 500);
-            setTimeout(removeBadge, 1500);
-        });
-
-        // Usa MutationObserver para detectar quando o iframe for injetado
+        document.addEventListener('DOMContentLoaded', removeBadge);
+        window.addEventListener('load', () => { setTimeout(removeBadge, 100); setTimeout(removeBadge, 1000); });
         if (window.MutationObserver) {
-            var observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    mutation.addedNodes.forEach(function(node) {
-                        if (node.tagName === 'IFRAME' && 
-                            (node.id === 'nl-badge-frame' || 
-                             node.title.indexOf('Netlify') !== -1)) {
-                            node.style.display = 'none';
-                            setTimeout(function() { node.remove(); }, 10);
-                        }
-                    });
-                });
-            });
-
-            observer.observe(document.body || document.documentElement, {
-                childList: true,
-                subtree: true
-            });
+            new MutationObserver(mutations => {
+                mutations.forEach(m => m.addedNodes.forEach(node => {
+                    if (node.tagName === 'IFRAME' && (node.id === 'nl-badge-frame' || (node.title && node.title.includes('Netlify')))) {
+                        node.remove();
+                    }
+                }));
+            }).observe(document.body, { childList: true, subtree: true });
         }
     })();
 </script>
-<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
-

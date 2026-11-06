@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Vaga - X SOLO 1 V 47 FREE FIRE</title>
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --input-bg: #0f172a;
+            --border-color: #334155;
+            --accent: #fbbf24;
+            --accent-hover: #f59e0b;
+            --success: #10b981;
+            --error: #ef4444;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --whatsapp: #25D366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.6rem;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        h1 .highlight { color: var(--accent); }
+        .subtitle { color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; }
+
+        .main-content { max-width: 600px; margin: 0 auto; padding: 25px 20px; }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .info-row:last-child { border-bottom: none; }
+
+        .info-label { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+        .info-value { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; }
+        .info-value.sala { color: var(--accent); }
+        .info-value.valor { color: var(--accent); }
+        .info-value.data { color: var(--text-primary); font-size: 0.95rem; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
+        .form-group label .required { color: var(--error); }
+
+        .input-wrapper { position: relative; }
+        .input-icon {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            color: var(--text-secondary); font-size: 1rem; width: 20px; text-align: center;
+        }
+
+        .form-group input {
+            width: 100%; background-color: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; padding: 14px 16px 14px 48px; color: var(--text-primary);
+            font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 400; transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+        }
+        .form-group input::placeholder { color: #64748b; }
+        .form-group input[readonly] {
+            background-color: rgba(16, 185, 129, 0.1); border-color: var(--success); color: var(--success); font-weight: 600;
+        }
+
+        .loading-icon {
+            position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+            width: 20px; height: 20px; border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; display: none;
+        }
+        @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+        .btn-enviar {
+            width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #000000; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800;
+            letter-spacing: 0.5px; padding: 16px; border: none; border-radius: 12px; cursor: pointer;
+            transition: all 0.3s ease; text-transform: uppercase; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-enviar:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4); }
+        .btn-enviar:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .mensagem {
+            padding: 14px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem;
+            font-weight: 600; text-align: center; display: none; animation: slideDown 0.3s ease;
+        }
+        .mensagem.erro { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; }
+        .mensagem.sucesso { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px; background-color: var(--whatsapp);
+            color: #ffffff; width: 56px; height: 56px; border-radius: 50%; text-align: center;
+            font-size: 28px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 100;
+            display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
+        .whatsapp-float i { position: relative; top: 2px; }
+
+        .back-link {
+            text-align: center; margin-top: 15px; color: var(--text-secondary); text-decoration: none;
+            font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; transition: color 0.3s ease;
+        }
+        .back-link:hover { color: var(--accent); }
+        .back-container { text-align: center; margin-top: 20px; }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.4rem; } .subtitle { font-size: 0.85rem; }
+            .info-value { font-size: 1rem; }
+            .form-group input { padding: 13px 14px 13px 46px; font-size: 0.95rem; }
+            .btn-enviar { font-size: 1rem; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>X SOLO <span class="highlight">1</span> V 47 FREE FIRE</h1>
+        <p class="subtitle">Finalize sua inscrição preenchendo os dados abaixo</p>
+    </header>
+
+    <main class="main-content">
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">Vaga Selecionada:</span>
+                <span class="info-value sala" id="sala-numero">01</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Valor:</span>
+                <span class="info-value valor">GRÁTIS</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Data/Hora:</span>
+                <span class="info-value data" id="data-hora">--/--/----, --:--:--</span>
+            </div>
+        </div>
+
+        <div id="mensagem-erro" class="mensagem erro"></div>
+        <div id="mensagem-sucesso" class="mensagem sucesso"></div>
+
+        <form id="form-reserva">
+            <div class="form-group">
+                <label for="id_jogador">ID do Free Fire <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-gamepad input-icon"></i>
+                    <input type="number" id="id_jogador" name="id" placeholder="Ex: 123456789" required inputmode="numeric">
+                    <div class="loading-icon" id="loading-icon"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nome_jogador">Nome do Jogador (Nick) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="nome_jogador" name="o jogador" placeholder="Será preenchido automaticamente" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">WhatsApp (com DDD) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="telefone" name="telefone" placeholder="Ex: 85999999999" required inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pix">Sua Chave PIX (para receber prêmio) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-qrcode input-icon"></i>
+                    <input type="text" id="pix" name="pix" placeholder="CPF, Email, Telefone ou Aleatória" required>
+                </div>
+            </div>
+
+            <input type="hidden" id="sala" name="sala">
+
+            <button type="submit" class="btn-enviar" id="btn-enviar">
+                <i class="fas fa-check-circle"></i> RESERVAR VAGA AGORA
+            </button>
+        </form>
+
+        <div class="back-container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Voltar para o início
+            </a>
+        </div>
+    </main>
+
+    <a href="https://chat.whatsapp.com/CvkURr19Ge82kZ5iRxnWsx?s=cl&p=a&iam=2" 
+       class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // ✅ NOVA URL DA API (VERSÃO 2 - PÚBLICA)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-TFTchINF5Gl3rR2NA3m9J4Q3enh2mZMVCYUXAHXz-gz0i_5zbIpq8eAQANvT7hEi/exec";
+        const PROXY_URL = 'https://empty-scene-c54e.alekziinamassa.workers.dev';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const numeroSala = urlParams.get('numero');
+
+        if (!numeroSala || isNaN(numeroSala) || numeroSala < 1 || numeroSala > 48) {
+            alert("Nenhuma sala válida selecionada.");
+            window.location.href = "index.html";
+        }
+
+        document.getElementById('sala-numero').textContent = String(numeroSala).padStart(2, '0');
+        document.getElementById('sala').value = String(numeroSala).padStart(2, '0');
+
+        const agora = new Date();
+        document.getElementById('data-hora').textContent = agora.toLocaleString('pt-BR');
+
+        const form = document.getElementById('form-reserva');
+        const btnEnviar = document.getElementById('btn-enviar');
+        const msgErro = document.getElementById('mensagem-erro');
+        const msgSucesso = document.getElementById('mensagem-sucesso');
+        const inputId = document.getElementById('id_jogador');
+        const inputNome = document.getElementById('nome_jogador');
+        const loadingIcon = document.getElementById('loading-icon');
+
+        let debounceTimer;
+
+        // BUSCA AUTOMÁTICA DO NICKNAME
+        inputId.addEventListener('input', function(e) {
+            const uid = e.target.value.trim();
+            clearTimeout(debounceTimer);
+            inputNome.style.color = 'var(--text-primary)';
+
+            if (uid.length >= 5) {
+                loadingIcon.style.display = 'block';
+                inputNome.placeholder = 'Buscando nome...';
+                
+                debounceTimer = setTimeout(async () => {
+                    try {
+                        const response = await fetch(`${PROXY_URL}/?uid=${encodeURIComponent(uid)}`, {
+                            method: 'GET',
+                            headers: { 'Accept': 'application/json' }
+                        });
+
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        const data = await response.json();
+
+                        if (data.ok && data.nickname) {
+                            inputNome.value = data.nickname;
+                            inputNome.style.color = 'var(--success)';
+                        } else if (data.erro) {
+                            inputNome.value = '';
+                            inputNome.style.color = 'var(--error)';
+                            inputNome.placeholder = 'ID não encontrado. Digite manualmente.';
+                        } else {
+                            inputNome.value = '';
+                            inputNome.style.color = 'var(--text-secondary)';
+                            inputNome.placeholder = 'Digite o nome manualmente';
+                        }
+                    } catch (error) {
+                        console.warn('Erro na consulta de nickname:', error);
+                        inputNome.value = '';
+                        inputNome.style.color = 'var(--text-secondary)';
+                        inputNome.placeholder = 'Erro na conexão. Digite manualmente';
+                    } finally {
+                        loadingIcon.style.display = 'none';
+                    }
+                }, 800);
+            } else {
+                inputNome.value = '';
+                inputNome.placeholder = 'Será preenchido automaticamente';
+                loadingIcon.style.display = 'none';
+            }
+        });
+
+        // MÁSCARA DE TELEFONE
+        document.getElementById('telefone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            e.target.value = value;
+        });
+
+        // VALIDAÇÃO DE CAMPOS
+        function validarCampos() {
+            const id = inputId.value.trim();
+            const nome = inputNome.value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const pix = document.getElementById('pix').value.trim();
+
+            if (!id || id.length < 5) return { valido: false, erro: 'ID do Free Fire inválido. Mínimo 5 dígitos.' };
+            if (!nome || nome.length < 3) return { valido: false, erro: 'Nome do jogador inválido. Mínimo 3 caracteres.' };
+            
+            const telLimpo = telefone.replace(/\D/g, '');
+            if (telLimpo.length < 10 || telLimpo.length > 11) return { valido: false, erro: 'WhatsApp inválido. Use DDD + número (10-11 dígitos).' };
+            if (!pix || pix.length < 5) return { valido: false, erro: 'Chave PIX inválida.' };
+
+            return { valido: true };
+        }
+
+        function mostrarMensagem(tipo, texto) {
+            msgErro.style.display = 'none';
+            msgSucesso.style.display = 'none';
+            if (tipo === 'erro') {
+                msgErro.textContent = texto;
+                msgErro.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                msgSucesso.textContent = texto;
+                msgSucesso.style.display = 'block';
+            }
+        }
+
+        // ENVIO DO FORMULÁRIO
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const validacao = validarCampos();
+            if (!validacao.valido) {
+                mostrarMensagem('erro', validacao.erro);
+                return;
+            }
+            
+            btnEnviar.disabled = true;
+            btnEnviar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando e Salvando...';
+            msgErro.style.display = 'none';
+
+            try {
+                // 1. Verificar se a sala já foi ocupada
+                const responseRead = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'read' })
+                });
+                
+                if (!responseRead.ok) throw new Error(`Falha na conexão (Read): ${responseRead.status}`);
+                const dataRead = await responseRead.json();
+
+                if (dataRead.status === 'success') {
+                    const salaOcupada = dataRead.data.some(row => 
+                        String(row.sala).trim() === String(numeroSala).trim()
+                    );
+
+                    if (salaOcupada) {
+                        throw new Error("❌ Esta sala acabou de ser reservada por outro jogador. Volte e escolha outra.");
+                    }
+                } else {
+                    throw new Error(dataRead.message || "Falha ao verificar disponibilidade.");
+                }
+
+                // 2. Salvar os dados
+                const dadosParaEnviar = {
+                    action: 'create',
+                    sala: String(numeroSala).padStart(2, '0'),
+                    id: inputId.value.trim(),
+                    'o jogador': inputNome.value.trim(),
+                    pix: document.getElementById('pix').value.trim(),
+                    telefone: document.getElementById('telefone').value.trim()
+                };
+
+                console.log("📤 Enviando dados para a planilha:", dadosParaEnviar);
+
+                const responseCreate = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(dadosParaEnviar)
+                });
+
+                if (!responseCreate.ok) {
+                    const errorText = await responseCreate.text();
+                    throw new Error(`Falha na conexão (Create): ${responseCreate.status} - ${errorText}`);
+                }
+
+                const dataCreate = await responseCreate.json();
+                console.log("✅ Resposta do servidor:", dataCreate);
+
+                if (dataCreate.status === 'success') {
+                    mostrarMensagem('sucesso', '✅ Vaga reservada com sucesso! Redirecionando...');
+                    setTimeout(() => {
+                        window.location.href = "zap1.html";
+                    }, 1500);
+                } else {
+                    throw new Error(dataCreate.message || "Erro ao salvar os dados.");
+                }
+
+            } catch (error) {
+                console.error("🚨 ERRO DETALHADO:", error);
+                let msg = error.message || "Ocorreu um erro desconhecido.";
+                
+                if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS')) {
+                    msg = "❌ Erro de conexão com o Google Sheets.\n\nVerifique:\n1. O script foi implantado como 'Qualquer pessoa'?\n2. Sua internet está funcionando?\n3. Desative o AdBlock temporariamente.";
+                }
+                
+                mostrarMensagem('erro', msg);
+                btnEnviar.disabled = false;
+                btnEnviar.innerHTML = '<i class="fas fa-check-circle"></i> RESERVAR VAGA AGORA';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<style>
+    /* Esconde o iframe do Netlify */
+    iframe[id="nl-badge-frame"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .wa-float-btn {
+        position: fixed !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        width: 190px !important;
+        height: 44px !important;
+        background: #25D366 !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
+        transition: all 0.25s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        font-family: 'Inter', -apple-system, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #ffffff !important;
+        letter-spacing: 0.3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        outline: none !important;
+    }
+
+    .wa-float-btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
+        background: #20BD5A !important;
+    }
+
+    .wa-float-btn:active {
+        transform: scale(0.97) !important;
+    }
+
+    .wa-float-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (max-width: 480px) {
+        .wa-float-btn {
+            width: 170px !important;
+            height: 42px !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            font-size: 0.85rem !important;
+        }
+        .wa-float-btn svg {
+            width: 20px !important;
+            height: 20px !important;
+        }
+    }
+</style>
+
+<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
+   class="wa-float-btn" 
+   id="waFloatBtn"
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    // Remove/esconde o iframe do Netlify
+    (function hideNetlifyBadge() {
+        function removeBadge() {
+            // Tenta esconder pelo ID
+            var iframe = document.getElementById('nl-badge-frame');
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.opacity = '0';
+                iframe.remove(); // Remove completamente do DOM
+            }
+            
+            // Tenta esconder por seletor CSS genérico
+            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
+            badges.forEach(function(badge) {
+                badge.style.display = 'none';
+                badge.remove();
+            });
+        }
+
+        // Executa imediatamente
+        removeBadge();
+
+        // Executa após DOM carregado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', removeBadge);
+        }
+
+        // Executa após página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(removeBadge, 100);
+            setTimeout(removeBadge, 500);
+            setTimeout(removeBadge, 1500);
+        });
+
+        // Usa MutationObserver para detectar quando o iframe for injetado
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'IFRAME' && 
+                            (node.id === 'nl-badge-frame' || 
+                             node.title.indexOf('Netlify') !== -1)) {
+                            node.style.display = 'none';
+                            setTimeout(function() { node.remove(); }, 10);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        }
+    })();
+</script>
+<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->

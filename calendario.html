@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Campeonatos - X SOLO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: #e3e6e8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CABEÇALHO */
+        .header {
+            width: 100%;
+            background: #141414;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #2a2a2a;
+            color: #e3e6e8;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .back-btn:hover { background: rgba(255, 216, 20, 0.1); border-color: #FFD814; color: #FFD814; }
+        
+        .header-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .header-title span { color: #FFD814; }
+
+        /* CONTEÚDO PRINCIPAL */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* RELÓGIO EM TEMPO REAL */
+        .realtime-clock {
+            background: linear-gradient(145deg, #141414, #1a1a1a);
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .clock-time {
+            font-family: 'Russo One', sans-serif;
+            font-size: 3.5rem;
+            color: #FFD814;
+            line-height: 1;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(255, 216, 20, 0.2);
+        }
+        .clock-date {
+            font-size: 1.1rem;
+            color: #888;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        /* CALENDÁRIO */
+        .calendar-card {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .calendar-month {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #2a2a2a;
+            color: #e3e6e8;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover { background: rgba(255, 216, 20, 0.1); border-color: #FFD814; color: #FFD814; }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        .weekday {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #FFD814;
+            text-transform: uppercase;
+            padding: 8px 0;
+            letter-spacing: 0.5px;
+        }
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #ccc;
+            cursor: default;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .day:hover:not(.empty):not(.today) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .day.empty {
+            cursor: default;
+        }
+        .day.today {
+            background: #FFD814;
+            color: #000;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(255, 216, 20, 0.3);
+        }
+        .day.weekend {
+            color: #FFD814;
+            font-weight: 600;
+        }
+        .day.weekend::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            width: 4px;
+            height: 4px;
+            background: #FFD814;
+            border-radius: 50%;
+        }
+        .day.today.weekend::after {
+            background: #000;
+        }
+
+        /* AVISOS E REGRAS */
+        .rules-card {
+            background: rgba(255, 216, 20, 0.05);
+            border: 1px solid rgba(255, 216, 20, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .rules-title {
+            font-family: 'Russo One', sans-serif;
+            color: #FFD814;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .rule-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .rule-icon {
+            font-size: 1.5rem;
+            color: #FFD814;
+            margin-top: 2px;
+        }
+        .rule-text h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .rule-text p {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .highlight {
+            color: #FFD814;
+            font-weight: 600;
+        }
+
+        /* LEGENDA */
+        .legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .legend-dot.today { background: #FFD814; }
+        .legend-dot.weekend { background: #FFD814; opacity: 0.5; }
+
+        @media (max-width: 600px) {
+            .clock-time { font-size: 2.5rem; }
+            .calendar-grid { gap: 4px; }
+            .day { font-size: 0.85rem; }
+            .weekday { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="back-btn" title="Voltar">
+            <i class="ph ph-arrow-left"></i>
+        </a>
+        <div class="header-title">CALENDÁRIO <span>CAMPEONATOS</span></div>
+    </header>
+
+    <div class="container">
+        <!-- RELÓGIO EM TEMPO REAL -->
+        <div class="realtime-clock">
+            <div class="clock-time" id="relogio">00:00:00</div>
+            <div class="clock-date" id="data-completa">Carregando data...</div>
+        </div>
+
+        <!-- CALENDÁRIO -->
+        <div class="calendar-card">
+            <div class="calendar-header">
+                <button class="nav-btn" onclick="mudarMes(-1)">
+                    <i class="ph ph-caret-left"></i>
+                </button>
+                <div class="calendar-month" id="mes-ano"></div>
+                <button class="nav-btn" onclick="mudarMes(1)">
+                    <i class="ph ph-caret-right"></i>
+                </button>
+            </div>
+            
+            <div class="calendar-grid">
+                <div class="weekday">Dom</div>
+                <div class="weekday">Seg</div>
+                <div class="weekday">Ter</div>
+                <div class="weekday">Qua</div>
+                <div class="weekday">Qui</div>
+                <div class="weekday">Sex</div>
+                <div class="weekday">Sáb</div>
+            </div>
+            <div class="calendar-grid" id="dias-calendario">
+                <!-- Dias gerados via JavaScript -->
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot today"></div>
+                    <span>Hoje</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot weekend"></div>
+                    <span>Fim de Semana (Horário Especial)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGRAS E HORÁRIOS -->
+        <div class="rules-card">
+            <div class="rules-title">
+                <i class="ph ph-info"></i>
+                INFORMAÇÕES OFICIAIS DE HORÁRIOS
+            </div>
+            
+            <div class="rule-item">
+                <i class="ph ph-calendar-check rule-icon"></i>
+                <div class="rule-text">
+                    <h4>Dias de Semana (Segunda a Sexta)</h4>
+                    <p>Horário previsto das <span class="highlight">21:00 às 23:00</span> (9h às 11h da noite).</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <i class="ph ph-star rule-icon"></i>
+                <div class="rule-text">
+                    <h4>Finais de Semana (Sábado e Domingo)</h4>
+                    <p>Horário previsto das <span class="highlight">14:00 às 18:00</span> (2h às 6h da tarde).</p>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <i class="ph ph-warning rule-icon" style="color: #ef4444;"></i>
+                <div class="rule-text">
+                    <h4 style="color: #ef4444;">Atenção Importante</h4>
+                    <p>As datas e horas exatas são encaminhadas diretamente no <strong>grupo oficial</strong>. Os horários estão <strong>sujeitos a alterações</strong> a qualquer momento pelos administradores. Fique atento às notificações!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. RELÓGIO EM TEMPO REAL (ATUALIZAÇÃO INFINITA)
+        // ==========================================
+        function atualizarRelogio() {
+            const agora = new Date();
+            
+            // Formata a hora (HH:MM:SS)
+            const horas = String(agora.getHours()).padStart(2, '0');
+            const minutos = String(agora.getMinutes()).padStart(2, '0');
+            const segundos = String(agora.getSeconds()).padStart(2, '0');
+            document.getElementById('relogio').textContent = `${horas}:${minutos}:${segundos}`;
+            
+            // Formata a data completa em português
+            const opcoesData = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dataFormatada = agora.toLocaleDateString('pt-BR', opcoesData);
+            document.getElementById('data-completa').textContent = dataFormatada;
+        }
+
+        // Atualiza a cada 1000ms (1 segundo) - válido infinitamente
+        setInterval(atualizarRelogio, 1000);
+        atualizarRelogio(); // Chama imediatamente ao carregar
+
+        // ==========================================
+        // 2. LÓGICA DO CALENDÁRIO DINÂMICO
+        // ==========================================
+        let dataAtual = new Date();
+        let mesAtual = dataAtual.getMonth();
+        let anoAtual = dataAtual.getFullYear();
+
+        const nomesMeses = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+
+        function renderizarCalendario(mes, ano) {
+            const primeiroDiaDoMes = new Date(ano, mes, 1).getDay();
+            const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+            const containerDias = document.getElementById('dias-calendario');
+            const mesAnoDisplay = document.getElementById('mes-ano');
+            
+            mesAnoDisplay.textContent = `${nomesMeses[mes]} ${ano}`;
+            containerDias.innerHTML = '';
+
+            // Dias vazios antes do primeiro dia do mês
+            for (let i = 0; i < primeiroDiaDoMes; i++) {
+                const divVazia = document.createElement('div');
+                divVazia.className = 'day empty';
+                containerDias.appendChild(divVazia);
+            }
+
+            // Dias do mês
+            const hoje = new Date();
+            for (let dia = 1; dia <= diasNoMes; dia++) {
+                const divDia = document.createElement('div');
+                divDia.className = 'day';
+                divDia.textContent = dia;
+
+                // Verifica se é hoje
+                if (dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear()) {
+                    divDia.classList.add('today');
+                }
+
+                // Verifica se é fim de semana (0 = Domingo, 6 = Sábado)
+                const diaDaSemana = new Date(ano, mes, dia).getDay();
+                if (diaDaSemana === 0 || diaDaSemana === 6) {
+                    divDia.classList.add('weekend');
+                }
+
+                containerDias.appendChild(divDia);
+            }
+        }
+
+        function mudarMes(direcao) {
+            mesAtual += direcao;
+            if (mesAtual > 11) {
+                mesAtual = 0;
+                anoAtual++;
+            } else if (mesAtual < 0) {
+                mesAtual = 11;
+                anoAtual--;
+            }
+            renderizarCalendario(mesAtual, anoAtual);
+        }
+
+        // Inicializa o calendário ao carregar a página
+        renderizarCalendario(mesAtual, anoAtual);
+    </script>
+</body>
+</html>

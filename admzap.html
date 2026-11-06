@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Link WhatsApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e3e6e8;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+
+        /* --- CABEÇALHO COMPACTO E ALINHADO --- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: linear-gradient(145deg, #141414, #0f0f0f);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD814, transparent);
+        }
+        .btn-menu {
+            background: rgba(255, 216, 20, 0.1);
+            border: 1px solid rgba(255, 216, 20, 0.3);
+            color: #FFD814;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-menu:hover { background: rgba(255, 216, 20, 0.2); transform: scale(1.05); }
+        
+        .header-content { flex: 1; }
+        .header h1 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.4rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .header h1 span { color: #FFD814; }
+        .header p { color: #888; font-size: 0.85rem; }
+
+        /* --- SIDEBAR (MENU FLUTUANTE) --- */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+        .sidebar {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 280px;
+            background: #141414;
+            border-right: 1px solid #2a2a2a;
+            z-index: 1999;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar.active { transform: translateX(0); }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-header h3 {
+            font-family: 'Russo One', sans-serif;
+            color: #FFD814;
+            font-size: 1.1rem;
+        }
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .sidebar-close:hover { color: #fff; }
+
+        .sidebar-menu { padding: 20px; flex: 1; }
+        .sidebar-item {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            color: #e3e6e8;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+        .sidebar-item i { font-size: 1.2rem; color: #FFD814; }
+        .sidebar-item:hover {
+            border-color: #FFD814;
+            background: rgba(255, 216, 20, 0.05);
+            transform: translateX(5px);
+        }
+
+        /* --- CARDS E FORMULÁRIOS --- */
+        .status-card {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .status-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-label i { color: #FFD814; font-size: 1.1rem; }
+        .status-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #ccc;
+            word-break: break-all;
+            padding: 12px;
+            background: #0a0a0a;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+        }
+        .status-value a { color: #FFD814; text-decoration: none; transition: opacity 0.2s; }
+        .status-value a:hover { opacity: 0.8; text-decoration: underline; }
+        .status-value.empty { color: #555; font-style: italic; }
+
+        .form-section {
+            background: #141414;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .section-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.1rem;
+            color: #FFD814;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #FFD814;
+            box-shadow: 0 0 0 3px rgba(255, 216, 20, 0.1);
+        }
+        .form-group input::placeholder { color: #555; }
+
+        .action-bar { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            flex: 1;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background: #FFD814; color: #000; }
+        .btn-primary:hover:not(:disabled) { background: #F7CA00; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 216, 20, 0.3); }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger:hover:not(:disabled) { background: #dc2626; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .btn-secondary { background: #141414; color: #ccc; border: 1px solid #2a2a2a; }
+        .btn-secondary:hover:not(:disabled) { border-color: #FFD814; color: #FFD814; }
+
+        .info-box {
+            background: rgba(255, 216, 20, 0.05);
+            border: 1px solid rgba(255, 216, 20, 0.2);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .info-box i { color: #FFD814; font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+        .info-box p { font-size: 0.85rem; color: #aaa; line-height: 1.5; }
+        .info-box strong { color: #FFD814; }
+
+        .loading-state { text-align: center; padding: 30px 20px; }
+        .loading-state i { animation: spin 1s linear infinite; font-size: 1.8rem; color: #FFD814; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; z-index: 2000;
+            opacity: 0; transition: all 0.4s ease; pointer-events: none; display: flex; align-items: center; gap: 10px;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { background: #10b981; color: #fff; }
+        .toast.error { background: #ef4444; color: #fff; }
+
+        @media (max-width: 600px) {
+            .header { padding: 14px 16px; }
+            .header h1 { font-size: 1.2rem; }
+            .action-bar { flex-direction: column; }
+            .btn { width: 100%; }
+            .sidebar { width: 85vw; max-width: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENU LATERAL FLUTUANTE -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Navegação</h3>
+            <button class="sidebar-close" onclick="toggleSidebar()"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="sidebar-menu">
+            <a href="adms.html" class="sidebar-item">
+                <i class="ph ph-house"></i>
+                TELA INICIAL ADM 01
+            </a>
+            <a href="adm18333jjcf.html" class="sidebar-item">
+                <i class="ph ph-whatsapp-logo"></i>
+                ALTERAR GRUPO VIP 02
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- CABEÇALHO COMPACTO -->
+        <div class="header">
+            <button class="btn-menu" onclick="toggleSidebar()" title="Abrir Menu">
+                <i class="ph ph-list"></i>
+            </button>
+            <div class="header-content">
+                <h1>PAINEL <span>ADMIN</span></h1>
+                <p>Gerenciamento de Link do WhatsApp</p>
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-label">
+                <i class="ph ph-link"></i>
+                Link atualmente salvo na planilha:
+            </div>
+            <div class="status-value" id="currentLinkDisplay">
+                <div class="loading-state">
+                    <i class="ph ph-spinner"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-title">
+                <i class="ph ph-whatsapp-logo"></i>
+                Gerenciar Link
+            </div>
+
+            <div class="info-box">
+                <i class="ph ph-info"></i>
+                <p>
+                    Insira o link do WhatsApp ou grupo. O link será salvo na <strong>célula A2</strong> da planilha e poderá ser substituído a qualquer momento.
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="linkInput">Link do WhatsApp:</label>
+                <input 
+                    type="text" 
+                    id="linkInput" 
+                    placeholder="Ex: https://wa.me/5511999999999 ou https://chat.whatsapp.com/..."
+                >
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" id="btnSave" onclick="saveLink()">
+                    <i class="ph ph-floppy-disk"></i>
+                    Salvar / Atualizar
+                </button>
+                <button class="btn btn-danger" id="btnRemove" onclick="removeLink()">
+                    <i class="ph ph-trash"></i>
+                    Remover
+                </button>
+            </div>
+            
+            <div class="action-bar" style="margin-top: 12px;">
+                <button class="btn btn-secondary" onclick="loadCurrentLink()">
+                    <i class="ph ph-arrows-clockwise"></i>
+                    Atualizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // URL do seu Google Apps Script implantado (ATUALIZADO)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzDI25f30EJR1hGmJnnun_JFqYYiMo7E5nVATSWHH1MAcPk9GrJsdYYuubcniSPBsWBg/exec";
+        
+        // Planilha vinculada (apenas para referência/documentação):
+        // https://docs.google.com/spreadsheets/d/1-rPxcVj9TCS5tmB4isiVudzKpF77Z7fNtsh6DxqbJjY/edit
+
+        // Elementos do DOM
+        const currentLinkDisplay = document.getElementById('currentLinkDisplay');
+        const linkInput = document.getElementById('linkInput');
+        const btnSave = document.getElementById('btnSave');
+        const btnRemove = document.getElementById('btnRemove');
+
+        // Função para mostrar toast
+        function mostrarToast(mensagem, tipo = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = tipo === 'success' ? 'ph-check-circle' : 'ph-x-circle';
+            toast.innerHTML = `<i class="ph ${icon}"></i> ${mensagem}`;
+            toast.className = `toast ${tipo} show`;
+            setTimeout(() => { toast.classList.remove('show'); }, 4000);
+        }
+
+        // Função para abrir/fechar o menu lateral
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+
+        // Função para carregar o link atual
+        async function loadCurrentLink() {
+            setLoading(true);
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    if (data.link && data.link.toString().trim() !== "") {
+                        currentLinkDisplay.innerHTML = `
+                            <a href="${data.link}" target="_blank" rel="noopener noreferrer">
+                                <i class="ph ph-external-link" style="margin-right: 8px;"></i>
+                                ${data.link}
+                            </a>
+                        `;
+                        linkInput.value = data.link;
+                    } else {
+                        currentLinkDisplay.innerHTML = `
+                            <span class="empty">
+                                <i class="ph ph-whatsapp-logo" style="margin-right: 8px; opacity: 0.5;"></i>
+                                Nenhum link salvo no momento
+                            </span>
+                        `;
+                        linkInput.value = "";
+                    }
+                } else {
+                    throw new Error(data.message || 'Erro ao carregar');
+                }
+            } catch (error) {
+                currentLinkDisplay.innerHTML = `
+                    <span class="empty" style="color: #ef4444;">
+                        <i class="ph ph-warning" style="margin-right: 8px;"></i>
+                        Erro ao carregar: ${error.message}
+                    </span>
+                `;
+                mostrarToast('Erro ao carregar link', 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Função para salvar/atualizar o link
+        async function saveLink() {
+            const newLink = linkInput.value.trim();
+            
+            if (!newLink) {
+                mostrarToast('Por favor, insira um link válido', 'error');
+                linkInput.focus();
+                return;
+            }
+
+            setLoading(true);
+            try {
+                const url = `${SCRIPT_URL}?link=${encodeURIComponent(newLink)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    mostrarToast('Link salvo com sucesso!');
+                    await loadCurrentLink();
+                } else {
+                    throw new Error(data.message || 'Erro ao salvar');
+                }
+            } catch (error) {
+                mostrarToast('Erro ao salvar: ' + error.message, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Função para remover o link
+        async function removeLink() {
+            const currentLink = linkInput.value.trim();
+            
+            if (!currentLink) {
+                mostrarToast('Não há link para remover', 'error');
+                return;
+            }
+
+            if (!confirm('Deseja realmente remover o link do WhatsApp da planilha?\n\nEsta ação vai limpar a célula A2.')) {
+                return;
+            }
+
+            setLoading(true);
+            try {
+                const url = `${SCRIPT_URL}?link=`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    mostrarToast('Link removido com sucesso!');
+                    linkInput.value = "";
+                    await loadCurrentLink();
+                } else {
+                    throw new Error(data.message || 'Erro ao remover');
+                }
+            } catch (error) {
+                mostrarToast('Erro ao remover: ' + error.message, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Função para setar estado de loading
+        function setLoading(isLoading) {
+            btnSave.disabled = isLoading;
+            btnRemove.disabled = isLoading;
+            if (isLoading) {
+                currentLinkDisplay.innerHTML = `
+                    <div class="loading-state" style="padding: 20px;">
+                        <i class="ph ph-spinner"></i>
+                    </div>
+                `;
+            }
+        }
+
+        // Permitir salvar com Enter
+        linkInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveLink();
+            }
+        });
+
+        // Carregar dados ao iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCurrentLink();
+        });
+    </script>
+</body>
+</html>

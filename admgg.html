@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloqueio de Vagas - TESTE INTERNO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #0a0a0a;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 0;
+      color: #e3e6e8;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    /* Aviso de Teste */
+    .warning-banner {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    /* Header com Botão Voltar */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      padding: 24px;
+      background: linear-gradient(145deg, #141414, #0f0f0f);
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #FFD814, transparent);
+    }
+    .header-back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #2a2a2a;
+      color: #ccc;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .header-back-btn:hover {
+      background: rgba(255, 216, 20, 0.1);
+      border-color: #FFD814;
+      color: #FFD814;
+      transform: translateX(-2px);
+    }
+    .header-text {
+      flex: 1;
+      text-align: center;
+    }
+    .header-text h1 { 
+      font-family: 'Russo One', sans-serif; 
+      font-size: 1.8rem; 
+      color: #fff; 
+      margin-bottom: 8px; 
+    }
+    .header-text h1 span { color: #FFD814; }
+    .header-text p { color: #888; font-size: 0.95rem; }
+
+    /* Stats */
+    .stats-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .stat-card {
+      flex: 1; min-width: 150px; background: #141414; border: 1px solid #2a2a2a;
+      border-radius: 10px; padding: 16px; text-align: center;
+    }
+    .stat-value { font-family: 'Russo One', sans-serif; font-size: 1.8rem; color: #FFD814; }
+    .stat-label { font-size: 0.8rem; color: #888; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Actions */
+    .action-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .btn {
+      padding: 12px 20px; border: none; border-radius: 8px; font-weight: 600;
+      font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: 'Inter', sans-serif; text-decoration: none;
+    }
+    .btn-primary { background: #FFD814; color: #000; }
+    .btn-primary:hover { background: #F7CA00; transform: translateY(-2px); }
+    .btn-secondary { background: #141414; color: #ccc; border: 1px solid #2a2a2a; }
+    .btn-secondary:hover { border-color: #FFD814; color: #FFD814; }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    /* Grid de Vagas */
+    .vagas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .vaga-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 14px 10px;
+      text-align: center;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .vaga-card.ocupada {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+    .vaga-card.livre {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .vaga-num {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .vaga-status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .vaga-card.ocupada .vaga-status { color: #ef4444; }
+    .vaga-card.livre .vaga-status { color: #10b981; }
+    .vaga-nome {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85); z-index: 1000;
+      align-items: center; justify-content: center; padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #141414; border: 1px solid #2a2a2a; border-radius: 16px;
+      max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 24px;
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-title { font-family: 'Russo One', sans-serif; font-size: 1.3rem; color: #FFD814; }
+    .modal-close {
+      background: none; border: none; color: #888; font-size: 1.5rem;
+      cursor: pointer; padding: 0; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; transition: all 0.2s;
+    }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 10px 12px; background: #0a0a0a; border: 1px solid #2a2a2a;
+      border-radius: 8px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif;
+    }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: #FFD814; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-actions .btn { flex: 1; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+      z-index: 2000; opacity: 0; transition: all 0.4s ease; pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast.success { background: #10b981; color: #fff; }
+    .toast.error { background: #ef4444; color: #fff; }
+    .toast.info { background: #3b82f6; color: #fff; }
+
+    .loading-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 10, 10, 0.9); z-index: 3000;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .loading-overlay.active { display: flex; }
+    .spinner {
+      width: 40px; height: 40px; border: 4px solid #2a2a2a;
+      border-top-color: #FFD814; border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { margin-top: 16px; color: #FFD814; font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .action-bar { flex-direction: column; }
+      .btn { width: 100%; }
+      .vagas-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .header-text h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loadingText">Processando...</div>
+  </div>
+
+  <div class="container">
+    <div class="warning-banner">
+      <i class="ph ph-warning" style="font-size: 1.5rem;"></i>
+      <span>ATENÇÃO: Ferramenta de TESTE INTERNO. Preenche a planilha para pausar inscrições reais. Lembre-se de "Limpar Tudo" depois!</span>
+    </div>
+
+    <!-- CABEÇALHO COM BOTÃO VOLTAR PARA O adms.html -->
+    <div class="header">
+      <a href="adms.html" class="header-back-btn" title="Voltar para o Painel Admin">
+        <i class="ph ph-arrow-left" style="font-size: 1.4rem;"></i>
+      </a>
+      
+      <div class="header-text">
+        <h1>BLOQUEIO DE <span>VAGAS</span></h1>
+        <p>Gerenciamento de ocupação da planilha (Máx: 48)</p>
+      </div>
+      
+      <!-- Espaçador invisível para manter o texto perfeitamente centralizado -->
+      <div style="width: 44px; flex-shrink: 0;"></div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Ocupadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statLivres">48</div>
+        <div class="stat-label">Disponíveis</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPercent">0%</div>
+        <div class="stat-label">Preenchido</div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="iniciarPreenchimentoAuto()">
+        <i class="ph ph-magic-wand"></i> Preencher Vagas Livres (Auto)
+      </button>
+      <button class="btn btn-secondary" onclick="abrirModalManual()">
+        <i class="ph ph-plus"></i> Adicionar Manualmente
+      </button>
+      <button class="btn btn-secondary" onclick="carregarDados()">
+        <i class="ph ph-arrows-clockwise"></i> Atualizar Lista
+      </button>
+      <button class="btn btn-danger" onclick="confirmarLimparTudo()">
+        <i class="ph ph-trash"></i> Limpar Tudo (Liberar)
+      </button>
+    </div>
+
+    <h3 style="color: #888; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">Status das 48 Vagas</h3>
+    <div class="vagas-grid" id="vagasGrid">
+      <!-- Grid gerado via JS -->
+    </div>
+  </div>
+
+  <!-- Modal de Adição Manual -->
+  <div class="modal-overlay" id="manualModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Adicionar Vaga Manualmente</div>
+        <button class="modal-close" onclick="fecharModalManual()">&times;</button>
+      </div>
+      <form id="manualForm" onsubmit="salvarManual(event)">
+        <div class="form-group">
+          <label>Número da Vaga (1-48)</label>
+          <select id="manualVaga" required></select>
+        </div>
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" id="manualNome" required placeholder="Ex: João da Silva">
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="manualTelefone" required placeholder="Ex: 85999999999">
+        </div>
+        <div class="form-group">
+          <label>ID Free Fire</label>
+          <input type="text" id="manualIdFF" required placeholder="Ex: 123456789">
+        </div>
+        <div class="form-group">
+          <label>Nome no Jogo</label>
+          <input type="text" id="manualNomeJogo" required placeholder="Ex: MatadorDeElite">
+        </div>
+        <div class="form-group">
+          <label>Chave PIX</label>
+          <input type="text" id="manualPix" required placeholder="Ex: cpf ou email">
+        </div>
+        <div class="form-group">
+          <label>CPF</label>
+          <input type="text" id="manualCpf" required placeholder="Apenas números">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="fecharModalManual()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="ph ph-floppy-disk"></i> Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxMcASfDg41MrWWjLaWE7Ojsz_3trO_1vfEOWTw1YEMEnWJXuN5Rj6XRJoduitPqaMukQ/exec";
+    const MAX_VAGAS = 48;
+    let jogadores = [];
+
+    const nomesBase = ["Lucas Silva","Mateus Oliveira","João Souza","Pedro Costa","Marcos Lima","Gustavo Almeida","Ana Beatriz","Carlos Eduardo"];
+    const nomesJogoBase = ["Fênix99","LoboBranco","RaioX","TigreNegro","AstroFire","ZeroKill","ShadowBR","NinjaFF"];
+
+    // --- Funções de UI ---
+    function mostrarToast(mensagem, tipo = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = mensagem;
+      toast.className = `toast ${tipo} show`;
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+
+    function toggleLoading(show, text = "Processando...") {
+      const overlay = document.getElementById('loadingOverlay');
+      document.getElementById('loadingText').textContent = text;
+      overlay.classList.toggle('active', show);
+    }
+
+    // --- Lógica Principal ---
+    async function carregarDados() {
+      toggleLoading(true, "Carregando status das vagas...");
+      try {
+        const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'read' }) });
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          jogadores = result.data || [];
+          atualizarEstatisticas();
+          renderizarGrid();
+          mostrarToast('Lista atualizada com sucesso!', 'success');
+        } else {
+          throw new Error(result.message || 'Erro ao carregar dados');
+        }
+      } catch (error) {
+        mostrarToast('Erro ao carregar: ' + error.message, 'error');
+      } finally {
+        toggleLoading(false);
+      }
+    }
+
+    function atualizarEstatisticas() {
+      const total = jogadores.length;
+      const livres = Math.max(0, MAX_VAGAS - total);
+      const percent = Math.round((total / MAX_VAGAS) * 100);
+
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statLivres').textContent = livres;
+      document.getElementById('statPercent').textContent = percent + '%';
+    }
+
+    function renderizarGrid() {
+      const grid = document.getElementById('vagasGrid');
+      grid.innerHTML = '';
+
+      const vagasOcupadasMap = {};
+      jogadores.forEach(j => {
+        if(j.sala) vagasOcupadasMap[parseInt(j.sala)] = j;
+      });
+
+      for (let i = 1; i <= MAX_VAGAS; i++) {
+        const jogador = vagasOcupadasMap[i];
+        const card = document.createElement('div');
+        
+        if (jogador) {
+          card.className = 'vaga-card ocupada';
+          card.innerHTML = `
+            <div class="vaga-num">#${i}</div>
+            <div class="vaga-status">Ocupada</div>
+            <div class="vaga-nome" title="${jogador.Nome || 'Sem nome'}">${jogador.Nome || 'Jogador'}</div>
+          `;
+        } else {
+          card.className = 'vaga-card livre';
+          card.innerHTML = `
+            <div class="vaga-num">#${i}</div>
+            <div class="vaga-status">Livre</div>
+            <div class="vaga-nome">Disponível</div>
+          `;
+        }
+        grid.appendChild(card);
+      }
+    }
+
+    // --- Preenchimento Automático ---
+    function gerarDadosAleatorios(numVaga) {
+      const nome = nomesBase[Math.floor(Math.random() * nomesBase.length)] + " " + Math.floor(Math.random() * 999);
+      const nomeJogo = nomesJogoBase[Math.floor(Math.random() * nomesJogoBase.length)] + Math.floor(Math.random() * 999);
+      const telefone = "859" + String(Math.floor(Math.random() * 90000000) + 10000000);
+      const idFF = String(Math.floor(Math.random() * 9000000000) + 1000000000);
+      const cpf = String(Math.floor(Math.random() * 90000000000) + 10000000000);
+      const txid = "TX" + Date.now() + Math.floor(Math.random() * 9999);
+      
+      return {
+        action: "create",
+        sala: numVaga,
+        Nome: nome,
+        Telefone: telefone,
+        ID: idFF,
+        "nome no jogo": nomeJogo,
+        pix: "pix-teste-" + numVaga + "@email.com",
+        "id pagamento": txid,
+        cpf: cpf
+      };
+    }
+
+    async function iniciarPreenchimentoAuto() {
+      const vagasOcupadas = new Set(jogadores.map(j => parseInt(j.sala)));
+      const vagasLivres = [];
+      for (let i = 1; i <= MAX_VAGAS; i++) {
+        if (!vagasOcupadas.has(i)) vagasLivres.push(i);
+      }
+
+      if (vagasLivres.length === 0) {
+        mostrarToast('Todas as 48 vagas já estão ocupadas!', 'info');
+        return;
+      }
+
+      if (!confirm(`Existem ${vagasLivres.length} vagas livres. Deseja preencher TODAS automaticamente com dados de teste?`)) {
+        return;
+      }
+
+      toggleLoading(true, "Preenchendo vagas...");
+      let sucessos = 0;
+      let erros = 0;
+
+      for (const v of vagasLivres) {
+        document.getElementById('loadingText').textContent = `Preenchendo vaga ${v} de ${MAX_VAGAS}...`;
+        try {
+          const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify(gerarDadosAleatorios(v))
+          });
+          const result = await response.json();
+          if (result.status === 'success') sucessos++;
+          else erros++;
+        } catch (e) {
+          erros++;
+        }
+        await new Promise(r => setTimeout(r, 400));
+      }
+
+      toggleLoading(false);
+      mostrarToast(`Concluído! ${sucessos} adicionadas, ${erros} falhas.`, erros > 0 ? 'error' : 'success');
+      await carregarDados();
+    }
+
+    // --- Adição Manual ---
+    function abrirModalManual() {
+      const vagasOcupadas = new Set(jogadores.map(j => parseInt(j.sala)));
+      const select = document.getElementById('manualVaga');
+      select.innerHTML = '';
+      
+      let temLivre = false;
+      for (let i = 1; i <= MAX_VAGAS; i++) {
+        if (!vagasOcupadas.has(i)) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = `Vaga ${i}`;
+          select.appendChild(option);
+          temLivre = true;
+        }
+      }
+
+      if (!temLivre) {
+        mostrarToast('Não há vagas disponíveis para adicionar manualmente.', 'error');
+        return;
+      }
+
+      document.getElementById('manualForm').reset();
+      document.getElementById('manualModal').classList.add('active');
+    }
+
+    function fecharModalManual() {
+      document.getElementById('manualModal').classList.remove('active');
+    }
+
+    async function salvarManual(event) {
+      event.preventDefault();
+      toggleLoading(true, "Salvando dados manualmente...");
+
+      const payload = {
+        action: "create",
+        sala: document.getElementById('manualVaga').value,
+        Nome: document.getElementById('manualNome').value,
+        Telefone: document.getElementById('manualTelefone').value,
+        ID: document.getElementById('manualIdFF').value,
+        "nome no jogo": document.getElementById('manualNomeJogo').value,
+        pix: document.getElementById('manualPix').value,
+        "id pagamento": "MANUAL-" + Date.now(),
+        cpf: document.getElementById('manualCpf').value.replace(/\D/g, '')
+      };
+
+      try {
+        const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          mostrarToast('Vaga preenchida com sucesso!', 'success');
+          fecharModalManual();
+          await carregarDados();
+        } else {
+          throw new Error(result.message || 'Erro ao salvar');
+        }
+      } catch (error) {
+        mostrarToast('Erro: ' + error.message, 'error');
+      } finally {
+        toggleLoading(false);
+      }
+    }
+
+    // --- Limpar Tudo ---
+    function confirmarLimparTudo() {
+      if (jogadores.length === 0) {
+        mostrarToast('A planilha já está vazia.', 'info');
+        return;
+      }
+      if (confirm(`⚠️ ATENÇÃO!\n\nIsso apagará TODOS os ${jogadores.length} registros da planilha.\n\nIsso LIBERARÁ as vagas para inscrições reais.\n\nContinuar?`)) {
+        if (confirm('ÚLTIMA CHANCE: Tem certeza absoluta que deseja apagar tudo?')) {
+          limparTudo();
+        }
+      }
+    }
+
+    async function limparTudo() {
+      toggleLoading(true, "Limpando todos os registros...");
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'clearAll' })
+        });
+        const result = await response.json();
+
+        if (result.status === 'success') {
+          mostrarToast('Todos os registros foram apagados! Vagas liberadas.', 'success');
+          await carregarDados();
+        } else {
+          throw new Error(result.message || 'Erro ao limpar');
+        }
+      } catch (error) {
+        mostrarToast('Erro ao limpar: ' + error.message, 'error');
+      } finally {
+        toggleLoading(false);
+      }
+    }
+
+    document.getElementById('manualModal').addEventListener('click', function(e) {
+      if (e.target === this) fecharModalManual();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      carregarDados();
+    });
+  </script>
+</body>
+</html>
