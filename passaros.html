@@ -93,10 +93,17 @@
         /* CONTEÚDO PRINCIPAL */
         .main-content {
             padding: 15px;
-            max-width: 1200px;
-            margin: 0 auto;
             flex: 1;
             width: 100%;
+        }
+
+        /* WRAPPER PARA LAYOUT LADO A LADO NO PC */
+        .desktop-layout-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* CARD DO MAPA */
@@ -108,7 +115,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 15px;
         }
 
         .mapa-left {
@@ -214,8 +220,6 @@
             border: 1px solid #1e3a5f;
             border-radius: 12px;
             padding: 25px;
-            margin-top: 15px;
-            margin-bottom: 15px;
         }
 
         .salas-grid {
@@ -251,7 +255,6 @@
             background: linear-gradient(145deg, #34d399, #10b981);
         }
 
-        /* ESTADO SELECIONADO (NOVO) */
         .sala-btn.selecionado {
             background: linear-gradient(145deg, #fbbf24, #f59e0b);
             border-color: #f59e0b;
@@ -417,7 +420,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
             text-decoration: none;
-            display: none; /* Oculto por padrão até selecionar */
+            display: none;
             align-items: center;
             justify-content: center;
             text-transform: uppercase;
@@ -564,7 +567,104 @@
 
         .overlay.active { opacity: 1; visibility: visible; }
 
-        /* AJUSTES PARA CELULAR */
+        /* ===================================================== */
+        /* AJUSTES EXCLUSIVOS PARA COMPUTADOR / NOTEBOOK (PC)    */
+        /* ===================================================== */
+        @media (min-width: 1024px) {
+            header {
+                padding: 15px 50px;
+                height: 70px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .main-content {
+                padding: 20px 40px;
+            }
+
+            /* Layout lado a lado profissional */
+            .desktop-layout-wrapper {
+                display: grid;
+                grid-template-columns: 420px 1fr; /* Esquerda fixa, direita flexível */
+                gap: 25px;
+                align-items: start;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            /* Fixa o mapa na tela enquanto rola as salas */
+            .mapa-section {
+                position: sticky;
+                top: 85px;
+                margin-bottom: 0;
+            }
+
+            .secao-titulo {
+                text-align: left;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .salas-section {
+                margin-top: 0;
+                padding: 25px 30px;
+            }
+
+            /* Grid perfeito: 8 colunas = 6 linhas para 48 itens */
+            .salas-grid {
+                grid-template-columns: repeat(8, 1fr);
+                gap: 12px;
+            }
+
+            .sala-btn {
+                height: 65px;
+                font-size: 1.1rem;
+                border-radius: 10px;
+            }
+
+            .legenda {
+                gap: 30px;
+                margin-bottom: 20px;
+            }
+
+            .status-vagas {
+                margin-top: 15px;
+                padding: 18px 20px;
+            }
+
+            .btn-reservar {
+                margin-top: 15px;
+                font-size: 1.1rem;
+                padding: 16px;
+            }
+
+            /* Ícones do menu lateral menores no PC */
+            .sidebar ul li a svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        /* Telas muito grandes (Ultrawide) */
+        @media (min-width: 1400px) {
+            .desktop-layout-wrapper {
+                max-width: 1300px;
+            }
+            .salas-grid {
+                grid-template-columns: repeat(12, 1fr); /* 12 colunas = 4 linhas */
+                gap: 14px;
+            }
+            .sala-btn {
+                height: 60px;
+                font-size: 1.05rem;
+            }
+        }
+
+        /* ===================================================== */
+        /* AJUSTES PARA CELULAR (INTACTOS - NÃO FORAM MEXIDOS)   */
+        /* ===================================================== */
         @media (max-width: 768px) {
             .mapa-section { padding: 15px; gap: 10px; }
             .mapa-left { flex: 0 0 40%; }
@@ -630,82 +730,91 @@
     </header>
 
     <main class="main-content">
-        <!-- MODALIDADE 1 -->
-        <div class="secao-titulo">Modalidade 1</div>
-        <div class="mapa-section">
-            <div class="mapa-left">
-                <img src="mp.webp" alt="Mapa Free Fire" class="mapa-img">
-                <div class="mapa-legend">
-                    <div class="legend-item"><span class="legend-dot green"></span>Abate</div>
-                    <div class="legend-item"><span class="legend-dot red"></span>Inscrição</div>
-                    <div class="legend-item"><span class="legend-dot blue"></span>BOOYAH!</div>
-                </div>
-            </div>
-            <div class="mapa-right">
-                <div class="planilha-row">
-                    <span class="row-label"><span class="row-dot" style="background-color: #ef4444;"></span>Valor Pago</span>
-                    <span class="row-value gratis">GRÁTIS</span>
-                </div>
-                <div class="planilha-row">
-                    <span class="row-label"><span class="row-dot" style="background-color: #10b981;"></span>Ganho por Abate</span>
-                    <span class="row-value">R$ 0,10</span>
-                </div>
-                <div class="planilha-row">
-                    <span class="row-label"><span class="row-dot" style="background-color: #3b82f6;"></span>Ganho por BOOYAH!</span>
-                    <span class="row-value">R$ 1,00</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEÇÃO DE SALAS -->
-        <div class="salas-section">
-            <h3 class="secao-titulo">Salas Disponíveis (01 a 48)</h3>
+        <!-- WRAPPER PARA CONTROLE DO LAYOUT LADO A LADO NO PC -->
+        <div class="desktop-layout-wrapper">
             
-            <!-- Legenda -->
-            <div class="legenda">
-                <div class="legenda-item">
-                    <div class="legenda-cor disponivel"></div>
-                    <span>Disponível</span>
-                </div>
-                <div class="legenda-item">
-                    <div class="legenda-cor selecionado"></div>
-                    <span>Selecionada</span>
-                </div>
-                <div class="legenda-item">
-                    <div class="legenda-cor indisponivel"></div>
-                    <span>Indisponível</span>
-                </div>
-            </div>
-
-            <!-- Grid de Salas -->
-            <div class="salas-grid" id="salas-grid">
-                <div class="carregando">Carregando salas</div>
-            </div>
-
-            <!-- Status das Vagas -->
-            <div class="status-vagas">
-                <div class="status-header">
-                    <span class="status-title">Vagas Vendidas</span>
-                    <span class="status-percentual" id="percentual-vendas">0%</span>
-                </div>
-                <div class="status-barra">
-                    <div class="status-progresso" id="barra-progresso" style="width: 0%"></div>
-                </div>
-                <div class="status-info">
-                    <span id="vagas-vendidas-texto">0 de 48 vagas vendidas</span>
-                    <span id="vagas-disponiveis-texto">48 disponíveis</span>
+            <!-- COLUNA ESQUERDA: MAPA E VALORES -->
+            <div class="left-column">
+                <div class="secao-titulo">Modalidade 1</div>
+                <div class="mapa-section">
+                    <div class="mapa-left">
+                        <img src="mp.webp" alt="Mapa Free Fire" class="mapa-img">
+                        <div class="mapa-legend">
+                            <div class="legend-item"><span class="legend-dot green"></span>Abate</div>
+                            <div class="legend-item"><span class="legend-dot red"></span>Inscrição</div>
+                            <div class="legend-item"><span class="legend-dot blue"></span>BOOYAH!</div>
+                        </div>
+                    </div>
+                    <div class="mapa-right">
+                        <div class="planilha-row">
+                            <span class="row-label"><span class="row-dot" style="background-color: #ef4444;"></span>Valor Pago</span>
+                            <span class="row-value gratis">GRÁTIS</span>
+                        </div>
+                        <div class="planilha-row">
+                            <span class="row-label"><span class="row-dot" style="background-color: #10b981;"></span>Ganho por Abate</span>
+                            <span class="row-value">R$ 0,10</span>
+                        </div>
+                        <div class="planilha-row">
+                            <span class="row-label"><span class="row-dot" style="background-color: #3b82f6;"></span>Ganho por BOOYAH!</span>
+                            <span class="row-value">R$ 1,00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mensagem Todas Vendidas -->
-            <div class="mensagem-todas-vendidas" id="mensagem-todas-vendidas">
-                <p>Todas as vagas foram vendidas!</p>
+            <!-- COLUNA DIREITA: SALAS E RESERVA -->
+            <div class="right-column">
+                <div class="salas-section">
+                    <h3 class="secao-titulo" style="text-align: center;">Salas Disponíveis (01 a 48)</h3>
+                    
+                    <!-- Legenda -->
+                    <div class="legenda">
+                        <div class="legenda-item">
+                            <div class="legenda-cor disponivel"></div>
+                            <span>Disponível</span>
+                        </div>
+                        <div class="legenda-item">
+                            <div class="legenda-cor selecionado"></div>
+                            <span>Selecionada</span>
+                        </div>
+                        <div class="legenda-item">
+                            <div class="legenda-cor indisponivel"></div>
+                            <span>Indisponível</span>
+                        </div>
+                    </div>
+
+                    <!-- Grid de Salas -->
+                    <div class="salas-grid" id="salas-grid">
+                        <div class="carregando">Carregando salas</div>
+                    </div>
+
+                    <!-- Status das Vagas -->
+                    <div class="status-vagas">
+                        <div class="status-header">
+                            <span class="status-title">Vagas Vendidas</span>
+                            <span class="status-percentual" id="percentual-vendas">0%</span>
+                        </div>
+                        <div class="status-barra">
+                            <div class="status-progresso" id="barra-progresso" style="width: 0%"></div>
+                        </div>
+                        <div class="status-info">
+                            <span id="vagas-vendidas-texto">0 de 48 vagas vendidas</span>
+                            <span id="vagas-disponiveis-texto">48 disponíveis</span>
+                        </div>
+                    </div>
+
+                    <!-- Mensagem Todas Vendidas -->
+                    <div class="mensagem-todas-vendidas" id="mensagem-todas-vendidas">
+                        <p>Todas as vagas foram vendidas!</p>
+                    </div>
+
+                    <!-- Botão Reservar -->
+                    <button class="btn-reservar" id="btn-reservar" disabled onclick="confirmarReserva()">
+                        Selecione uma vaga acima
+                    </button>
+                </div>
             </div>
 
-            <!-- Botão Reservar -->
-            <button class="btn-reservar" id="btn-reservar" disabled onclick="confirmarReserva()">
-                Selecione uma vaga acima
-            </button>
         </div>
     </main>
 
@@ -898,154 +1007,145 @@
 
 
 
-const SHEET_NAME = "Página1";
 
-// Função para salvar/substituir o link do WhatsApp na célula A2
-function doGet(e) {
-  const lock = LockService.getScriptLock();
-  lock.tryLock(10000);
-
-  try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-    
-    if (!sheet) {
-      return response({ status: 'error', message: 'Aba da planilha não encontrada.' });
+<!-- BOTÃO FLUTUANTE WHATSAPP + REMOVE MARCA NETLIFY -->
+<style>
+    /* Esconde o iframe do Netlify */
+    iframe[id="nl-badge-frame"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
     }
 
-    const link = e.parameter.link;
-
-    if (link) {
-      // Salva/substitui o link na célula A2 (linha 2, coluna 1)
-      sheet.getRange(2, 1).setValue(link);
-      return response({ 
-        status: 'success', 
-        message: 'Link do WhatsApp salvo com sucesso!',
-        link: link 
-      });
-    } else {
-      // Retorna o link que está salvo em A2
-      const savedLink = sheet.getRange(2, 1).getValue();
-      return response({ 
-        status: 'success', 
-        message: 'Link atual recuperado.',
-        link: savedLink 
-      });
+    .wa-float-btn {
+        position: fixed !important;
+        bottom: 16px !important;
+        right: 16px !important;
+        width: 190px !important;
+        height: 44px !important;
+        background: #25D366 !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        z-index: 2147483647 !important;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4) !important;
+        transition: all 0.25s ease !important;
+        text-decoration: none !important;
+        border: none !important;
+        font-family: 'Inter', -apple-system, sans-serif !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        color: #ffffff !important;
+        letter-spacing: 0.3px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        outline: none !important;
     }
 
-  } catch (error) {
-    return response({ status: 'error', message: 'Erro: ' + error.toString() });
-  } finally {
-    lock.releaseLock();
-  }
-}
-
-// Função POST para CRUD (create, read, update, delete, clearAll)
-function doPost(e) {
-  const lock = LockService.getScriptLock();
-  lock.tryLock(10000);
-
-  try {
-    const requestData = JSON.parse(e.postData.contents);
-    const action = requestData.action;
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-    
-    if (!sheet) {
-      return response({ status: 'error', message: 'Aba da planilha não encontrada.' });
+    .wa-float-btn:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55) !important;
+        background: #20BD5A !important;
     }
 
-    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-    let result = {};
+    .wa-float-btn:active {
+        transform: scale(0.97) !important;
+    }
 
-    if (action === 'create') {
-      const newRow = headers.map(header => requestData[header] !== undefined ? requestData[header] : "");
-      sheet.appendRow(newRow);
-      result = { status: 'success', message: 'Dados salvos com sucesso!' };
-    } 
-    else if (action === 'read') {
-      const values = sheet.getDataRange().getValues();
-      const jsonData = [];
-      for (let i = 1; i < values.length; i++) {
-        let rowObj = {};
-        for (let j = 0; j < headers.length; j++) {
-          rowObj[headers[j]] = values[i][j];
+    .wa-float-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        fill: #ffffff !important;
+        flex-shrink: 0 !important;
+    }
+
+    @media (max-width: 480px) {
+        .wa-float-btn {
+            width: 170px !important;
+            height: 42px !important;
+            bottom: 12px !important;
+            right: 12px !important;
+            font-size: 0.85rem !important;
         }
-        jsonData.push(rowObj);
-      }
-      result = { status: 'success', data: jsonData };
-    }
-    else if (action === 'update') {
-      const targetId = String(requestData['id pagamento']).trim();
-      const values = sheet.getDataRange().getValues();
-      let rowIndex = -1;
-      const idColIndex = headers.indexOf('id pagamento');
-      
-      if (idColIndex === -1) throw new Error('Coluna "id pagamento" não encontrada.');
-
-      for (let i = 1; i < values.length; i++) {
-        if (String(values[i][idColIndex]).trim() === targetId) {
-          rowIndex = i + 1;
-          break;
+        .wa-float-btn svg {
+            width: 20px !important;
+            height: 20px !important;
         }
-      }
-      
-      if (rowIndex !== -1) {
-        headers.forEach(header => {
-          if (requestData[header] !== undefined) {
-            const colIndex = headers.indexOf(header) + 1;
-            sheet.getRange(rowIndex, colIndex).setValue(requestData[header]);
-          }
+    }
+</style>
+
+<a href="https://wa.me/5585996787670?text=Ol%C3%A1!%20Vim%20pelo%20site%20X%20SOLO%201%20V%2047" 
+   class="wa-float-btn" 
+   id="waFloatBtn"
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+    </svg>
+    <span>WhatsApp</span>
+</a>
+
+<script>
+    // Remove/esconde o iframe do Netlify
+    (function hideNetlifyBadge() {
+        function removeBadge() {
+            // Tenta esconder pelo ID
+            var iframe = document.getElementById('nl-badge-frame');
+            if (iframe) {
+                iframe.style.display = 'none';
+                iframe.style.visibility = 'hidden';
+                iframe.style.opacity = '0';
+                iframe.remove(); // Remove completamente do DOM
+            }
+            
+            // Tenta esconder por seletor CSS genérico
+            var badges = document.querySelectorAll('iframe[title*="Netlify"], iframe[srcdoc*="Netlify"]');
+            badges.forEach(function(badge) {
+                badge.style.display = 'none';
+                badge.remove();
+            });
+        }
+
+        // Executa imediatamente
+        removeBadge();
+
+        // Executa após DOM carregado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', removeBadge);
+        }
+
+        // Executa após página carregar completamente
+        window.addEventListener('load', function() {
+            setTimeout(removeBadge, 100);
+            setTimeout(removeBadge, 500);
+            setTimeout(removeBadge, 1500);
         });
-        result = { status: 'success', message: 'Dados atualizados com sucesso!' };
-      } else {
-        result = { status: 'error', message: 'ID de pagamento não encontrado.' };
-      }
-    }
-    else if (action === 'delete') {
-      const targetId = String(requestData['id pagamento']).trim();
-      const values = sheet.getDataRange().getValues();
-      let rowIndex = -1;
-      const idColIndex = headers.indexOf('id pagamento');
-      
-      if (idColIndex === -1) throw new Error('Coluna "id pagamento" não encontrada.');
-      
-      for (let i = 1; i < values.length; i++) {
-        if (String(values[i][idColIndex]).trim() === targetId) {
-          rowIndex = i + 1;
-          break;
+
+        // Usa MutationObserver para detectar quando o iframe for injetado
+        if (window.MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.tagName === 'IFRAME' && 
+                            (node.id === 'nl-badge-frame' || 
+                             node.title.indexOf('Netlify') !== -1)) {
+                            node.style.display = 'none';
+                            setTimeout(function() { node.remove(); }, 10);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(document.body || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
         }
-      }
-      
-      if (rowIndex !== -1) {
-        sheet.deleteRow(rowIndex);
-        result = { status: 'success', message: 'Registro apagado com sucesso!' };
-      } else {
-        result = { status: 'error', message: 'ID de pagamento não encontrado.' };
-      }
-    }
-    else if (action === 'clearAll') {
-      const lastRow = sheet.getLastRow();
-      if (lastRow > 1) {
-        sheet.deleteRows(2, lastRow - 1);
-        result = { status: 'success', message: 'Todos os registros foram apagados!' };
-      } else {
-        result = { status: 'success', message: 'A planilha já está vazia.' };
-      }
-    }
-    else {
-      result = { status: 'error', message: 'Ação inválida.' };
-    }
-
-    return response(result);
-
-  } catch (error) {
-    return response({ status: 'error', message: 'Erro: ' + error.toString() });
-  } finally {
-    lock.releaseLock();
-  }
-}
-
-// Função auxiliar para retornar respostas em JSON
-function response(data) {
-  return ContentService.createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
-}
+    })();
+</script>
+<!-- FIM BOTÃO FLUTUANTE WHATSAPP -->
